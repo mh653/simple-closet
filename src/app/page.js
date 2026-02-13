@@ -3,12 +3,15 @@
 import { supabase } from "@/lib/supabaseClient";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   const [clothes, setClothes] = useState([]);
+  const [tags, setTags] = useState([]);
 
   useEffect(() => {
     fetchClothes()
+    fetchTags()
   }, [])
 
   // t_clothesのデータを取得する関数
@@ -36,9 +39,31 @@ export default function Home() {
     return data.publicUrl
   }
 
+  // t_tagsのデータを取得する関数（コーデと紐づいてるものだけ）
+  const fetchTags = async () => {
+    const { data } = await supabase
+      .from('t_tags')
+      .select(`
+        *,
+        t_code_tags!inner (
+          id
+        )
+      `)
+      .order('created_at', {ascending: false})
+    setTags(data  || [])
+  }
+
+
+
+
+
+
+
+
   return (
     <>
       <h1>Simple Closet</h1>
+
       {clothes.map((c) => (
         <div key={c.id}>
           <Image src={getImageUrl(c.img_path)} alt='' width={300} height={300} />
@@ -50,6 +75,18 @@ export default function Home() {
           <hr></hr>
         </div>
       ))}
+
+      {tags.map((t) => (
+        <div key={t.id}>
+          <p>ID:{t.id}</p>
+          <p>作成日:{t.created_at}</p>
+          <p>タグ名:{t.name}</p>
+          <Link href={`/tag-codes/${t.id}`}>{t.name}</Link>
+          <hr></hr>
+        </div>
+      ))}
+
+
     </>
 
   );
