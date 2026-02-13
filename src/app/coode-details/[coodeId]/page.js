@@ -2,31 +2,31 @@ import { supabase } from "@/lib/supabaseClient";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function codeDetail(props) {
+export default async function coodeDetail(props) {
 
   const params = await props.params
-  const codeId = params.codeId
+  const coodeId = params.coodeId
 
   // コーデを取得する関数
   // eqで絞る
-  const { data:code } = await supabase
+  const { data:coode } = await supabase
     .from('t_coordinations')
     .select(`
       *,
-      t_code_clothes (
+      t_coode_clothes (
         t_clothes (
           id,
           img_path
         )
       ),
-      t_code_tags (
+      t_coode_tags (
         t_tags (
           id,
           name
         )
       )
     `)
-    .eq('id', codeId)
+    .eq('id', coodeId)
     .single()
 
   // ストレージの画像URLを取得する関数
@@ -46,7 +46,7 @@ export default async function codeDetail(props) {
   //   {
   //     id: 1,
   //     memo: "...",
-  //     t_code_clothes: [
+  //     t_coode_clothes: [
   //       {
   //         t_clothes: {
   //           img_path: "1.jpg"
@@ -68,31 +68,31 @@ export default async function codeDetail(props) {
 
       <h2>コーデ詳細</h2>
 
-      <p>ID:{code.id}</p>
+      <p>ID:{coode.id}</p>
 
-      {code.t_code_clothes.map((item) => (
+      {coode.t_coode_clothes.map((item) => (
           <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
       ))}
 
       <h3>メモ</h3>
-      <p>{code.memo}</p>
+      <p>{coode.memo}</p>
 
 
       <h3>タグ</h3>
-      {code.t_code_tags.map((tag) => (
+      {coode.t_coode_tags.map((tag) => (
           <p key={tag.t_tags.id}>{tag.t_tags.name}</p>
       ))}
       {/* {tags.map((t) => (
         <div key={t.id}>
           <p>ID:{t.id}</p>
           <p>作成日:{t.created_at}</p>
-          <Link href={`/tag-codes/${t.id}`}>{t.name}</Link>
+          <Link href={`/tag-coodes/${t.id}`}>{t.name}</Link>
           <hr></hr>
         </div>
       ))} */}
 
       <h3>トップ画面にピン留めする</h3>
-      <p>{String(code.pin)}</p>
+      <p>{String(coode.pin)}</p>
 
       <h3>編集</h3>
       <h3>削除</h3>

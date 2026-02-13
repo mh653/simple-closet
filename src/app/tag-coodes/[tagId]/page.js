@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabaseClient"
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function tagCode(props) {
+export default async function tagCoode(props) {
   const params = await props.params
   const tagId = params.tagId
 
@@ -16,28 +16,28 @@ export default async function tagCode(props) {
     .single()
 
   // タグIDに紐づくコーデを取得する関数
-  const { data:codes } = await supabase
+  const { data:coodes } = await supabase
     .from('t_coordinations')
     .select(`
       *,
-      t_code_tags!inner (
+      t_coode_tags!inner (
         tags_id
       ),
-      t_code_clothes (
+      t_coode_clothes (
         t_clothes (
           id,
           img_path
         )
       )
     `)
-    .eq('t_code_tags.tags_id', tagId)
+    .eq('t_coode_tags.tags_id', tagId)
 
   // 返ってくるデータ構造
   // [
   //   {
   //     id: 1,
   //     memo: "...",
-  //     t_code_clothes: [
+  //     t_coode_clothes: [
   //       {
   //         t_clothes: {
   //           img_path: "1.jpg"
@@ -68,13 +68,13 @@ export default async function tagCode(props) {
     <>
       <h2>タグでコーデを検索</h2>
       <p>{tagData.name} の検索結果</p>
-      {codes.map((c) => (
+      {coodes.map((c) => (
 
-        <Link key={c.id} href={`/code-details/${c.id}`}>
+        <Link key={c.id} href={`/coode-details/${c.id}`}>
           <div>
             <p>コーデID:{c.id}</p>
 
-            {c.t_code_clothes.map((item) => (
+            {c.t_coode_clothes.map((item) => (
                 <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
             ))}
 

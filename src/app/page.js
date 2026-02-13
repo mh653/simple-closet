@@ -6,11 +6,11 @@ export default async function Home() {
 
   // ピン留めコーデを取得する関数
   // eqで絞る
-  const { data:codes } = await supabase
+  const { data:coodes } = await supabase
     .from('t_coordinations')
     .select(`
       *,
-      t_code_clothes (
+      t_coode_clothes (
         t_clothes (
           id,
           img_path
@@ -35,7 +35,7 @@ export default async function Home() {
     .from('t_tags')
     .select(`
       *,
-      t_code_tags!inner (
+      t_coode_tags!inner (
         id
       )
     `)
@@ -46,12 +46,12 @@ export default async function Home() {
       <h1>Simple Closet</h1>
 
       <h2>ピン留めしたコーデ</h2>
-      {codes.map((c) => (
-        <Link key={c.id} href={`/code-details/${c.id}`}>
+      {coodes.map((c) => (
+        <Link key={c.id} href={`/coode-details/${c.id}`}>
           <div>
             <p>コーデID:{c.id}</p>
 
-            {c.t_code_clothes.map((item) => (
+            {c.t_coode_clothes.map((item) => (
                 <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
             ))}
 
@@ -64,7 +64,7 @@ export default async function Home() {
         <div key={t.id}>
           <p>ID:{t.id}</p>
           <p>作成日:{t.created_at}</p>
-          <Link href={`/tag-codes/${t.id}`}>{t.name}</Link>
+          <Link href={`/tag-coodes/${t.id}`}>{t.name}</Link>
           <hr></hr>
         </div>
       ))}
@@ -124,7 +124,7 @@ export default async function Home() {
 //       .from('t_tags')
 //       .select(`
 //         *,
-//         t_code_tags!inner (
+//         t_coode_tags!inner (
 //           id
 //         )
 //       `)
@@ -153,7 +153,7 @@ export default async function Home() {
 //           <p>ID:{t.id}</p>
 //           <p>作成日:{t.created_at}</p>
 //           <p>タグ名:{t.name}</p>
-//           <Link href={`/tag-codes/${t.id}`}>{t.name}</Link>
+//           <Link href={`/tag-coodes/${t.id}`}>{t.name}</Link>
 //           <hr></hr>
 //         </div>
 //       ))}
