@@ -1,66 +1,36 @@
-'use client'
-
 import { supabase } from "@/lib/supabaseClient"
-import { useState,useEffect } from "react";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import Link from "next/link";
 
-export default function tagCode() {
-  const { tagId } = useParams();
-  const [codes, setCodes] = useState([]);
-  const [tagName, setTagName] = useState('');
-
-  // App Router の useParams() は最初 undefined になることがある
-  useEffect(() => {
-    if (!tagId) return
-    fetchCodes()
-    fetchTagName()
-  }, [tagId]);
+export default async function tagCode(props) {
+  const params = await props.params
+  const tagId = params.tagId
 
   // タグIDに紐づくタグ名を取得する関数
   // supabaseの.select()は必ず配列で返すので、1件だけ取得したいなら.single()をつける
-  // 返り値は{ name: "寒い日" }
-  const fetchTagName = async () => {
-    const { data, error } = await supabase
-      .from('t_tags')
-      .select('name')
-      .eq('id', tagId)
-      .single()
-
-    if (error) {
-      console.error(error)
-      return
-    }
-
-    setTagName(data.name)
-  }
+  // 返り値{ name: "寒い日" }をtagDataに格納する
+  const { data:tagData } = await supabase
+    .from('t_tags')
+    .select('name')
+    .eq('id', tagId)
+    .single()
 
   // タグIDに紐づくコーデを取得する関数
-  // eqで指定されたIDだけに絞る
-  const fetchCodes = async () => {
-    const { data, error } = await supabase
-      .from('t_coordinations')
-      .select(`
-        *,
-        t_code_tags!inner (
-          tags_id
-        ),
-        t_code_clothes (
-          t_clothes (
-            id,
-            img_path
-          )
+  const { data:codes } = await supabase
+    .from('t_coordinations')
+    .select(`
+      *,
+      t_code_tags!inner (
+        tags_id
+      ),
+      t_code_clothes (
+        t_clothes (
+          id,
+          img_path
         )
-      `)
-      .eq('t_code_tags.tags_id', tagId)
-
-    if (error) {
-      console.error(error)
-      return
-    }
-
-    setCodes(data || [])
-  }
+      )
+    `)
+    .eq('t_code_tags.tags_id', tagId)
 
   // 返ってくるデータ構造
   // [
@@ -94,21 +64,23 @@ export default function tagCode() {
     return data.publicUrl
   }
 
-
-
   return (
     <>
-      <p>{tagName} の検索結果</p>
+      <h2>タグでコーデを検索</h2>
+      <p>{tagData.name} の検索結果</p>
       {codes.map((c) => (
-        <div key={c.id}>
-          <p>コーデID:{c.id}</p>
 
-          {c.t_code_clothes.map((item) => (
-              <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={300} height={300} />
-          ))}
+        <Link key={c.id} href={`/code-details/${c.id}`}>
+          <div>
+            <p>コーデID:{c.id}</p>
 
-          <hr></hr>
-        </div>
+            {c.t_code_clothes.map((item) => (
+                <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
+            ))}
+
+          </div>
+        </Link>
+
       ))}
     </>
   )
