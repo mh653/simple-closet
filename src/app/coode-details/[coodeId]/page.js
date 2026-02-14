@@ -1,3 +1,5 @@
+// クライアント化して編集機能を追加予定
+
 import { supabase } from "@/lib/supabaseClient";
 import Image from "next/image";
 import Link from "next/link";
