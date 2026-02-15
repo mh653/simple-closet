@@ -66,8 +66,6 @@ export default async function coodeDetail(props) {
 
   return (
     <>
-      <h1>Simple Closet</h1>
-
       <h2>コーデ詳細</h2>
 
       <p>ID:{coode.id}</p>

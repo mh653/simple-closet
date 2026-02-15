@@ -43,32 +43,40 @@ export default async function Home() {
 
   return (
     <>
-      <h1>Simple Closet</h1>
-
       <h2>ピン留めしたコーデ</h2>
-      {coodes.map((c) => (
-        <Link key={c.id} href={`/coode-details/${c.id}`}>
-          <div>
-            <p>コーデID:{c.id}</p>
+      {
+      coodes ? (
+        coodes.map((c) => (
+          <Link key={c.id} href={`/coode-details/${c.id}`}>
+            <div>
+              <p>コーデID:{c.id}</p>
 
-            {c.t_coode_clothes.map((item) => (
-                <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
-            ))}
+              {c.t_coode_clothes.map((item) => (
+                  <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
+              ))}
 
-          </div>
-        </Link>
-      ))}
+            </div>
+          </Link>
+        ))
+      ):(
+        <p>ピン留めされているコーデはありません</p>
+      )
+      }
 
       <h2>タグでコーデを検索</h2>
-      {tags.map((t) => (
-        <div key={t.id}>
-          <p>ID:{t.id}</p>
-          <p>作成日:{t.created_at}</p>
-          <Link href={`/tag-coodes/${t.id}`}>{t.name}</Link>
-          <hr></hr>
-        </div>
-      ))}
-
+      {tags ? (
+        tags.map((t) => (
+          <div key={t.id}>
+            <p>ID:{t.id}</p>
+            <p>作成日:{t.created_at}</p>
+            <Link href={`/tag-coodes/${t.id}`}>{t.name}</Link>
+            <hr></hr>
+          </div>
+        ))
+      ):(
+        <p>登録されているタグはありません</p>        
+      )
+      }
     </>
   );
 }

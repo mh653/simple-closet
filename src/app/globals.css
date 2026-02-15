@@ -1,3 +1,23 @@
+header {
+  width: 100vw;
+  background-color: #eee;
+}
+
+nav {
+  width: 100vw;
+  background-color: #ccc;
+}
+nav ul {
+  display: flex;
+  gap: 2vw;
+  /* justify-content: space-around; */
+}
+nav ul li {
+  list-style-type: none;
+}
+
+
+
 /* :root {
   --background: #ffffff;
   --foreground: #171717;
