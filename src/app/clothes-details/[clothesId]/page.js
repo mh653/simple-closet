@@ -10,7 +10,7 @@ import { useRouter, useParams } from "next/navigation";
 
 export default function ClothesDetail() {
 
-  const router = useRouter();  
+  const router = useRouter();
   const { clothesId } = useParams();
   const [clothes, setClothes] = useState(null);
 
@@ -131,7 +131,7 @@ export default function ClothesDetail() {
       <p>{clothes.memo}</p>
 
 
-      <h3>カテゴリー</h3>
+      <h3>カテゴリ</h3>
       <p>{clothes.t_categories.name}</p>
 
       <h3>使用コーデ</h3>
@@ -264,7 +264,7 @@ export default function ClothesDetail() {
 //         )
 //       `)
 //       .in('id', coodeIds)
-//     setCoode(data || []) 
+//     setCoode(data || [])
 //   }
 
 

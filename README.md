@@ -16,6 +16,10 @@ next.config.mjs に以下を加筆
   },
 ---
 
+2026/2/16
+npm install react-image-file-resizer
+npm install heic2any
+
 
 
 <!-- This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
