@@ -9,7 +9,7 @@ export default function Nav() {
         <li><Link href={"/"}>コーデ一覧</Link></li>
         <li><Link href={"/"}>Home</Link></li>
         <li><Link href={"/add-clothes"}>服の登録</Link></li>
-        <li><Link href={"/"}>コーデ登録</Link></li>
+        <li><Link href={"/add-coodinations"}>コーデ登録</Link></li>
       </ul>
     </nav>
   );
