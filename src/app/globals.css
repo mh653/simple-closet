@@ -16,6 +16,14 @@ nav ul li {
   list-style-type: none;
 }
 
+.weather {
+  width: 100vw;
+  background-color: #eee;
+}
+
+
+
+
 .modal {
   position: fixed;
   inset: 0;
