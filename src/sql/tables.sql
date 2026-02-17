@@ -78,6 +78,7 @@ insert into t_coordinations (memo, pin) values
 
 -- =========================================
 -- t_code_clothes
+-- on delete cascadeがあるので、t_coordinations(id)を削除すると連鎖して削除される
 -- =========================================
 create table if not exists t_code_clothes (
   id integer generated always as identity primary key,

@@ -55,7 +55,6 @@ export default function CoodeDetail() {
     return data.publicUrl
   }
 
-
   // 返ってくるデータ構造
   // [
   //   {
@@ -76,6 +75,22 @@ export default function CoodeDetail() {
   //     ]
   //   }
   // ]
+
+  // 削除関数
+  const deleteCoordination = async (id) => {
+    const { error } = await supabase
+      .from("t_coordinations")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error(error);
+      alert("削除失敗");
+      return;
+    }
+
+    alert("削除成功");
+  };
 
 
   // fechCoode成功前に本来のDOMを描画しようとするとエラーになるので
@@ -113,8 +128,8 @@ export default function CoodeDetail() {
       <h3>トップ画面にピン留めする</h3>
       <p>{String(coode.pin)}</p>
 
-      <h3>編集</h3>
-      <h3>削除</h3>
+      <button>編集</button>
+      <button onClick={() => deleteCoordination(coodeId)}>削除</button>
 
     </>
   );

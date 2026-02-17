@@ -57,7 +57,7 @@ export default function AddCoodinations() {
       console.log(insertError);
       return;
     }
-    alert("登録完了！")
+    alert("タグを作成しました！")
     setNewTag("")
     setIsNewTag(!isNewTag)
   }
@@ -79,22 +79,31 @@ export default function AddCoodinations() {
     return data.publicUrl
   }
 
+  // タグをトグルする関数
+  const toggleTag = (id) => {
+  setTagsId((prev) => {
+    if (prev.includes(id)) {
+      return prev.filter((t) => t !== id) // 外す
+    } else {
+      return [...prev, id] // 追加
+    }
+  })
+}
 
+
+// コーデを登録する関数
 const addCoordination = async () => {
-
   const { error } = await supabase.rpc("insert_coordination", {
     p_memo: memo,
     p_pin: isPin,
     p_clothes: clothes,
     p_tags: tagsId
   });
-
   if (error) {
     console.error(error);
     alert("失敗");
     return;
   }
-
   alert("成功");
 };
 
@@ -128,7 +137,10 @@ const addCoordination = async () => {
           tags.length > 0 ? (
             tags.map((tag) => (
               <span key={tag.id}>
-                <input type="checkbox" id={tag.id} name="istag" value={tag.id} onChange={(e) => setTagsId(tagsId.push(e.target.value))}/>
+                <input type="checkbox" id={tag.id} name="istag" value={tag.id}
+                  checked={tagsId.includes(tag.id)}
+                  onChange={() => toggleTag(tag.id)}
+                />
                 <label htmlFor={tag.id}>{tag.name}</label>
               </span>
             ))

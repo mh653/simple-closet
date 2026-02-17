@@ -108,6 +108,22 @@ export default function ClothesDetail() {
     return data.publicUrl
   }
 
+  // 削除関数
+  const deleteClothes = async (id) => {
+    const { error } = await supabase
+      .from("t_clothes")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error(error);
+      alert("削除失敗");
+      return;
+    }
+
+    alert("削除成功");
+  };
+
   // fechClothes成功前に本来のDOMを描画しようとするとエラーになるので
   if (!clothes) {
     return (
@@ -156,8 +172,8 @@ export default function ClothesDetail() {
           );
         })}
 
-      <h3>編集</h3>
-      <h3>削除</h3>
+      <button>編集</button>
+      <button onClick={() => deleteClothes(clothesId)}>削除</button>
 
     </>
   );
