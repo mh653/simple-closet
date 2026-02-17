@@ -20,6 +20,8 @@ next.config.mjs に以下を加筆
 npm install react-image-file-resizer
 npm install heic2any
 
+2026/2/17
+npm install react-icons
 
 
 <!-- This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
