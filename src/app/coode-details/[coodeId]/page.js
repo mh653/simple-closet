@@ -111,7 +111,7 @@ export default function CoodeDetail() {
       <p>ID:{coodeId}</p>
 
       {coode.t_coode_clothes.map((item) => (
-        <Link key={item.t_clothes.id} href={`/coode-details/${item.t_clothes.id}`}>
+        <Link key={item.t_clothes.id} href={`/clothes-details/${item.t_clothes.id}`}>
           <Image src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
         </Link>
       ))}

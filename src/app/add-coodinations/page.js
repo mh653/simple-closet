@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react"
 import { supabase } from "@/lib/supabaseClient"
 import Image from "next/image";
+import SelectClothesModal from "../ui/SelectClothesModal";
 
 export default function AddCoodinations() {
   const[tags, setTags] = useState([]);
@@ -14,6 +15,10 @@ export default function AddCoodinations() {
   const[tagsId, setTagsId] = useState([]);
   const[isPin, setIsPin] = useState(false);
 
+  const [isOpen, setIsOpen] = useState(false)
+
+  const[selectedClothes, setSelectedClothes] = useState([]);
+
   // const[clothes, setClothes] = useState([4,3,2]);
   // const[memo, setMemo] = useState("追加テスト");
   // const[tagsId, setTagsId] = useState([4,1]);
@@ -23,8 +28,6 @@ export default function AddCoodinations() {
   // setMemo("追加テスト")
   // setTagsId([4,1])
   // setIsPin(true)
-
-
 
   // const fileInputRef = useRef(null);
   // const categoryInputRef = useRef(null);
@@ -62,11 +65,28 @@ export default function AddCoodinations() {
     setIsNewTag(!isNewTag)
   }
 
+  // タグをトグルする関数
+  const toggleTag = (id) => {
+    setTagsId((prev) => {
+      if (prev.includes(id)) {
+        return prev.filter((t) => t !== id) // 外す
+      } else {
+        return [...prev, id] // 追加
+      }
+    })
+  }
 
-  useEffect(() => {
-    fetchTags()
-  }, [isNewTag])
-
+  // 選択した服のデータを取得する関数
+  const fetchSelectedClothes = async () => {
+    const {data}  = await supabase
+      .from('t_clothes')
+      .select(`
+          id,
+          img_path
+      `)
+      .in('id', clothes)
+    setSelectedClothes(data || [])
+  }
 
   // ストレージの画像URLを取得する関数
   const getImageUrl = (imgPath) => {
@@ -79,50 +99,56 @@ export default function AddCoodinations() {
     return data.publicUrl
   }
 
-  // タグをトグルする関数
-  const toggleTag = (id) => {
-  setTagsId((prev) => {
-    if (prev.includes(id)) {
-      return prev.filter((t) => t !== id) // 外す
-    } else {
-      return [...prev, id] // 追加
+  useEffect(() => {
+    fetchTags()
+  }, [isNewTag])
+
+  useEffect(() => {
+    if (clothes.length === 0) {
+      setSelectedClothes([])
+      return
     }
-  })
-}
+    fetchSelectedClothes()
+  }, [isOpen])
 
 
-// コーデを登録する関数
-const addCoordination = async () => {
-  const { error } = await supabase.rpc("insert_coordination", {
-    p_memo: memo,
-    p_pin: isPin,
-    p_clothes: clothes,
-    p_tags: tagsId
-  });
-  if (error) {
-    console.error(error);
-    alert("失敗");
-    return;
-  }
-  alert("成功");
-};
+  // コーデを登録する関数
+  const addCoordination = async () => {
+    const { error } = await supabase.rpc("insert_coordination", {
+      p_memo: memo,
+      p_pin: isPin,
+      p_clothes: clothes,
+      p_tags: tagsId
+    });
+    if (error) {
+      console.error(error);
+      alert("失敗");
+      return;
+    }
+    alert("成功");
+  };
 
   return (
     <>
       <h2>コーデ登録</h2>
 
         <p>使用する服(6枚まで追加可能です)</p>
-        <button>服を追加</button>
+        <button onClick={() => setIsOpen(true)}>服を選択</button>
+
+        {isOpen && (
+          <div className="modal">
+            <SelectClothesModal
+              clothes={clothes}
+              setClothes={setClothes}
+              onClose={() => setIsOpen(false)}
+            />
+          </div>
+        )}
 
         {
-          clothes.length > 0 ? (
-            clothes.map((c) => (
-              <div key={c.id}>
-                <p>{c.id}</p>
-                <button>コーデから削除</button>
-              </div>
-
-                // <Image key={c.id} src={getImageUrl(c.img_path)} alt='' width={100} height={100} />
+          selectedClothes.length > 0 ? (
+            selectedClothes.map((s) => (
+              <Image key={s.id} src={getImageUrl(s.img_path)} alt='' width={100} height={100} />
             ))
           ):(
             <p>選択された服がありません</p>

@@ -77,31 +77,31 @@ insert into t_coordinations (memo, pin) values
 
 
 -- =========================================
--- t_code_clothes
+-- t_coode_clothes
 -- on delete cascadeがあるので、t_coordinations(id)を削除すると連鎖して削除される
 -- =========================================
-create table if not exists t_code_clothes (
+create table if not exists t_coode_clothes (
   id integer generated always as identity primary key,
   created_at timestamptz default now(),
-  code_id integer references t_coordinations(id) on delete cascade,
+  coode_id integer references t_coordinations(id) on delete cascade,
   clothes_id integer references t_clothes(id) on delete cascade
 );
 
-insert into t_code_clothes (code_id, clothes_id) values
+insert into t_coode_clothes (coode_id, clothes_id) values
 (1,1),(1,2),(1,3),(2,2),(2,4);
 
 
 -- =========================================
--- t_code_tags
+-- t_coode_tags
 -- =========================================
-create table if not exists t_code_tags (
+create table if not exists t_coode_tags (
   id integer generated always as identity primary key,
   created_at timestamptz default now(),
-  code_id integer references t_coordinations(id) on delete cascade,
+  coode_id integer references t_coordinations(id) on delete cascade,
   tags_id integer references t_tags(id) on delete cascade
 );
 
-insert into t_code_tags (code_id, tags_id) values
+insert into t_coode_tags (coode_id, tags_id) values
 (1,1),(1,4),(1,6),(2,7);
 
 
@@ -111,14 +111,14 @@ insert into t_code_tags (code_id, tags_id) values
 alter table t_clothes enable row level security;
 alter table t_tags enable row level security;
 alter table t_coordinations enable row level security;
-alter table t_code_clothes enable row level security;
-alter table t_code_tags enable row level security;
+alter table t_coode_clothes enable row level security;
+alter table t_coode_tags enable row level security;
 
 create policy "allow all clothes" on t_clothes for all using (true) with check (true);
 create policy "allow all tags" on t_tags for all using (true) with check (true);
 create policy "allow all coord" on t_coordinations for all using (true) with check (true);
-create policy "allow all code_clothes" on t_code_clothes for all using (true) with check (true);
-create policy "allow all code_tags" on t_code_tags for all using (true) with check (true);
+create policy "allow all coode_clothes" on t_coode_clothes for all using (true) with check (true);
+create policy "allow all coode_tags" on t_coode_tags for all using (true) with check (true);
 
 
 

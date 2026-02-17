@@ -16,6 +16,26 @@ nav ul li {
   list-style-type: none;
 }
 
+.modal {
+  position: fixed;
+  inset: 0;
+  /* 要素を四隅にピッタリ貼り付ける */
+
+  background: rgba(0,0,0,0.4);
+  /* backdrop-filter: blur(10px); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+
+.modalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+
 
 
 /* :root {
