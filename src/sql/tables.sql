@@ -118,3 +118,40 @@ create policy "allow all tags" on t_tags for all using (true) with check (true);
 create policy "allow all coord" on t_coordinations for all using (true) with check (true);
 create policy "allow all code_clothes" on t_code_clothes for all using (true) with check (true);
 create policy "allow all code_tags" on t_code_tags for all using (true) with check (true);
+
+
+
+
+
+
+
+
+-- 2/17 コーデ追加のトランザクション化のため、SQL Editeorで下記RPCを追加
+create or replace function insert_coordination(
+  p_memo text,
+  p_pin boolean,
+  p_clothes int[],
+  p_tags int[]
+)
+returns void
+language plpgsql
+as $$
+declare
+  new_coode_id int;
+begin
+
+  -- ① coordination
+  insert into t_coordinations (memo, pin)
+  values (p_memo, p_pin)
+  returning id into new_coode_id;
+
+  -- ② clothes
+  insert into t_coode_clothes (coode_id, clothes_id)
+  select new_coode_id, unnest(p_clothes);
+
+  -- ③ tags
+  insert into t_coode_tags (coode_id, tags_id)
+  select new_coode_id, unnest(p_tags);
+
+end;
+$$;

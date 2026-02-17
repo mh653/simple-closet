@@ -47,7 +47,11 @@ export default async function tagCoode(props) {
 
   return (
     <>
-      <h2>カテゴリ別</h2>
+      <h2>服から探す</h2>
+      <Link href="/clothes">
+        <button>戻る</button>
+      </Link>
+
       <p>{categoryData.name}</p>
       {
       categoryData.t_clothes.length > 0 ? (
