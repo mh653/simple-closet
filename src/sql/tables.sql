@@ -156,3 +156,34 @@ begin
 
 end;
 $$;
+
+
+-- 2/17 服と画像削除のトランザクション化のため、SQL Editeorで下記RPCを追加
+create or replace function delete_clothes_with_image(
+  p_clothes_id int
+)
+returns text
+language plpgsql
+as $$
+declare
+  img text;
+begin
+
+  select img_path into img
+  from t_clothes
+  where id = p_clothes_id;
+
+  delete from t_clothes
+  where id = p_clothes_id;
+
+  return img;
+
+end;
+$$;
+
+-- バケットの削除ポリシーも追加
+create policy "allow delete clothes image"
+on storage.objects
+for delete
+to anon
+using (bucket_id = 'clothes_image');

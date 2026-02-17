@@ -110,18 +110,36 @@ export default function ClothesDetail() {
 
   // 削除関数
   const deleteClothes = async (id) => {
-    const { error } = await supabase
-      .from("t_clothes")
-      .delete()
-      .eq("id", id);
-
+    const { data: imgPath, error } = await supabase
+      .rpc("delete_clothes_with_image", {
+        p_clothes_id: Number(id)
+      })
     if (error) {
       console.error(error);
-      alert("削除失敗");
-      return;
+      alert('テーブル削除に失敗しました')
+      return
     }
 
-    alert("削除成功");
+    console.log(imgPath)
+
+    if (!imgPath) {
+      console.log("imgなし")
+      alert('imgなし')
+      return
+    }
+
+    const { error: storageError } = await supabase.storage
+      .from("clothes_image")
+      .remove([imgPath])
+
+    if (storageError) {
+      console.error(storageError)
+      alert("storage削除失敗")
+      return
+    }
+
+    alert("削除完了しました");
+    router.back()
   };
 
   // fechClothes成功前に本来のDOMを描画しようとするとエラーになるので

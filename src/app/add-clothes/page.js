@@ -69,7 +69,7 @@ export default function AddClothes() {
     // }
 
     const resizedFile = await resizeImage(file);
-    const fileName = `${Date.now()}`;
+    const fileName = `${Date.now()}.jpg`;
 
     const { error: uploadError } = await supabase.storage
       .from("clothes_image")
