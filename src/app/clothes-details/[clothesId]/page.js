@@ -1,5 +1,3 @@
-// 編集機能を付けるために、clothesをステートにしています
-
 'use client'
 
 import { supabase } from "@/lib/supabaseClient";
@@ -19,9 +17,7 @@ export default function ClothesDetail() {
 
   useEffect(() => {
     if (!clothesId) return;
-
     fetchClothes()
-
   }, [clothesId])
 
 
@@ -108,40 +104,6 @@ export default function ClothesDetail() {
     return data.publicUrl
   }
 
-  // 削除関数
-  const deleteClothes = async (id) => {
-    const { data: imgPath, error } = await supabase
-      .rpc("delete_clothes_with_image", {
-        p_clothes_id: Number(id)
-      })
-    if (error) {
-      console.error(error);
-      alert('テーブル削除に失敗しました')
-      return
-    }
-
-    console.log(imgPath)
-
-    if (!imgPath) {
-      console.log("imgなし")
-      alert('imgなし')
-      return
-    }
-
-    const { error: storageError } = await supabase.storage
-      .from("clothes_image")
-      .remove([imgPath])
-
-    if (storageError) {
-      console.error(storageError)
-      alert("storage削除失敗")
-      return
-    }
-
-    alert("削除完了しました");
-    router.back()
-  };
-
   // fechClothes成功前に本来のDOMを描画しようとするとエラーになるので
   if (!clothes) {
     return (
@@ -190,8 +152,13 @@ export default function ClothesDetail() {
           );
         })}
 
-      <button>編集</button>
-      <button onClick={() => deleteClothes(clothesId)}>削除</button>
+      <Link href={`/clothes-details/${clothesId}/edit-clothes/${clothesId}`}>
+        <button>編集</button>
+      </Link>
+      <Link href={`/clothes-details/${clothesId}/delete-clothes/${clothesId}`}>
+        <button>削除</button>
+      </Link>
+
 
     </>
   );

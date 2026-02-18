@@ -1,17 +1,18 @@
 'use client'
 
 import { useState, useRef } from "react"
+import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient"
 import FileResizer from "react-image-file-resizer";
 // import heic2any from "heic2any";
 
 export default function AddClothes() {
+  // ルータ
+  const router = useRouter();
+  // 登録内容
   const[file, setFile] = useState(null);
-  const[memo, setMemo] = useState("");
   const[categoryId, setCategoryId] = useState(null);
-
-  const fileInputRef = useRef(null);
-  const categoryInputRef = useRef(null);
+  const[memo, setMemo] = useState("");
 
   // ライブラリのリサイズ関数
   const resizeImage = (file) =>
@@ -40,9 +41,7 @@ export default function AddClothes() {
   // Promiseで包むことで、await resizeImage(file) のように非同期処理を待てるようにする
   // resolve(resizedFile) が呼ばれた時点で Promise が完了し、次の処理に進める
 
-  const handleUpload = async (e) => {
-    e.preventDefault()
-
+  const addClothes = async () => {
     if(!file) {
       alert("画像を選択してください")
       return
@@ -99,30 +98,19 @@ export default function AddClothes() {
       return
     }
 
-    alert("登録完了！")
-
-    setFile(null)
-    setCategoryId(null)
-    setMemo("")
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-    if (categoryInputRef.current) {
-      categoryInputRef.current.value = "";
-    }
+    router.push(`/add-clothes/result`);
   }
 
   return (
     <>
       <h2>服の登録</h2>
 
-      <form onSubmit={handleUpload}>
-        <p>服の写真（必須）</p>
+        <h3>服の写真（必須）</h3>
         <p>※JPEGまたはHEICのみアップロード可能です</p>
-        <input type="file" accept="image/jpeg,image/heic,image/heif" onChange={(e) => setFile(e.target.files[0])} ref={fileInputRef} />
+        <input type="file" accept="image/jpeg,image/heic,image/heif" onChange={(e) => setFile(e.target.files[0])}/>
 
-        <p>カテゴリ（必須）</p>
-        <select onChange={(e) => setCategoryId(Number(e.target.value))} ref={categoryInputRef}>
+        <h3>カテゴリ（必須）</h3>
+        <select onChange={(e) => setCategoryId(Number(e.target.value))}>
           <option value={""}>選択してください</option>
           <option value={1}>トップス - 半袖/袖なし</option>
           <option value={2}>トップス - 長袖</option>
@@ -137,17 +125,14 @@ export default function AddClothes() {
           <option value={11}>その他</option>
         </select>
 
-        <p>メモ</p>
+        <h3>メモ</h3>
         <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>
 
-        <button type="submit">登録</button>
+        <button onClick={() => addClothes()}>登録</button>
 
-      </form>
     </>
   )
 }
-
-// form使わなくて良さそう
 
 
 
