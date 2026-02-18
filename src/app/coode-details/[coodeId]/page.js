@@ -76,22 +76,6 @@ export default function CoodeDetail() {
   //   }
   // ]
 
-  // 削除関数
-  const deleteCoordination = async (id) => {
-    const { error } = await supabase
-      .from("t_coordinations")
-      .delete()
-      .eq("id", id);
-
-    if (error) {
-      console.error(error);
-      alert("削除失敗");
-      return;
-    }
-
-    alert("削除成功");
-  };
-
 
   // fechCoode成功前に本来のDOMを描画しようとするとエラーになるので
   if (!coode) {
@@ -128,14 +112,159 @@ export default function CoodeDetail() {
       <h3>トップ画面にピン留めする</h3>
       <p>{String(coode.pin)}</p>
 
-      <Link href={`/coode-details/${coodeId}/edit-coodinations/${coodeId}`}>
+      <Link href={`/coode-details/${coodeId}/edit-coordinations/${coodeId}`}>
         <button>編集</button>
       </Link>
-      <button onClick={() => deleteCoordination(coodeId)}>削除</button>
+      <Link href={`/coode-details/${coodeId}/delete-coordinations/${coodeId}`}>
+        <button>削除</button>
+      </Link>
 
     </>
   );
 }
+
+
+
+
+
+
+
+// 'use client'
+
+// import { supabase } from "@/lib/supabaseClient";
+// import Image from "next/image";
+// import Link from "next/link";
+// import { useState, useEffect } from "react";
+// import { useRouter, useParams } from "next/navigation";
+// import DeleteCoordinationModal from "@/app/ui/DeleteCoordinationModal";
+
+// export default function CoodeDetail() {
+
+//   const router = useRouter();
+//   const { coodeId } = useParams();
+//   const [coode, setCoode] = useState(null);
+//   const [isOpenDelete, setIsOpenDelete] = useState(false)
+
+//   useEffect(() => {
+//     if (!coodeId) return;
+
+//     fetchCoode()
+
+//   }, [coodeId])
+
+//   // コーデを取得する関数
+//   // eqで絞る
+//   const fetchCoode = async () => {
+//     const { data } = await supabase
+//       .from('t_coordinations')
+//       .select(`
+//         *,
+//         t_coode_clothes (
+//           t_clothes (
+//             id,
+//             img_path
+//           )
+//         ),
+//         t_coode_tags (
+//           t_tags (
+//             id,
+//             name
+//           )
+//         )
+//       `)
+//       .eq('id', coodeId)
+//       .single()
+//     setCoode(data || null)
+//   }
+
+//   // ストレージの画像URLを取得する関数
+//   const getImageUrl = (imgPath) => {
+//     if(!imgPath) return null;
+
+//     const { data } = supabase.storage
+//       .from('clothes_image')
+//       .getPublicUrl(imgPath)
+
+//     return data.publicUrl
+//   }
+
+//   // 返ってくるデータ構造
+//   // [
+//   //   {
+//   //     id: 1,
+//   //     memo: "...",
+//   //     t_coode_clothes: [
+//   //       {
+//   //         t_clothes: {
+//   //           img_path: "1.jpg"
+//   //         }
+//   //       },
+//   //       {
+//   //         t_clothes: {
+//   //           id: "2"
+//   //           img_path: "2.jpg"
+//   //         }
+//   //       }
+//   //     ]
+//   //   }
+//   // ]
+
+
+//   // fechCoode成功前に本来のDOMを描画しようとするとエラーになるので
+//   if (!coode) {
+//     return (
+//       <>
+//         <p>Loading...</p>
+//       </>
+//     );
+//   }
+
+//   return (
+//     <>
+//       <button onClick={() => router.back()}>戻る</button>
+
+//       <h2>コーデ詳細</h2>
+
+//       <p>ID:{coodeId}</p>
+
+//       {coode.t_coode_clothes.map((item) => (
+//         <Link key={item.t_clothes.id} href={`/clothes-details/${item.t_clothes.id}`}>
+//           <Image src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
+//         </Link>
+//       ))}
+
+//       <h3>メモ</h3>
+//       <p>{coode.memo}</p>
+
+
+//       <h3>タグ</h3>
+//       {coode.t_coode_tags.map((tag) => (
+//           <p key={tag.t_tags.id}>{tag.t_tags.name}</p>
+//       ))}
+
+//       <h3>トップ画面にピン留めする</h3>
+//       <p>{String(coode.pin)}</p>
+
+//       <Link href={`/coode-details/${coodeId}/edit-coordinations/${coodeId}`}>
+//         <button>編集</button>
+//       </Link>
+//       {/* <Link href={`/coode-details/${coodeId}/delete-coordinations/${coodeId}`}>
+//         <button>削除</button>
+//       </Link> */}
+//       <button onClick={() => setIsOpenDelete(true)}>削除</button>
+
+//       {isOpenDelete && (
+//         <div className="modal">
+//           <DeleteCoordinationModal
+//             deleteId={clothesId}
+//             onClose={() => setIsOpenDelete(false)}
+//           />
+//         </div>
+//       )}
+
+//     </>
+//   );
+// }
 
 
 

@@ -6,28 +6,24 @@ import Image from "next/image";
 import SelectClothesModal from "@/app/ui/SelectClothesModal";
 import { useRouter, useParams } from "next/navigation";
 
-export default function EditCoodinations() {
+export default function EditCoordinations() {
 
   // ルータ
   const router = useRouter();
-
   // パラメータ取得
   const { coodeId } = useParams();
-
   // 登録内容
-  const[clothesId, setClothesId] = useState([]);
-  const[memo, setMemo] = useState("");
-  const[tagsId, setTagsId] = useState([]);
-  const[isPin, setIsPin] = useState(false);
-
+  const [clothesId, setClothesId] = useState([]);
+  const [memo, setMemo] = useState("");
+  const [tagsId, setTagsId] = useState([]);
+  const [isPin, setIsPin] = useState(false);
   // 服
   const [isOpen, setIsOpen] = useState(false)
-  const[selectedClothes, setSelectedClothes] = useState([]);
-
+  const [selectedClothes, setSelectedClothes] = useState([]);
   // タグ
-  const[tags, setTags] = useState([]);
-  const[newTag, setNewTag] = useState("");
-  const[isNewTag, setIsNewTag] = useState(false);
+  const [tags, setTags] = useState([]);
+  const [newTag, setNewTag] = useState("");
+  const [isNewTag, setIsNewTag] = useState(false);
 
 
   // タグ一覧を取得
@@ -88,9 +84,9 @@ export default function EditCoodinations() {
       ]);
     if (insertError) {
       console.log(insertError);
+      alert("タグの登録に失敗しました")
       return;
     }
-    alert("タグを作成しました！")
     setNewTag("")
     setIsNewTag(!isNewTag)
   }
@@ -170,10 +166,10 @@ export default function EditCoodinations() {
     });
     if (error) {
       console.error(error);
-      alert("更新失敗");
+      alert("更新に失敗しました");
       return;
     }
-    alert("更新成功");
+    alert("更新完了しました！");
     router.push(`/coode-details/${coodeId}`);
   };
 
@@ -201,7 +197,7 @@ export default function EditCoodinations() {
               <Image key={s.id} src={getImageUrl(s.img_path)} alt='' width={100} height={100} />
             ))
           ):(
-            <p>選択された服がありません</p>
+            null
           )
         }
 

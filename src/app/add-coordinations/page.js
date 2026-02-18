@@ -4,36 +4,27 @@ import { useState, useRef, useEffect } from "react"
 import { supabase } from "@/lib/supabaseClient"
 import Image from "next/image";
 import SelectClothesModal from "../ui/SelectClothesModal";
+import { useRouter } from "next/navigation";
 
 export default function AddCoodinations() {
-  const[tags, setTags] = useState([]);
-  const[newTag, setNewTag] = useState("");
-  const[isNewTag, setIsNewTag] = useState(false);
 
-  const[clothes, setClothes] = useState([]);
-  const[memo, setMemo] = useState("");
-  const[tagsId, setTagsId] = useState([]);
-  const[isPin, setIsPin] = useState(false);
-
+  // ルータ
+  const router = useRouter();
+  // 登録内容
+  const [clothesId, setClothesId] = useState([]);
+  const [memo, setMemo] = useState("");
+  const [tagsId, setTagsId] = useState([]);
+  const [isPin, setIsPin] = useState(false);
+  // 服
   const [isOpen, setIsOpen] = useState(false)
-
-  const[selectedClothes, setSelectedClothes] = useState([]);
-
-  // const[clothes, setClothes] = useState([4,3,2]);
-  // const[memo, setMemo] = useState("追加テスト");
-  // const[tagsId, setTagsId] = useState([4,1]);
-  // const[isPin, setIsPin] = useState(true);
-
-  // setClothes([4,3,2])
-  // setMemo("追加テスト")
-  // setTagsId([4,1])
-  // setIsPin(true)
-
-  // const fileInputRef = useRef(null);
-  // const categoryInputRef = useRef(null);
+  const [selectedClothes, setSelectedClothes] = useState([]);
+  // タグ
+  const [tags, setTags] = useState([]);
+  const [newTag, setNewTag] = useState("");
+  const [isNewTag, setIsNewTag] = useState(false);
 
 
-  // タグを取得
+  // タグ一覧を取得
   const fetchTags = async () => {
     const {data} = await supabase
       .from('t_tags')
@@ -43,6 +34,7 @@ export default function AddCoodinations() {
       .order('created_at', {ascending: false})
     setTags(data || [])
   }
+
   // タグを新規作成
   const handleAddTag = async () => {
     if(!newTag) {
@@ -58,14 +50,14 @@ export default function AddCoodinations() {
       ]);
     if (insertError) {
       console.log(insertError);
+      alert("タグの登録に失敗しました")
       return;
     }
-    alert("タグを作成しました！")
     setNewTag("")
     setIsNewTag(!isNewTag)
   }
 
-  // タグをトグルする関数
+  // タグをトグル
   const toggleTag = (id) => {
     setTagsId((prev) => {
       if (prev.includes(id)) {
@@ -84,7 +76,7 @@ export default function AddCoodinations() {
           id,
           img_path
       `)
-      .in('id', clothes)
+      .in('id', clothesId)
     setSelectedClothes(data || [])
   }
 
@@ -99,12 +91,15 @@ export default function AddCoodinations() {
     return data.publicUrl
   }
 
+
+  // 新しいタグが作成されたらセット
   useEffect(() => {
     fetchTags()
   }, [isNewTag])
 
+  // 選択された服のプレビューをセット
   useEffect(() => {
-    if (clothes.length === 0) {
+    if (clothesId.length === 0) {
       setSelectedClothes([])
       return
     }
@@ -112,34 +107,43 @@ export default function AddCoodinations() {
   }, [isOpen])
 
 
-  // コーデを登録する関数
+  // コーデを登録
   const addCoordination = async () => {
+    if (clothesId.length < 2) {
+      alert("服を2枚以上選んでください");
+      return;
+    }
+    if (clothesId.length > 6) {
+      alert("登録できる服は6枚までです");
+      return;
+    }
+
     const { error } = await supabase.rpc("insert_coordination", {
       p_memo: memo,
       p_pin: isPin,
-      p_clothes: clothes,
+      p_clothes: clothesId,
       p_tags: tagsId
     });
     if (error) {
       console.error(error);
-      alert("失敗");
+      alert("登録に失敗しました");
       return;
     }
-    alert("成功");
+    router.push(`/add-coordinations/result`);
   };
 
   return (
     <>
       <h2>コーデ登録</h2>
 
-        <p>使用する服(6枚まで追加可能です)</p>
+        <p>使用する服(6枚まで)</p>
         <button onClick={() => setIsOpen(true)}>服を選択</button>
 
         {isOpen && (
           <div className="modal">
             <SelectClothesModal
-              clothes={clothes}
-              setClothes={setClothes}
+              clothes={clothesId}
+              setClothes={setClothesId}
               onClose={() => setIsOpen(false)}
             />
           </div>
@@ -151,7 +155,7 @@ export default function AddCoodinations() {
               <Image key={s.id} src={getImageUrl(s.img_path)} alt='' width={100} height={100} />
             ))
           ):(
-            <p>選択された服がありません</p>
+            null
           )
         }
 
@@ -186,7 +190,7 @@ export default function AddCoodinations() {
 
         <br></br>
         <button onClick={() => {
-          console.log(clothes)
+          console.log(clothesId)
           console.log(memo)
           console.log(tagsId)
           console.log(isPin)
