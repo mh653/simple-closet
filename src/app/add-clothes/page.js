@@ -74,12 +74,14 @@ export default function AddClothes() {
     const { error: uploadError } = await supabase.storage
       .from("clothes_image")
       .upload(fileName, resizedFile)
+
     if (uploadError) {
       console.log(uploadError);
       alert("画像アップロードに失敗しました")
       return;
     }
 
+    // 1回の .insert() は1つのSQLとして実行されるので原子的。途中だけ成功することはない。
     const { error: insertError } = await supabase
       .from("t_clothes")
       .insert([
@@ -89,6 +91,7 @@ export default function AddClothes() {
           memo: memo,
         },
       ]);
+
     if (insertError) {
       await supabase.storage.from("clothes_image").remove([fileName])
       console.log(insertError);

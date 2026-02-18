@@ -21,9 +21,6 @@ nav ul li {
   background-color: #eee;
 }
 
-
-
-
 .modal {
   position: fixed;
   inset: 0;
@@ -36,11 +33,18 @@ nav ul li {
   align-items: center;
   padding: 50px;
 }
-
 .modalContent {
   background: white;
   padding: 20px;
   border-radius: 10px;
+}
+.modalClothes {
+  background: white;
+  border: 1px solid black;
+  width: 80vw;
+  padding: 10px;
+  max-height: 80vh;   /* 画面の80%まで */
+  overflow-y: auto;   /* 縦スクロール */
 }
 
 

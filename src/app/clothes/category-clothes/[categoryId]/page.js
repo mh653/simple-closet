@@ -1,3 +1,6 @@
+// 一旦使わないことにしたページです
+
+
 import { supabase } from "@/lib/supabaseClient"
 import Image from "next/image";
 import Link from "next/link";

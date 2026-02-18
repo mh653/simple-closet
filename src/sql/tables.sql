@@ -181,9 +181,48 @@ begin
 end;
 $$;
 
--- バケットの削除ポリシーも追加
+-- 2/17 バケットの削除ポリシーも追加
 create policy "allow delete clothes image"
 on storage.objects
 for delete
 to anon
 using (bucket_id = 'clothes_image');
+
+
+-- 2/18 コーデ更新のトランザクション化のため、SQL Editeorで下記RPCを追加
+create or replace function update_coordination(
+  p_coode_id int,
+  p_memo text,
+  p_pin boolean,
+  p_clothes int[],
+  p_tags int[]
+)
+returns void
+language plpgsql
+as $$
+begin
+
+  -- メイン更新
+  update t_coordinations
+  set memo = p_memo,
+      pin = p_pin
+  where id = p_coode_id;
+
+  -- 服削除
+  delete from t_coode_clothes
+  where coode_id = p_coode_id;
+
+  -- 服insert
+  insert into t_coode_clothes (coode_id, clothes_id)
+  select p_coode_id, unnest(p_clothes);
+
+  -- タグ削除
+  delete from t_coode_tags
+  where coode_id = p_coode_id;
+
+  -- タグinsert
+  insert into t_coode_tags (coode_id, tag_id)
+  select p_coode_id, unnest(p_tags);
+
+end;
+$$;

@@ -128,7 +128,9 @@ export default function CoodeDetail() {
       <h3>トップ画面にピン留めする</h3>
       <p>{String(coode.pin)}</p>
 
-      <button>編集</button>
+      <Link href={`/coode-details/${coodeId}/edit-coodinations/${coodeId}`}>
+        <button>編集</button>
+      </Link>
       <button onClick={() => deleteCoordination(coodeId)}>削除</button>
 
     </>
