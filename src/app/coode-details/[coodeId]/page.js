@@ -109,8 +109,13 @@ export default function CoodeDetail() {
           <p key={tag.t_tags.id}>{tag.t_tags.name}</p>
       ))}
 
-      <h3>トップ画面にピン留めする</h3>
-      <p>{String(coode.pin)}</p>
+      <h3>トップ画面にピン留めする？</h3>
+        {coode.pin ? (
+            <p>はい</p>
+          ) : (
+            <p>いいえ</p>            
+          )
+        }
 
       <Link href={`/coode-details/${coodeId}/edit-coordinations/${coodeId}`}>
         <button>編集</button>

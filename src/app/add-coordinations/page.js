@@ -23,6 +23,15 @@ export default function AddCoodinations() {
   const [newTag, setNewTag] = useState("");
   const [isNewTag, setIsNewTag] = useState(false);
 
+  // ログイン判定
+  const [user, setUser] = useState(null);
+  const getUser = async () => {
+    const { data } = await supabase.auth.getUser();
+    setUser(data.user);
+  };
+  useEffect(() => {
+    getUser()
+  }, [])
 
   // タグ一覧を取得
   const fetchTags = async () => {
@@ -37,7 +46,11 @@ export default function AddCoodinations() {
 
   // タグを新規作成
   const handleAddTag = async () => {
-    if(!newTag) {
+    if (!user) {
+      alert("権限がありません（ログインしてください）");
+      return;
+    }
+    if(!newTag.trim()) {
       alert("作成するタグ名を入力してください")
       return
     }
@@ -109,6 +122,10 @@ export default function AddCoodinations() {
 
   // コーデを登録
   const addCoordination = async () => {
+    if (!user) {
+      alert("権限がありません（ログインしてください）");
+      return;
+    }
     if (clothesId.length < 2) {
       alert("服を2枚以上選んでください");
       return;
@@ -136,7 +153,7 @@ export default function AddCoodinations() {
     <>
       <h2>コーデ登録</h2>
 
-        <p>使用する服(6枚まで)</p>
+        <h3>使用する服(6枚まで)</h3>
         <button onClick={() => setIsOpen(true)}>服を選択</button>
 
         {isOpen && (
@@ -159,10 +176,10 @@ export default function AddCoodinations() {
           )
         }
 
-        <p>メモ</p>
+        <h3>メモ</h3>
         <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>
 
-        <p>タグ</p>
+        <h3>タグ</h3>
         {
           tags.length > 0 ? (
             tags.map((tag) => (
@@ -181,9 +198,8 @@ export default function AddCoodinations() {
         <br></br>
         <input type="text" placeholder="タグ名を入力" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
         <button onClick={() => handleAddTag()}>タグを作成</button>
-        <p>※ログイン時のみ作成可能です</p>
 
-        <p>トップ画面にピン留めする？</p>
+        <h3>トップ画面にピン留めする？</h3>
         <input type="radio" id="yes" name="ispin" value={true} onChange={(e) => setIsPin(e.target.value)}/>
         <label htmlFor="yes">する</label>
         <input type="radio" id="no" name="ispin" value={false} defaultChecked onChange={(e) => setIsPin(e.target.value)}/>
@@ -199,7 +215,8 @@ export default function AddCoodinations() {
 
         <br></br>
         <button onClick={() => addCoordination()}>登録</button>
-        <p>※ログイン時のみ登録可能です。ページ左上の歯車マークから、ポートフォリオに記載のIDとパスワードでログインして頂けます。</p>
+        <p>※登録・更新・削除はログイン時のみ可能です。ページ左上の歯車マークから、ポートフォリオに記載のIDとパスワードでログインしてぜひお試しください。</p>
+
 
     </>
   )

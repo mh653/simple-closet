@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabaseClient"
 import Image from "next/image";
 import SelectClothesModal from "@/app/ui/SelectClothesModal";
 import { useRouter, useParams } from "next/navigation";
+import Note from "@/app/ui/Note";
 
 export default function EditCoordinations() {
 
@@ -25,6 +26,15 @@ export default function EditCoordinations() {
   const [newTag, setNewTag] = useState("");
   const [isNewTag, setIsNewTag] = useState(false);
 
+  // ログイン判定
+  const [user, setUser] = useState(null);
+  const getUser = async () => {
+    const { data } = await supabase.auth.getUser();
+    setUser(data.user);
+  };
+  useEffect(() => {
+    getUser()
+  }, [])
 
   // タグ一覧を取得
   const fetchTags = async () => {
@@ -71,7 +81,11 @@ export default function EditCoordinations() {
 
   // タグを新規作成
   const handleAddTag = async () => {
-    if(!newTag) {
+    if (!user) {
+      alert("権限がありません（ログインしてください）");
+      return;
+    }
+    if(!newTag.trim()) {
       alert("作成するタグ名を入力してください")
       return
     }
@@ -148,6 +162,10 @@ export default function EditCoordinations() {
 
   // コーデ変更内容を登録
   const changeCoordination = async () => {
+    if (!user) {
+      alert("権限がありません（ログインしてください）");
+      return;
+    }
     if (clothesId.length < 2) {
       alert("服を2枚以上選んでください");
       return;
@@ -178,7 +196,7 @@ export default function EditCoordinations() {
       <button onClick={() => router.back()}>変更せず戻る</button>
       <h2>コーデ編集</h2>
 
-        <p>使用する服(6枚まで)</p>
+        <h3>使用する服(6枚まで)</h3>
         <button onClick={() => setIsOpen(true)}>服を選択</button>
 
         {isOpen && (
@@ -201,10 +219,10 @@ export default function EditCoordinations() {
           )
         }
 
-        <p>メモ</p>
+        <h3>メモ</h3>
         <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>
 
-        <p>タグ</p>
+        <h3>タグ</h3>
         {
           tags.length > 0 ? (
             tags.map((tag) => (
@@ -224,7 +242,7 @@ export default function EditCoordinations() {
         <input type="text" placeholder="タグ名を入力" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
         <button onClick={() => handleAddTag()}>タグを作成</button>
 
-        <p>トップ画面にピン留めする？</p>
+        <h3>トップ画面にピン留めする？</h3>
         <input type="radio" id="yes" name="ispin" checked={isPin === true} onChange={() => setIsPin(true)}/>
         <label htmlFor="yes">する</label>
         <input type="radio" id="no" name="ispin" checked={isPin === false} onChange={() => setIsPin(false)}/>
@@ -240,7 +258,8 @@ export default function EditCoordinations() {
 
         <br></br>
         <button onClick={() => changeCoordination()}>変更</button>
-        <br></br>
+
+        <Note />
 
     </>
   )

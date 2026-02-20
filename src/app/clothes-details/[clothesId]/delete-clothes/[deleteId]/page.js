@@ -2,14 +2,31 @@
 
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter, useParams } from "next/navigation";
+import { useState, useEffect } from "react"
+import Note from "@/app/ui/Note";
 
 export default function DeleteClothes() {
 
   const router = useRouter();
   const { deleteId } = useParams();
 
+  // ログイン判定
+  const [user, setUser] = useState(null);
+  const getUser = async () => {
+    const { data } = await supabase.auth.getUser();
+    setUser(data.user);
+  };
+  useEffect(() => {
+    getUser()
+  }, [])
+
   // 削除関数
   const deleteClothes = async (id) => {
+    if (!user) {
+      alert("権限がありません（ログインしてください）");
+      return;
+    }
+
     const { data: imgPath, error } = await supabase
       .rpc("delete_clothes_with_image", {
         p_clothes_id: Number(id)
@@ -49,6 +66,7 @@ export default function DeleteClothes() {
       <br></br>
       <button onClick={() => router.back()}>いいえ</button>
       <button onClick={() => deleteClothes(deleteId)}>はい</button>
+      <Note />
     </div>
   );
 }

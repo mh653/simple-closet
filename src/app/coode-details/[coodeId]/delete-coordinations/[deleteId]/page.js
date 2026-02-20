@@ -2,14 +2,30 @@
 
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter, useParams } from "next/navigation";
+import { useState, useEffect } from "react"
+import Note from "@/app/ui/Note";
 
 export default function DeleteCoordination() {
 
   const router = useRouter();
   const { deleteId } = useParams();
 
+  // ログイン判定
+  const [user, setUser] = useState(null);
+  const getUser = async () => {
+    const { data } = await supabase.auth.getUser();
+    setUser(data.user);
+  };
+  useEffect(() => {
+    getUser()
+  }, [])
+
   // 削除関数
   const deleteCoordination = async (id) => {
+    if (!user) {
+      alert("権限がありません（ログインしてください）");
+      return;
+    }
     const { error } = await supabase
       .from("t_coordinations")
       .delete()
@@ -32,6 +48,8 @@ export default function DeleteCoordination() {
       <br></br>
       <button onClick={() => router.back()}>いいえ</button>
       <button onClick={() => deleteCoordination(deleteId)}>はい</button>
+
+      <Note />
     </div>
   );
 }

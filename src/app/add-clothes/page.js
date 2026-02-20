@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useRef } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient"
 import FileResizer from "react-image-file-resizer";
+import Note from "../ui/Note";
 // import heic2any from "heic2any";
 
 export default function AddClothes() {
@@ -13,6 +14,16 @@ export default function AddClothes() {
   const[file, setFile] = useState(null);
   const[categoryId, setCategoryId] = useState(null);
   const[memo, setMemo] = useState("");
+
+  // ログイン判定
+  const [user, setUser] = useState(null);
+  const getUser = async () => {
+    const { data } = await supabase.auth.getUser();
+    setUser(data.user);
+  };
+  useEffect(() => {
+    getUser()
+  }, [])
 
   // ライブラリのリサイズ関数
   const resizeImage = (file) =>
@@ -42,6 +53,10 @@ export default function AddClothes() {
   // resolve(resizedFile) が呼ばれた時点で Promise が完了し、次の処理に進める
 
   const addClothes = async () => {
+    if (!user) {
+      alert("権限がありません（ログインしてください）");
+      return;
+    }
     if(!file) {
       alert("画像を選択してください")
       return
@@ -111,7 +126,7 @@ export default function AddClothes() {
 
         <h3>カテゴリ（必須）</h3>
         <select onChange={(e) => setCategoryId(Number(e.target.value))}>
-          <option value={""}>選択してください</option>
+          <option value={""}>--選択してください--</option>
           <option value={1}>トップス - 半袖/袖なし</option>
           <option value={2}>トップス - 長袖</option>
           <option value={3}>トップス - その他</option>
@@ -129,7 +144,7 @@ export default function AddClothes() {
         <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>
 
         <button onClick={() => addClothes()}>登録</button>
-        <p>※ログイン時のみ登録可能です。ページ左上の歯車マークから、ポートフォリオに記載のIDとパスワードでログインして頂けます。</p>
+        <Note />
 
     </>
   )

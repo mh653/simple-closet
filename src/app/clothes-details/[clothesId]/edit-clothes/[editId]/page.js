@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { supabase } from "@/lib/supabaseClient"
 import Image from "next/image";
 import { useRouter, useParams } from "next/navigation";
+import Note from "@/app/ui/Note";
 
 export default function EditCoordinations() {
 
@@ -15,6 +16,16 @@ export default function EditCoordinations() {
   const [memo, setMemo] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [imgPath, setImgPath] = useState(null);
+
+  // ログイン判定
+  const [user, setUser] = useState(null);
+  const getUser = async () => {
+    const { data } = await supabase.auth.getUser();
+    setUser(data.user);
+  };
+  useEffect(() => {
+    getUser()
+  }, [])
 
   // 編集前状態を取得
   const fetchDefault = async () => {
@@ -53,6 +64,10 @@ export default function EditCoordinations() {
 
   // 変更内容を登録
   const changeClothes = async () => {
+    if (!user) {
+      alert("権限がありません（ログインしてください）");
+      return;
+    }
     if (!categoryId) {
       alert("カテゴリは登録必須です");
       return;
@@ -117,8 +132,8 @@ export default function EditCoordinations() {
 
         <br></br>
         <button onClick={() => changeClothes()}>変更</button>
-        <br></br>
 
+        <Note />
     </>
   )
 }

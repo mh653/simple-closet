@@ -49,7 +49,7 @@ export default function TagSettings() {
       alert("権限がありません（ログインしてください）");
       return;
     }
-    if(!newTag) {
+    if(!newTag.trim()) {
       alert("作成するタグ名を入力してください")
       return
     }
