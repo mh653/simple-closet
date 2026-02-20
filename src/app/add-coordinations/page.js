@@ -181,6 +181,7 @@ export default function AddCoodinations() {
         <br></br>
         <input type="text" placeholder="タグ名を入力" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
         <button onClick={() => handleAddTag()}>タグを作成</button>
+        <p>※ログイン時のみ作成可能です</p>
 
         <p>トップ画面にピン留めする？</p>
         <input type="radio" id="yes" name="ispin" value={true} onChange={(e) => setIsPin(e.target.value)}/>
@@ -198,7 +199,7 @@ export default function AddCoodinations() {
 
         <br></br>
         <button onClick={() => addCoordination()}>登録</button>
-        <br></br>
+        <p>※ログイン時のみ登録可能です。ページ左上の歯車マークから、ポートフォリオに記載のIDとパスワードでログインして頂けます。</p>
 
     </>
   )

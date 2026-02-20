@@ -106,7 +106,7 @@ export default function AddClothes() {
       <h2>服の登録</h2>
 
         <h3>服の写真（必須）</h3>
-        <p>※JPEGまたはHEICのみアップロード可能です</p>
+        <p>※JPEGのみアップロード可能です</p>
         <input type="file" accept="image/jpeg,image/heic,image/heif" onChange={(e) => setFile(e.target.files[0])}/>
 
         <h3>カテゴリ（必須）</h3>
@@ -129,6 +129,7 @@ export default function AddClothes() {
         <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>
 
         <button onClick={() => addClothes()}>登録</button>
+        <p>※ログイン時のみ登録可能です。ページ左上の歯車マークから、ポートフォリオに記載のIDとパスワードでログインして頂けます。</p>
 
     </>
   )

@@ -2,8 +2,44 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function Header() {
+
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [user, setUser] = useState(null);
+
+  const getUser = async () => {
+    const { data } = await supabase.auth.getUser();
+    setUser(data.user);
+  };
+
+  const login = async () => {
+    const {error} = await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
+    if (error) {
+      alert("ログイン失敗")
+      return;
+    }
+    alert("ログインしました")
+    getUser()
+    setEmail("")
+    setPassword("")
+  }
+
+  const logout = async () => {
+    const {error} = await supabase.auth.signOut()
+    if (error) {
+      alert("ログアウト失敗")
+      return;
+    }
+    alert("ログアウトしました")
+    getUser()
+  }
+
 
   const fetchWeather = async () => {
     if(!navigator.geolocation) {
@@ -30,15 +66,19 @@ export default function Header() {
     <div>
       <h2>設定</h2>
 
-      <h3>管理者ログイン</h3>
+      <h3>ログイン</h3>
       <p>デフォルトでは閲覧のみ可能です。</p>
-      <p>ポートフォリオサイトに記載のID,パスワードでログイン頂くと、登録・削除のアクションが可能になります。</p>
+      <p>ポートフォリオサイトに記載のIDとパスワードでログインして頂くと、登録・削除のアクションが可能になります。</p>
       <p>定期的にデータベースをリセットしていますので、お気軽にお試しください。</p>
-      <label><p>ID：</p><input type="text"></input></label>
-      <label><p>パスワード：</p><input type="password"></input></label>
+      <label><p>ID：</p><input type="text" onChange={(e) => setEmail(e.target.value)} value={email}></input></label>
+      <label><p>パスワード：</p><input type="password" onChange={(e) => setPassword(e.target.value)} value={password}></input></label>
       <br></br>
-      <button>ログイン</button>
 
+      {user ? (
+        <button onClick={() => logout()}>ログアウト</button>
+      ) : (
+        <button onClick={() => login()}>ログイン</button>
+      )}
 
       <h3>天気の地点</h3>
       <p>初期設定で東京の天気を表示しています。</p>

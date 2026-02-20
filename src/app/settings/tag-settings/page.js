@@ -62,18 +62,22 @@ export default function TagSettings() {
       alert("タグ名を入力してください");
       return;
     }
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from("t_tags")
       .update({
-          name: editTag,
-        })
-      .eq('id', editingId);
+        name: editTag,
+      })
+      .eq("id", editingId)
+      .select();
     if (error) {
       console.error(error);
       alert("登録に失敗しました");
       return;
     }
-    alert("タグ名を変更しました");
+    if (!data || data.length === 0) {
+      alert("権限がありません（ログインしてください）");
+      return;
+    }
     setEditingId(null)
     setEditTag("")
     fetchTags()
@@ -81,13 +85,18 @@ export default function TagSettings() {
 
   // タグを削除
   const handleDeleteTag = async (id) => {
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from("t_tags")
       .delete()
-      .eq("id", id);
+      .eq("id", id)
+      .select();
     if (error) {
       console.error(error);
       alert("削除失敗");
+      return;
+    }
+    if (!data || data.length === 0) {
+      alert("権限がありません（ログインしてください）");
       return;
     }
     alert("タグを削除しました");
@@ -98,6 +107,7 @@ export default function TagSettings() {
     <>
       <button onClick={() => router.push("/settings")}>戻る</button>
       <h2>タグの編集</h2>
+      <p>※ログイン時のみ操作可能です</p>
         <h3>タグを新規作成する</h3>
         <input type="text" placeholder="タグ名を入力" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
         <button onClick={() => handleAddTag()}>作成</button>
