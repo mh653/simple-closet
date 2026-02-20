@@ -17,6 +17,20 @@ export default function TagSettings() {
   const [editingId, setEditingId] = useState(null)
   const [editTag, setEditTag] = useState("")
 
+  // let userData = null;
+  // const getUser = async () => {
+  //   userData = await supabase.auth.getUser();
+  // };
+
+  // ログイン判定
+  const [user, setUser] = useState(null);
+  const getUser = async () => {
+    const { data } = await supabase.auth.getUser();
+    setUser(data.user);
+  };
+  useEffect(() => {
+    getUser()
+  }, [])
 
   // タグ一覧を取得
   const fetchTags = async () => {
@@ -31,6 +45,10 @@ export default function TagSettings() {
 
   // タグを新規作成
   const handleAddTag = async () => {
+    if (!user) {
+      alert("権限がありません（ログインしてください）");
+      return;
+    }
     if(!newTag) {
       alert("作成するタグ名を入力してください")
       return
@@ -58,11 +76,15 @@ export default function TagSettings() {
 
   // 変更を保存
   const handleUpdateTag = async () => {
+    if (!user) {
+      alert("権限がありません（ログインしてください）");
+      return;
+    }
     if (!editTag.trim()) {
       alert("タグ名を入力してください");
       return;
     }
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("t_tags")
       .update({
         name: editTag,
@@ -74,10 +96,6 @@ export default function TagSettings() {
       alert("登録に失敗しました");
       return;
     }
-    if (!data || data.length === 0) {
-      alert("権限がありません（ログインしてください）");
-      return;
-    }
     setEditingId(null)
     setEditTag("")
     fetchTags()
@@ -85,7 +103,11 @@ export default function TagSettings() {
 
   // タグを削除
   const handleDeleteTag = async (id) => {
-    const { data, error } = await supabase
+    if (!user) {
+      alert("権限がありません（ログインしてください）");
+      return;
+    }
+    const { error } = await supabase
       .from("t_tags")
       .delete()
       .eq("id", id)
@@ -93,10 +115,6 @@ export default function TagSettings() {
     if (error) {
       console.error(error);
       alert("削除失敗");
-      return;
-    }
-    if (!data || data.length === 0) {
-      alert("権限がありません（ログインしてください）");
       return;
     }
     alert("タグを削除しました");

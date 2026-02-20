@@ -8,13 +8,19 @@ export default function Header() {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
 
+  // ログイン判定
+  const [user, setUser] = useState(null);
   const getUser = async () => {
     const { data } = await supabase.auth.getUser();
     setUser(data.user);
   };
+  useEffect(() => {
+    getUser()
+  }, [])
 
+  // ログイン
   const login = async () => {
     const {error} = await supabase.auth.signInWithPassword({
       email,
@@ -30,6 +36,7 @@ export default function Header() {
     setPassword("")
   }
 
+  // ログアウト
   const logout = async () => {
     const {error} = await supabase.auth.signOut()
     if (error) {
@@ -40,12 +47,17 @@ export default function Header() {
     getUser()
   }
 
-
-  const fetchWeather = async () => {
+  // 位置情報を取得
+  const fetchLocation = async () => {
     if(!navigator.geolocation) {
       alert("このブラウザは位置情報に対応していません");
       return;
     };
+    // 連打防止
+    if(loading) {
+      return;
+    };
+    setLoading(true)
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         // 位置情報の取得に成功した時
@@ -53,11 +65,13 @@ export default function Header() {
         // console.log( latitude, longitude );
         localStorage.setItem("weatherQuery", `${latitude},${longitude}`);
         alert("天気の地点を変更しました！")
+        setLoading(false)
       },
       (error) => {
-        // 位置情報の取得に失敗した時に呼ばれる
+        // 位置情報の取得に失敗した時
         console.log(error);
         alert("位置情報の取得に失敗しました")
+        setLoading(false)
       }
     )
   }
@@ -70,21 +84,28 @@ export default function Header() {
       <p>デフォルトでは閲覧のみ可能です。</p>
       <p>ポートフォリオサイトに記載のIDとパスワードでログインして頂くと、登録・削除のアクションが可能になります。</p>
       <p>定期的にデータベースをリセットしていますので、お気軽にお試しください。</p>
-      <label><p>ID：</p><input type="text" onChange={(e) => setEmail(e.target.value)} value={email}></input></label>
-      <label><p>パスワード：</p><input type="password" onChange={(e) => setPassword(e.target.value)} value={password}></input></label>
-      <br></br>
 
       {user ? (
-        <button onClick={() => logout()}>ログアウト</button>
+        <button onClick={() => logout()}>ログアウトする</button>
       ) : (
-        <button onClick={() => login()}>ログイン</button>
+        <>
+          <label><p>ID：</p><input type="text" onChange={(e) => setEmail(e.target.value)} value={email}></input></label>
+          <label><p>パスワード：</p><input type="password" onChange={(e) => setPassword(e.target.value)} value={password}></input></label>
+          <br></br>
+          <button onClick={() => login()}>ログイン</button>        
+        </>
       )}
 
       <h3>天気の地点</h3>
       <p>初期設定で東京の天気を表示しています。</p>
       <p>下記ボタンで位置情報を取得し、現在地に変更頂けます。</p>
       <p>（位置情報はローカルストレージに保存されます）</p>
-      <button onClick={() => fetchWeather()}>位置情報を取得する</button>
+
+      {loading ? (
+        <button disabled>取得中…</button>
+      ) : (
+        <button onClick={() => fetchLocation()}>位置情報を取得する</button>
+      )}
 
       <h3>タグの編集</h3>
       <p>下記ボタンからタグを新規作成・編集・削除して頂けます。</p>
