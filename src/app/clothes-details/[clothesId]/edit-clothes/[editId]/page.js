@@ -91,7 +91,7 @@ export default function EditCoordinations() {
 
   return (
     <>
-      <button onClick={() => router.back()}>変更せず戻る</button>
+      <button onClick={() => router.push(`/clothes-details/${clothesId}`)}>変更せず戻る</button>
       <h2>服の編集</h2>
 
         <p>ID:{clothesId}</p>

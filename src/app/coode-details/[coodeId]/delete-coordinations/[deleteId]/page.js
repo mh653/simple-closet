@@ -46,7 +46,7 @@ export default function DeleteCoordination() {
       <h2>本当に削除しますか？</h2>
       <p>削除したコーディネートは元に戻せません</p>
       <br></br>
-      <button onClick={() => router.back()}>いいえ</button>
+      <button onClick={() => router.push(`/coode-details/${deleteId}`)}>いいえ</button>
       <button onClick={() => deleteCoordination(deleteId)}>はい</button>
 
       <Note />

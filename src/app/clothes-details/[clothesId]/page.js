@@ -1,50 +1,35 @@
-'use client'
-
 import { supabase } from "@/lib/supabaseClient";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
+import BackButton from "@/app/ui/BackButton";
 
-export default function ClothesDetail() {
+export default async function ClothesDetail(props) {
 
-  const router = useRouter();
-  const { clothesId } = useParams();
-  const [clothes, setClothes] = useState(null);
+    // パラメータ受け取り
+  const params = await props.params
+  const clothesId = params.clothesId
 
-  // const [editMode, setEditMode] = useState(false);
-  // const [memo, setMemo] = useState(clothes.memo);
-
-  useEffect(() => {
-    if (!clothesId) return;
-    fetchClothes()
-  }, [clothesId])
-
-
-  // 服の情報を取得する関数
-  const fetchClothes = async () => {
-    const { data } = await supabase
-      .from('t_clothes')
-      .select(`
-        *,
-        t_categories(name),
-        t_coode_clothes(
-          t_coordinations(
-            id,
-            memo,
-            t_coode_clothes(
-              t_clothes(
-                id,
-                img_path
-              )
+  // 服の情報を取得する
+  const { data:clothes } = await supabase
+    .from('t_clothes')
+    .select(`
+      *,
+      t_categories(name),
+      t_coode_clothes(
+        t_coordinations(
+          id,
+          memo,
+          t_coode_clothes(
+            t_clothes(
+              id,
+              img_path
             )
           )
         )
-      `)
-      .eq('id', clothesId)
-      .single()
-    setClothes(data || null)
-  }
+      )
+    `)
+    .eq('id', clothesId)
+    .single()
 
   // 返り値
   // {
@@ -104,18 +89,9 @@ export default function ClothesDetail() {
     return data.publicUrl
   }
 
-  // fechClothes成功前に本来のDOMを描画しようとするとエラーになるので
-  if (!clothes) {
-    return (
-      <>
-        <p>Loading...</p>
-      </>
-    );
-  }
-
   return (
     <>
-      <button onClick={() => router.back()}>戻る</button>
+      <BackButton />
 
       <h2>服の詳細</h2>
 
@@ -159,10 +135,178 @@ export default function ClothesDetail() {
         <button>削除</button>
       </Link>
 
-
     </>
   );
 }
+
+
+
+
+// 'use client'
+
+// import { supabase } from "@/lib/supabaseClient";
+// import Image from "next/image";
+// import Link from "next/link";
+// import { useState, useEffect } from "react";
+// import { useRouter, useParams } from "next/navigation";
+
+// export default function ClothesDetail() {
+
+//   const router = useRouter();
+//   const { clothesId } = useParams();
+//   const [clothes, setClothes] = useState(null);
+
+//   // const [editMode, setEditMode] = useState(false);
+//   // const [memo, setMemo] = useState(clothes.memo);
+
+//   useEffect(() => {
+//     if (!clothesId) return;
+//     fetchClothes()
+//   }, [clothesId])
+
+
+//   // 服の情報を取得する関数
+//   const fetchClothes = async () => {
+//     const { data } = await supabase
+//       .from('t_clothes')
+//       .select(`
+//         *,
+//         t_categories(name),
+//         t_coode_clothes(
+//           t_coordinations(
+//             id,
+//             memo,
+//             t_coode_clothes(
+//               t_clothes(
+//                 id,
+//                 img_path
+//               )
+//             )
+//           )
+//         )
+//       `)
+//       .eq('id', clothesId)
+//       .single()
+//     setClothes(data || null)
+//   }
+
+//   // 返り値
+//   // {
+//   //   id: 2,
+//   //   created_at: "（登録時刻）",
+//   //   img_path: "2.jpg",
+//   //   category: 4,
+//   //   memo: "家で洗ったら色落ちした。ウエストが苦しいので食べ放題には不向き。",
+
+//   //   t_categories: {
+//   //     name: "ボトムス"
+//   //   },
+
+//   //   t_code_clothes: [
+//   //     {
+//   //       t_coordinations: {
+//   //         id: 1,
+//   //         memo: "ヒートテックは紺がベスト。",
+//   //         t_code_clothes: [
+//   //           {
+//   //             t_clothes: { id: 1, img_path: "1.jpg" }
+//   //           },
+//   //           {
+//   //             t_clothes: { id: 2, img_path: "2.jpg" }
+//   //           },
+//   //           {
+//   //             t_clothes: { id: 3, img_path: "3.jpg" }
+//   //           }
+//   //         ]
+//   //       }
+//   //     },
+//   //     {
+//   //       t_coordinations: {
+//   //         id: 2,
+//   //         memo: "ポンチョが無いと地味。温度調節しにくい。",
+//   //         t_code_clothes: [
+//   //           {
+//   //             t_clothes: { id: 2, img_path: "2.jpg" }
+//   //           },
+//   //           {
+//   //             t_clothes: { id: 4, img_path: "4.jpg" }
+//   //           }
+//   //         ]
+//   //       }
+//   //     }
+//   //   ]
+//   // }
+
+//   // ストレージの画像URLを取得する関数
+//   const getImageUrl = (imgPath) => {
+//     if(!imgPath) return null;
+
+//     const { data } = supabase.storage
+//       .from('clothes_image')
+//       .getPublicUrl(imgPath)
+
+//     return data.publicUrl
+//   }
+
+//   // fechClothes成功前に本来のDOMを描画しようとするとエラーになるので
+//   if (!clothes) {
+//     return (
+//       <>
+//         <p>Loading...</p>
+//       </>
+//     );
+//   }
+
+//   return (
+//     <>
+//       <button onClick={() => router.back()}>戻る</button>
+
+//       <h2>服の詳細</h2>
+
+//       <p>ID:{clothesId}</p>
+
+//       <Image src={getImageUrl(clothes.img_path)} alt='' width={100} height={100} />
+
+//       <h3>メモ</h3>
+//       <p>{clothes.memo}</p>
+
+
+//       <h3>カテゴリ</h3>
+//       <p>{clothes.t_categories.name}</p>
+
+//       <h3>使用コーデ</h3>
+//         {clothes.t_coode_clothes?.map((cc) => {
+//           const coode = cc.t_coordinations;
+//           if (!coode) return null;
+
+//           return (
+//             <Link key={coode.id} href={`/coode-details/${coode.id}`}>
+//               <div>
+//                 {coode.t_coode_clothes?.map((cc2) => (
+//                   <Image
+//                     key={cc2.t_clothes.id}
+//                     src={getImageUrl(cc2.t_clothes.img_path)}
+//                     alt=""
+//                     width={100}
+//                     height={100}
+//                   />
+//                 ))}
+//               </div>
+//             </Link>
+//           );
+//         })}
+
+//       <Link href={`/clothes-details/${clothesId}/edit-clothes/${clothesId}`}>
+//         <button>編集</button>
+//       </Link>
+//       <Link href={`/clothes-details/${clothesId}/delete-clothes/${clothesId}`}>
+//         <button>削除</button>
+//       </Link>
+
+
+//     </>
+//   );
+// }
 
 
 

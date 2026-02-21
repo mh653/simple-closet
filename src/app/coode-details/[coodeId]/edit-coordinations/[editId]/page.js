@@ -193,7 +193,7 @@ export default function EditCoordinations() {
 
   return (
     <>
-      <button onClick={() => router.back()}>変更せず戻る</button>
+      <button onClick={() => router.push(`/coode-details/${coodeId}`)}>変更せず戻る</button>
       <h2>コーデ編集</h2>
 
         <h3>使用する服(6枚まで)</h3>
@@ -249,12 +249,12 @@ export default function EditCoordinations() {
         <label htmlFor="no">しない</label>
 
         <br></br>
-        <button onClick={() => {
+        {/* <button onClick={() => {
           console.log(clothesId)
           console.log(memo)
           console.log(tagsId)
           console.log(isPin)
-        }}>確認</button>
+        }}>確認</button> */}
 
         <br></br>
         <button onClick={() => changeCoordination()}>変更</button>

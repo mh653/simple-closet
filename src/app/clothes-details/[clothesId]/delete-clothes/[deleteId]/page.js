@@ -64,7 +64,7 @@ export default function DeleteClothes() {
       <h2>本当に削除しますか？</h2>
       <p>削除した服は元に戻せません</p>
       <br></br>
-      <button onClick={() => router.back()}>いいえ</button>
+      <button onClick={() => router.push(`/clothes-details/${deleteId}`)}>いいえ</button>
       <button onClick={() => deleteClothes(deleteId)}>はい</button>
       <Note />
     </div>
