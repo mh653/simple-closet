@@ -31,16 +31,19 @@ nav ul li {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 50px;
 }
 .modalContent {
   background: white;
+  height: 80vh;
+  width: 90vw;
+  margin: 5vh;
   padding: 20px;
   border-radius: 10px;
 }
 .modalClothes {
   background: white;
   border: 1px solid black;
+  height: 60vh;
   width: 80vw;
   padding: 10px;
   max-height: 80vh;   /* 画面の80%まで */

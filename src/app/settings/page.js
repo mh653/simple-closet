@@ -12,7 +12,7 @@ export default function Header() {
   const [loading, setLoading] = useState(false);
 
   // ログイン判定
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined);
   const getUser = async () => {
     const { data } = await supabase.auth.getUser();
     setUser(data.user);
@@ -74,6 +74,10 @@ export default function Header() {
         setLoading(false)
       }
     )
+  }
+
+  if (user === undefined) {
+    return <p>読み込み中...</p>;
   }
 
   return (
