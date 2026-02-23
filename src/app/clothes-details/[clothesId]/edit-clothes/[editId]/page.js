@@ -127,13 +127,6 @@ export default function EditCoordinations() {
         </select>
 
         <br></br>
-        <button onClick={() => {
-          console.log(clothesId)
-          console.log(memo)
-          console.log(categoryId)
-        }}>確認</button>
-
-        <br></br>
         <button onClick={() => changeClothes()}>変更</button>
 
         <Note />
