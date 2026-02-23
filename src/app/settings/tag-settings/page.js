@@ -1,11 +1,10 @@
 'use client'
 
-import { useState, useEffect } from "react"
 import { supabase } from "@/lib/supabaseClient"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 
 export default function TagSettings() {
-
   // ルータ
   const router = useRouter();
 
@@ -13,14 +12,9 @@ export default function TagSettings() {
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState("");
   const [isNewTag, setIsNewTag] = useState(false);
-
+  // タグ編集用
   const [editingId, setEditingId] = useState(null)
   const [editTag, setEditTag] = useState("")
-
-  // let userData = null;
-  // const getUser = async () => {
-  //   userData = await supabase.auth.getUser();
-  // };
 
   // ログイン判定
   const [user, setUser] = useState(null);
@@ -74,7 +68,7 @@ export default function TagSettings() {
     fetchTags()
   }, [isNewTag])
 
-  // 変更を保存
+  // 編集内容を保存
   const handleUpdateTag = async () => {
     if (!user) {
       alert("権限がありません（ログインしてください）");

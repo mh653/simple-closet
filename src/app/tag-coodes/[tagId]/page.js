@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function tagCoode(props) {
-  
   // パラメータ受け取り
   const params = await props.params
   const tagId = params.tagId
@@ -38,27 +37,6 @@ export default async function tagCoode(props) {
       )
     `)
     .eq('t_coode_tags.tags_id', tagId)
-
-  // 返ってくるデータ構造
-  // [
-  //   {
-  //     id: 1,
-  //     memo: "...",
-  //     t_coode_clothes: [
-  //       {
-  //         t_clothes: {
-  //           img_path: "1.jpg"
-  //         }
-  //       },
-  //       {
-  //         t_clothes: {
-  //           id: "2"
-  //           img_path: "2.jpg"
-  //         }
-  //       }
-  //     ]
-  //   }
-  // ]
 
   // ストレージの画像URLを取得する関数
   const getImageUrl = (imgPath) => {
@@ -95,32 +73,28 @@ export default async function tagCoode(props) {
         ))
       )}
 
-
-      {/* {coodes.map((c) => (
-
-        <Link key={c.id} href={`/coode-details/${c.id}?from=${currentPath}`}>
-          <div>
-            <p>コーデID:{c.id}</p>
-
-            {c.t_coode_clothes.map((item) => (
-                <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
-            ))}
-
-          </div>
-        </Link>
-
-        // <Link key={c.id} href={`/coode-details/${c.id}?from=${encodeURIComponent(currentPath)}`}>
-        //   <div>
-        //     <p>コーデID:{c.id}</p>
-
-        //     {c.t_coode_clothes.map((item) => (
-        //         <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
-        //     ))}
-
-        //   </div>
-        // </Link>
-
-      ))} */}
     </>
   )
 }
+
+
+// supabase返り値の例
+// [
+//   {
+//     id: 1,
+//     memo: "...",
+//     t_coode_clothes: [
+//       {
+//         t_clothes: {
+//           img_path: "1.jpg"
+//         }
+//       },
+//       {
+//         t_clothes: {
+//           id: "2"
+//           img_path: "2.jpg"
+//         }
+//       }
+//     ]
+//   }
+// ]

@@ -1,26 +1,28 @@
 'use client'
 
-import { useState, useEffect } from "react"
 import { supabase } from "@/lib/supabaseClient"
+import { useState, useEffect } from "react"
+import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 import SelectClothesModal from "@/app/ui/SelectClothesModal";
-import { useRouter, useParams } from "next/navigation";
 import Note from "@/app/ui/Note";
 
 export default function EditCoordinations() {
-
   // ルータ
   const router = useRouter();
   // パラメータ取得
   const { coodeId } = useParams();
+
   // 登録内容
   const [clothesId, setClothesId] = useState([]);
   const [memo, setMemo] = useState("");
   const [tagsId, setTagsId] = useState([]);
   const [isPin, setIsPin] = useState(false);
-  // 服
+
+  // 服（アイテム）
   const [isOpen, setIsOpen] = useState(false)
   const [selectedClothes, setSelectedClothes] = useState([]);
+
   // タグ
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState("");
@@ -188,20 +190,18 @@ export default function EditCoordinations() {
       return;
     }
     alert("更新完了しました！");
-    // router.push(`/coode-details/${coodeId}`);
     router.back();
     router.refresh()
   };
 
   return (
     <>
-      {/* <button onClick={() => router.push(`/coode-details/${coodeId}`)}>変更せず戻る</button> */}
       <button onClick={() => router.back()}>変更せず戻る</button>
       <h2>コーデ編集</h2>
 
         <h3>使用アイテム(6点まで)</h3>
-        <button onClick={() => setIsOpen(true)}>アイテムを選択</button>
 
+        <button onClick={() => setIsOpen(true)}>アイテムを選択</button>
         {isOpen && (
           <div className="modal">
             <SelectClothesModal
@@ -250,16 +250,8 @@ export default function EditCoordinations() {
         <label htmlFor="yes">する</label>
         <input type="radio" id="no" name="ispin" checked={isPin === false} onChange={() => setIsPin(false)}/>
         <label htmlFor="no">しない</label>
-
         <br></br>
-        {/* <button onClick={() => {
-          console.log(clothesId)
-          console.log(memo)
-          console.log(tagsId)
-          console.log(isPin)
-        }}>確認</button> */}
-
-        <br></br>
+        
         <button onClick={() => changeCoordination()}>変更</button>
 
         <Note />

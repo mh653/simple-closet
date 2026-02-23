@@ -7,11 +7,11 @@ import { useRouter, useParams } from "next/navigation";
 import Note from "@/app/ui/Note";
 
 export default function EditCoordinations() {
-
   // ルータ
   const router = useRouter();
   // パラメータ取得
   const { clothesId } = useParams();
+
   // 登録内容
   const [memo, setMemo] = useState("");
   const [categoryId, setCategoryId] = useState("");

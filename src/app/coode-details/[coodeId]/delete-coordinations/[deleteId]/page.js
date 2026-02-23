@@ -1,15 +1,15 @@
 'use client'
 
 import { supabase } from "@/lib/supabaseClient";
-import { useRouter, useParams, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react"
+import { useRouter, useParams, useSearchParams } from "next/navigation";
 import Note from "@/app/ui/Note";
 
 export default function DeleteCoordination() {
-
+  // ルータ
   const router = useRouter();
+  // パラメータ取得
   const { deleteId } = useParams();
-
   // from受け取り
   const searchParams = useSearchParams();
   const from = searchParams.get("from")
@@ -42,12 +42,8 @@ export default function DeleteCoordination() {
     }
 
     alert("コーディネートを削除しました");
-    // router.push("/coordinations")
-    // router.push(searchParams)
     if (from) {
       router.push(from)
-      // router.push(decodeURIComponent(from))
-      // router.replace(from)
     } else {
       router.push("/")
     }
@@ -58,7 +54,6 @@ export default function DeleteCoordination() {
       <h2>本当に削除しますか？</h2>
       <p>削除したコーディネートは元に戻せません</p>
       <br></br>
-      {/* <button onClick={() => router.push(`/coode-details/${deleteId}`)}>いいえ</button> */}
       <button onClick={() => router.back()}>いいえ</button>
       <button onClick={() => deleteCoordination(deleteId)}>はい</button>
 

@@ -1,5 +1,3 @@
--- ※2/13　GUIからcodeをcoodeに変更
-
 -- =========================================
 -- t_categories（固定マスター）
 -- =========================================
@@ -106,40 +104,153 @@ insert into t_coode_tags (coode_id, tags_id) values
 
 
 -- =========================================
--- RLS 個人用
--- =========================================
-alter table t_clothes enable row level security;
-alter table t_tags enable row level security;
-alter table t_coordinations enable row level security;
-alter table t_coode_clothes enable row level security;
-alter table t_coode_tags enable row level security;
-
-create policy "allow all clothes" on t_clothes for all using (true) with check (true);
-create policy "allow all tags" on t_tags for all using (true) with check (true);
-create policy "allow all coord" on t_coordinations for all using (true) with check (true);
-create policy "allow all coode_clothes" on t_coode_clothes for all using (true) with check (true);
-create policy "allow all coode_tags" on t_coode_tags for all using (true) with check (true);
-
-
-
-
--- =========================================
--- バケット作成（public）
+-- バケット（public）
 -- デモ画像4枚はGUIで追加
 -- =========================================
 insert into storage.buckets (id, name, public)
 values ('clothes_image', 'clothes_image', true)
 on conflict (id) do nothing;
 
+
+-- =========================================
+-- ポリシー
+-- =========================================
+-- 読み取りは誰でもOK
+create policy "public read clothes"
+on t_clothes
+for select
+using (true);
+
+create policy "public read tags"
+on t_tags
+for select
+using (true);
+
+create policy "public read coord"
+on t_coordinations
+for select
+using (true);
+
+create policy "public read coode_clothes"
+on t_coode_clothes
+for select
+using (true);
+
+create policy "public read coode_tags"
+on t_coode_tags
+for select
+using (true);
+
+-- 書き込みはログイン時のみ
+-- 服（アイテム）
+create policy "auth insert clothes"
+on t_clothes
+for insert
+with check (auth.uid() is not null);
+
+create policy "auth update clothes"
+on t_clothes
+for update
+using (auth.uid() is not null);
+
+create policy "auth delete clothes"
+on t_clothes
+for delete
+using (auth.uid() is not null);
+
+-- タグ
+create policy "auth insert tags"
+on t_tags
+for insert
+with check (auth.uid() is not null);
+
+create policy "auth update tags"
+on t_tags
+for update
+using (auth.uid() is not null);
+
+create policy "auth delete tags"
+on t_tags
+for delete
+using (auth.uid() is not null);
+
+-- コーデ
+create policy "auth insert coordinations"
+on t_coordinations
+for insert
+with check (auth.uid() is not null);
+
+create policy "auth update coordinations"
+on t_coordinations
+for update
+using (auth.uid() is not null);
+
+create policy "auth delete coordinations"
+on t_coordinations
+for delete
+using (auth.uid() is not null);
+
+-- コーデと服（アイテム）
+create policy "auth insert coode_clothes"
+on t_coode_clothes
+for insert
+with check (auth.uid() is not null);
+
+create policy "auth update coode_clothes"
+on t_coode_clothes
+for update
+using (auth.uid() is not null);
+
+create policy "auth delete coode_clothes"
+on t_coode_clothes
+for delete
+using (auth.uid() is not null);
+
+-- コーデとタグ
+create policy "auth insert coode_tags"
+on t_coode_tags
+for insert
+with check (auth.uid() is not null);
+
+create policy "auth update coode_tags"
+on t_coode_tags
+for update
+using (auth.uid() is not null);
+
+create policy "auth delete coode_tags"
+on t_coode_tags
+for delete
+using (auth.uid() is not null);
+
+-- バケット
+drop policy "allow upload qf0l9g_0" on storage.objects;
+drop policy "allow delete clothes image" on storage.objects;
+
+create policy "auth upload clothes image"
+on storage.objects
+for insert
+to authenticated
+with check (bucket_id = 'clothes_image');
+
+create policy "auth delete clothes image"
+on storage.objects
+for delete
+to authenticated
+using (bucket_id = 'clothes_image');
+
+-- RPCも保護
+revoke all on function insert_coordination from public;
+revoke all on function update_coordination from public;
+revoke all on function delete_clothes_with_image from public;
+
+grant execute on function insert_coordination to authenticated;
+grant execute on function update_coordination to authenticated;
+grant execute on function delete_clothes_with_image to authenticated;
+
+
+
 -- 2/15 GUIからこの内容で追加
 CREATE POLICY "allow upload qf0l9g_0" ON storage.objects FOR INSERT TO anon WITH CHECK (bucket_id = 'clothes_image');
-
-
-
-
-
-
-
 
 
 -- 2/17 コーデ追加のトランザクション化のため、SQL Editeorで下記RPCを追加
@@ -196,13 +307,13 @@ begin
 end;
 $$;
 
+
 -- 2/17 バケットの削除ポリシーも追加
 create policy "allow delete clothes image"
 on storage.objects
 for delete
 to anon
 using (bucket_id = 'clothes_image');
-
 
 
 -- 2/18 コーデ更新のトランザクション化のため、SQL Editeorで下記RPCを追加
@@ -244,7 +355,7 @@ using (bucket_id = 'clothes_image');
 -- $$;
 
 
--- ※tagになっていたので2/23にtagsに修正
+-- ※↑がtagになっていたので2/23にtagsに修正
 create or replace function update_coordination(
   p_coode_id int,
   p_memo text,
@@ -284,141 +395,3 @@ $$;
 
 
 
--- 既存ポリシー削除
-drop policy if exists "allow all clothes" on t_clothes;
-drop policy if exists "allow all tags" on t_tags;
-drop policy if exists "allow all coord" on t_coordinations;
-drop policy if exists "allow all coode_clothes" on t_coode_clothes;
-drop policy if exists "allow all coode_tags" on t_coode_tags;
-
--- 読み取りは誰でもOK
-create policy "public read clothes"
-on t_clothes
-for select
-using (true);
-
-create policy "public read tags"
-on t_tags
-for select
-using (true);
-
-create policy "public read coord"
-on t_coordinations
-for select
-using (true);
-
-create policy "public read coode_clothes"
-on t_coode_clothes
-for select
-using (true);
-
-create policy "public read coode_tags"
-on t_coode_tags
-for select
-using (true);
-
--- 書き込みはログイン時のみ
-create policy "auth insert clothes"
-on t_clothes
-for insert
-with check (auth.uid() is not null);
-
-create policy "auth update clothes"
-on t_clothes
-for update
-using (auth.uid() is not null);
-
-create policy "auth delete clothes"
-on t_clothes
-for delete
-using (auth.uid() is not null);
-
-
-create policy "auth insert tags"
-on t_tags
-for insert
-with check (auth.uid() is not null);
-
-create policy "auth update tags"
-on t_tags
-for update
-using (auth.uid() is not null);
-
-create policy "auth delete tags"
-on t_tags
-for delete
-using (auth.uid() is not null);
-
-
-create policy "auth insert coordinations"
-on t_coordinations
-for insert
-with check (auth.uid() is not null);
-
-create policy "auth update coordinations"
-on t_coordinations
-for update
-using (auth.uid() is not null);
-
-create policy "auth delete coordinations"
-on t_coordinations
-for delete
-using (auth.uid() is not null);
-
-
-create policy "auth insert coode_clothes"
-on t_coode_clothes
-for insert
-with check (auth.uid() is not null);
-
-create policy "auth update coode_clothes"
-on t_coode_clothes
-for update
-using (auth.uid() is not null);
-
-create policy "auth delete coode_clothes"
-on t_coode_clothes
-for delete
-using (auth.uid() is not null);
-
-
-create policy "auth insert coode_tags"
-on t_coode_tags
-for insert
-with check (auth.uid() is not null);
-
-create policy "auth update coode_tags"
-on t_coode_tags
-for update
-using (auth.uid() is not null);
-
-create policy "auth delete coode_tags"
-on t_coode_tags
-for delete
-using (auth.uid() is not null);
-
-
--- storageも修正
-drop policy "allow upload qf0l9g_0" on storage.objects;
-drop policy "allow delete clothes image" on storage.objects;
-
-create policy "auth upload clothes image"
-on storage.objects
-for insert
-to authenticated
-with check (bucket_id = 'clothes_image');
-
-create policy "auth delete clothes image"
-on storage.objects
-for delete
-to authenticated
-using (bucket_id = 'clothes_image');
-
--- RPCも保護
-revoke all on function insert_coordination from public;
-revoke all on function update_coordination from public;
-revoke all on function delete_clothes_with_image from public;
-
-grant execute on function insert_coordination to authenticated;
-grant execute on function update_coordination to authenticated;
-grant execute on function delete_clothes_with_image to authenticated;

@@ -6,11 +6,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function Home() {
-
   // このページのパス
   const currentPath = `/coordinations`
 
-  // コーデを取得する関数
+  // コーデを取得
   const { data:coodes } = await supabase
     .from('t_coordinations')
     .select(`

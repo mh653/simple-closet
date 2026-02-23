@@ -5,9 +5,9 @@ export default function AddCoodinationsResult() {
   return (
     <div>
       <h2>登録完了しました！</h2>
-      <Link href={"/"}>ホームに戻る</Link>
+      <Link href={"/"}><button>ホームに戻る</button></Link>
       <br></br>
-      <Link href={"/add-coordinations"}>続けて登録する</Link>
+      <Link href={"/add-coordinations"}><button>続けて登録する</button></Link>
     </div>
   );
 }

@@ -2,17 +2,18 @@
 
 import { useRouter, useSearchParams } from "next/navigation"
 
-export default function FromBackButton() {
+// 遷移元に戻るボタン
 
+export default function FromBackButton() {
+  // ルータ
   const router = useRouter();
+  // どこから来たかを取得
   const searchParams = useSearchParams();
   const from = searchParams.get("from")
 
   const handleBack = () => {
     if (from) {
       router.push(from)
-      // router.push(decodeURIComponent(from))
-      // router.refresh()
     } else {
       router.push("/")
     }
