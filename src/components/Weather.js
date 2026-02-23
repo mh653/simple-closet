@@ -56,13 +56,18 @@ export default function Weather() {
     getWeather()
   }, [])
 
-  if(!weather) return null;
+  if(!weather) return (
+    <div className="weather">
+      <p>天気を取得しています…</p>
+    </div>
+  );
 
   return (
-    <div className="weather">
+   <div className="weather">
       <p>Weather</p>
-        <p>場所：{weather.location.name}</p>
         <p>日付：{weather.location.localtime}</p>
+        <p>場所：{weather.location.name}</p>
+
         {times.map((t) => {
           const Icon = weatherIconMap[weather.forecast.forecastday[0].hour[t].condition.code];
           const officialIcon = "https:" + weatherIconMap[weather.forecast.forecastday[0].hour[t].condition.icon];

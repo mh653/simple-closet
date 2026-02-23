@@ -4,6 +4,9 @@ import Link from "next/link";
 
 export default async function Home() {
 
+  // このページのパス
+  const currentPath = `/coordinations`
+
   // コーデを取得する関数
   const { data:coodes } = await supabase
     .from('t_coordinations')
@@ -34,7 +37,7 @@ export default async function Home() {
       {
       coodes ? (
         coodes.map((c) => (
-          <Link key={c.id} href={`/coode-details/${c.id}`}>
+          <Link key={c.id} href={`/coode-details/${c.id}?from=${currentPath}`}>
             <div>
               <p>コーデID:{c.id}</p>
 

@@ -4,6 +4,9 @@ import Link from "next/link";
 
 export default async function Clothes() {
 
+  // このページのパス
+  const currentPath = `/clothes`
+
   // カテゴリIDに紐づくカテゴリ名と服データを取得
   const { data:categoryClothes } = await supabase
     .from('t_categories')
@@ -52,7 +55,7 @@ export default async function Clothes() {
             {
             ca.t_clothes.length > 0 ? (
               ca.t_clothes.map((cl) => (
-                <Link key={cl.id} href={`/clothes-details/${cl.id}`}>
+                <Link key={cl.id} href={`/clothes-details/${cl.id}?from=${currentPath}`}>
                   <div>
                     {/* <p>ID:{cl.id}</p> */}
                     <Image src={getImageUrl(cl.img_path)} alt='' width={100} height={100} />

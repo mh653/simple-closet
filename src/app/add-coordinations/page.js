@@ -206,12 +206,12 @@ export default function AddCoodinations() {
         <label htmlFor="no">しない</label>
 
         <br></br>
-        <button onClick={() => {
+        {/* <button onClick={() => {
           console.log(clothesId)
           console.log(memo)
           console.log(tagsId)
           console.log(isPin)
-        }}>確認</button>
+        }}>確認</button> */}
 
         <br></br>
         <button onClick={() => addCoordination()}>登録</button>

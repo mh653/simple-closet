@@ -1,13 +1,22 @@
+export const dynamic = "force-dynamic"
+
 import { supabase } from "@/lib/supabaseClient";
 import Image from "next/image";
 import Link from "next/link";
 import BackButton from "@/app/ui/BackButton";
+import FromBackButton from "@/app/ui/FromBackButton";
+import { redirect } from "next/navigation"
 
 export default async function CoodeDetail(props) {
 
   // パラメータ受け取り
   const params = await props.params
   const coodeId = params.coodeId
+  // どこから来たかのパラメータを受け取る
+  const searchParams = await props.searchParams
+  const from = searchParams?.from
+  // このページのパス
+  const currentPath = `/coode-details/${coodeId}?from=${from}`
 
   // コーデを取得する
   // eqで絞る
@@ -29,7 +38,13 @@ export default async function CoodeDetail(props) {
       )
     `)
     .eq('id', coodeId)
-    .single()
+    // .single()
+    .maybeSingle()
+
+  // コーデが削除されていたら、ホームに戻す
+  if (!coode) {
+    redirect("/")
+  }
 
   // ストレージの画像URLを取得する関数
   const getImageUrl = (imgPath) => {
@@ -65,17 +80,29 @@ export default async function CoodeDetail(props) {
 
   return (
     <>
-      <BackButton />
+      {/* <BackButton /> */}
+      <FromBackButton />
+      {/* <p>{from}</p> */}
+      {/* <Link href={from}>
+        <button>戻る</button>
+      </Link> */}
+      
 
       <h2>コーデ詳細</h2>
 
       <p>ID:{coodeId}</p>
 
       {coode.t_coode_clothes.map((item) => (
-        <Link key={item.t_clothes.id} href={`/clothes-details/${item.t_clothes.id}`}>
+        <Link key={item.t_clothes.id} href={`/clothes-details/${item.t_clothes.id}?from=${currentPath}`}>
           <Image src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
         </Link>
       ))}
+
+      {/* {coode.t_coode_clothes.map((item) => (
+        <Link key={item.t_clothes.id} href={`/clothes-details/${item.t_clothes.id}?from=${encodeURIComponent(currentPath)}`}>
+          <Image src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
+        </Link>
+      ))} */}
 
       <h3>メモ</h3>
       <p>{coode.memo}</p>
@@ -97,7 +124,7 @@ export default async function CoodeDetail(props) {
       <Link href={`/coode-details/${coodeId}/edit-coordinations/${coodeId}`}>
         <button>編集</button>
       </Link>
-      <Link href={`/coode-details/${coodeId}/delete-coordinations/${coodeId}`}>
+      <Link href={`/coode-details/${coodeId}/delete-coordinations/${coodeId}?from=${from}`}>
         <button>削除</button>
       </Link>
 

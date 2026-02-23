@@ -5,10 +5,11 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 export const supabase = createClient(
   supabaseUrl,
-  supabaseKey,
-  {
-    auth: {
-      persistSession: false, // ブラウザを閉じるとログアウト
-    },
-  }
+  supabaseKey
+  // ,
+  // {
+  //   auth: {
+  //     persistSession: false, // ブラウザを閉じるとログアウト
+  //   },
+  // }
 );

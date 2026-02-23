@@ -2,12 +2,19 @@ import { supabase } from "@/lib/supabaseClient";
 import Image from "next/image";
 import Link from "next/link";
 import BackButton from "@/app/ui/BackButton";
+import FromBackButton from "@/app/ui/FromBackButton";
+import { redirect } from "next/navigation"
 
 export default async function ClothesDetail(props) {
 
-    // パラメータ受け取り
+  // パラメータ受け取り
   const params = await props.params
   const clothesId = params.clothesId
+  // どこから来たかのパラメータを受け取る
+  const searchParams = await props.searchParams
+  const from = searchParams?.from
+  // このページのパス
+  const currentPath = `/clothes-details/${clothesId}?from=${from}`
 
   // 服の情報を取得する
   const { data:clothes } = await supabase
@@ -29,7 +36,13 @@ export default async function ClothesDetail(props) {
       )
     `)
     .eq('id', clothesId)
-    .single()
+    // .single()
+    .maybeSingle()
+
+  // 服が削除されていたら、ホームに戻す
+  if (!clothes) {
+    redirect("/")
+  }
 
   // 返り値
   // {
@@ -91,7 +104,8 @@ export default async function ClothesDetail(props) {
 
   return (
     <>
-      <BackButton />
+      {/* <BackButton /> */}
+      <FromBackButton />
 
       <h2>服の詳細</h2>
 
@@ -112,7 +126,7 @@ export default async function ClothesDetail(props) {
           if (!coode) return null;
 
           return (
-            <Link key={coode.id} href={`/coode-details/${coode.id}`}>
+            <Link key={coode.id} href={`/coode-details/${coode.id}?from=${currentPath}`}>
               <div>
                 {coode.t_coode_clothes?.map((cc2) => (
                   <Image
@@ -125,13 +139,27 @@ export default async function ClothesDetail(props) {
                 ))}
               </div>
             </Link>
+
+            // <Link key={coode.id} href={`/coode-details/${coode.id}`}>
+            //   <div>
+            //     {coode.t_coode_clothes?.map((cc2) => (
+            //       <Image
+            //         key={cc2.t_clothes.id}
+            //         src={getImageUrl(cc2.t_clothes.img_path)}
+            //         alt=""
+            //         width={100}
+            //         height={100}
+            //       />
+            //     ))}
+            //   </div>
+            // </Link>
           );
         })}
 
       <Link href={`/clothes-details/${clothesId}/edit-clothes/${clothesId}`}>
         <button>編集</button>
       </Link>
-      <Link href={`/clothes-details/${clothesId}/delete-clothes/${clothesId}`}>
+      <Link href={`/clothes-details/${clothesId}/delete-clothes/${clothesId}?from=${from}`}>
         <button>削除</button>
       </Link>
 

@@ -3,8 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function tagCoode(props) {
+  
+  // パラメータ受け取り
   const params = await props.params
   const tagId = params.tagId
+  // このページのパス
+  const currentPath = `/tag-coodes/${tagId}`
 
   // タグIDに紐づくタグ名を取得する関数
   // supabaseの.select()は必ず配列で返すので、1件だけ取得したいなら.single()をつける
@@ -70,7 +74,7 @@ export default async function tagCoode(props) {
       <p>{tagData.name} の検索結果</p>
       {coodes.map((c) => (
 
-        <Link key={c.id} href={`/coode-details/${c.id}`}>
+        <Link key={c.id} href={`/coode-details/${c.id}?from=${currentPath}`}>
           <div>
             <p>コーデID:{c.id}</p>
 
@@ -80,6 +84,17 @@ export default async function tagCoode(props) {
 
           </div>
         </Link>
+
+        // <Link key={c.id} href={`/coode-details/${c.id}?from=${encodeURIComponent(currentPath)}`}>
+        //   <div>
+        //     <p>コーデID:{c.id}</p>
+
+        //     {c.t_coode_clothes.map((item) => (
+        //         <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
+        //     ))}
+
+        //   </div>
+        // </Link>
 
       ))}
     </>

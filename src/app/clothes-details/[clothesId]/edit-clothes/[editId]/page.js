@@ -86,12 +86,15 @@ export default function EditCoordinations() {
       return;
     }
     alert("更新完了しました！");
-    router.push(`/clothes-details/${clothesId}`);
+    // router.push(`/clothes-details/${clothesId}`);
+    router.back();
+    router.refresh()
   };
 
   return (
     <>
-      <button onClick={() => router.push(`/clothes-details/${clothesId}`)}>変更せず戻る</button>
+      {/* <button onClick={() => router.push(`/clothes-details/${clothesId}`)}>変更せず戻る</button> */}
+      <button onClick={() => router.back()}>変更せず戻る</button>
       <h2>服の編集</h2>
 
         <p>ID:{clothesId}</p>

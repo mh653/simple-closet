@@ -188,12 +188,15 @@ export default function EditCoordinations() {
       return;
     }
     alert("更新完了しました！");
-    router.push(`/coode-details/${coodeId}`);
+    // router.push(`/coode-details/${coodeId}`);
+    router.back();
+    router.refresh()
   };
 
   return (
     <>
-      <button onClick={() => router.push(`/coode-details/${coodeId}`)}>変更せず戻る</button>
+      {/* <button onClick={() => router.push(`/coode-details/${coodeId}`)}>変更せず戻る</button> */}
+      <button onClick={() => router.back()}>変更せず戻る</button>
       <h2>コーデ編集</h2>
 
         <h3>使用する服(6枚まで)</h3>

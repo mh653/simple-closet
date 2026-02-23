@@ -47,6 +47,8 @@ export default async function Home() {
 
   return (
     <>
+      <Weather />
+      
       <h2>ピン留めしたコーデ</h2>
       {
       coodes ? (
@@ -80,7 +82,7 @@ export default async function Home() {
       )
       }
 
-      <Weather />
+      
     </>
   );
 }

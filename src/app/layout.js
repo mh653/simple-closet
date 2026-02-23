@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Siimple Closet",
+  title: "Simple Closet",
   description: "シンプルで操作性の良いクローゼットアプリ",
   robots: {
     index: false,
