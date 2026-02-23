@@ -92,11 +92,19 @@ export default async function CoodeDetail(props) {
 
       <p>ID:{coodeId}</p>
 
-      {coode.t_coode_clothes.map((item) => (
-        <Link key={item.t_clothes.id} href={`/clothes-details/${item.t_clothes.id}?from=${currentPath}`}>
-          <Image src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
-        </Link>
-      ))}
+      <h3>使用アイテム</h3>
+      {!coode.t_coode_clothes || coode.t_coode_clothes.length === 0 ? (
+        <div>
+          <p>アイテムが削除されたようです。</p>
+          <p>「編集」ボタンからアイテムを選択し直すか、「削除」ボタンでコーデを削除してください。</p>      
+        </div>
+      ) : (
+        coode.t_coode_clothes.map((item) => (
+          <Link key={item.t_clothes.id} href={`/clothes-details/${item.t_clothes.id}?from=${currentPath}`}>
+            <Image src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
+          </Link>
+        ))
+      )}
 
       {/* {coode.t_coode_clothes.map((item) => (
         <Link key={item.t_clothes.id} href={`/clothes-details/${item.t_clothes.id}?from=${encodeURIComponent(currentPath)}`}>
@@ -109,9 +117,20 @@ export default async function CoodeDetail(props) {
 
 
       <h3>タグ</h3>
-      {coode.t_coode_tags.map((tag) => (
+      {!coode.t_coode_tags || coode.t_coode_tags.length === 0 ? (
+        <div>
+          <p>登録されているタグはありません</p>
+        </div>
+      ) : (
+        coode.t_coode_tags.map((tag) => (
+            <p key={tag.t_tags.id}>{tag.t_tags.name}</p>
+        ))
+      )}
+
+
+      {/* {coode.t_coode_tags.map((tag) => (
           <p key={tag.t_tags.id}>{tag.t_tags.name}</p>
-      ))}
+      ))} */}
 
       <h3>トップ画面にピン留めする？</h3>
         {coode.pin ? (

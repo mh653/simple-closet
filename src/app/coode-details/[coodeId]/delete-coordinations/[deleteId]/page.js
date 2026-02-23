@@ -45,8 +45,9 @@ export default function DeleteCoordination() {
     // router.push("/coordinations")
     // router.push(searchParams)
     if (from) {
-      router.push(decodeURIComponent(from))
-      router.replace(from)
+      router.push(from)
+      // router.push(decodeURIComponent(from))
+      // router.replace(from)
     } else {
       router.push("/")
     }

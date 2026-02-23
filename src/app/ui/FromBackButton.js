@@ -10,7 +10,8 @@ export default function FromBackButton() {
 
   const handleBack = () => {
     if (from) {
-      router.push(decodeURIComponent(from))
+      router.push(from)
+      // router.push(decodeURIComponent(from))
       // router.refresh()
     } else {
       router.push("/")

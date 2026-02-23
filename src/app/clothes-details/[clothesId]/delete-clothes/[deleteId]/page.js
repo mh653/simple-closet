@@ -62,7 +62,8 @@ export default function DeleteClothes() {
     alert("服を削除しました");
     // router.push("/clothes")
     if (from) {
-      router.push(decodeURIComponent(from))
+      router.push(from)
+      // router.push(decodeURIComponent(from))
     } else {
       router.push("/")
     }
@@ -71,7 +72,7 @@ export default function DeleteClothes() {
   return (
     <div>
       <h2>本当に削除しますか？</h2>
-      <p>削除した服は元に戻せません</p>
+      <p>削除したアイテムは元に戻せません</p>
       <br></br>
       {/* <button onClick={() => router.push(`/clothes-details/${deleteId}`)}>いいえ</button> */}
       <button onClick={() => router.back()}>いいえ</button>

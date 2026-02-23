@@ -72,7 +72,28 @@ export default async function tagCoode(props) {
     <>
       <h2>タグでコーデを検索</h2>
       <p>{tagData.name} の検索結果</p>
-      {coodes.map((c) => (
+
+      {!coodes || coodes.length === 0 ? (
+        <p>このタグに登録されているコーデはありません</p>
+      ) : (
+        coodes.map((c) => (
+
+          <Link key={c.id} href={`/coode-details/${c.id}?from=${currentPath}`}>
+            <div>
+              <p>コーデID:{c.id}</p>
+
+              {c.t_coode_clothes.map((item) => (
+                  <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
+              ))}
+
+            </div>
+          </Link>
+
+        ))
+      )}
+
+
+      {/* {coodes.map((c) => (
 
         <Link key={c.id} href={`/coode-details/${c.id}?from=${currentPath}`}>
           <div>
@@ -96,7 +117,7 @@ export default async function tagCoode(props) {
         //   </div>
         // </Link>
 
-      ))}
+      ))} */}
     </>
   )
 }

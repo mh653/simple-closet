@@ -167,11 +167,11 @@ export default function EditCoordinations() {
       return;
     }
     if (clothesId.length < 2) {
-      alert("服を2枚以上選んでください");
+      alert("アイテムを2点以上選んでください");
       return;
     }
     if (clothesId.length > 6) {
-      alert("登録できる服は6枚までです");
+      alert("使用できるアイテムは6点までです");
       return;
     }
 
@@ -199,8 +199,8 @@ export default function EditCoordinations() {
       <button onClick={() => router.back()}>変更せず戻る</button>
       <h2>コーデ編集</h2>
 
-        <h3>使用する服(6枚まで)</h3>
-        <button onClick={() => setIsOpen(true)}>服を選択</button>
+        <h3>使用アイテム(6点まで)</h3>
+        <button onClick={() => setIsOpen(true)}>アイテムを選択</button>
 
         {isOpen && (
           <div className="modal">

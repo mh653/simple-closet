@@ -95,7 +95,7 @@ export default function EditCoordinations() {
     <>
       {/* <button onClick={() => router.push(`/clothes-details/${clothesId}`)}>変更せず戻る</button> */}
       <button onClick={() => router.back()}>変更せず戻る</button>
-      <h2>服の編集</h2>
+      <h2>アイテム編集</h2>
 
         <p>ID:{clothesId}</p>
 
@@ -103,8 +103,8 @@ export default function EditCoordinations() {
           <Image
             src={getImageUrl(imgPath)}
             alt=""
-            width={100}
-            height={100}
+            width={300}
+            height={300}
           />
         )}
 

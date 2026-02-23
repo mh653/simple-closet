@@ -45,7 +45,7 @@ export default async function Clothes() {
 
   return (
     <>
-      <h2>服から探す</h2>
+      <h2>アイテム一覧</h2>
 
         {
         categoryClothes.map((ca) => (
@@ -63,7 +63,7 @@ export default async function Clothes() {
                 </Link>
               ))
             ):(
-              <p>このカテゴリに登録されている服はありません。</p>
+              <p>このカテゴリの登録アイテムはありません。</p>
             )
             }
           <hr></hr>

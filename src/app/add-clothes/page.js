@@ -118,9 +118,9 @@ export default function AddClothes() {
 
   return (
     <>
-      <h2>服の登録</h2>
+      <h2>アイテム登録</h2>
 
-        <h3>服の写真（必須）</h3>
+        <h3>アイテム画像（必須）</h3>
         <p>※JPEGのみアップロード可能です</p>
         <input type="file" accept="image/jpeg,image/heic,image/heif" onChange={(e) => setFile(e.target.files[0])}/>
 

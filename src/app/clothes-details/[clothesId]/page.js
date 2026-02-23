@@ -107,11 +107,11 @@ export default async function ClothesDetail(props) {
       {/* <BackButton /> */}
       <FromBackButton />
 
-      <h2>服の詳細</h2>
+      <h2>アイテム詳細</h2>
 
       <p>ID:{clothesId}</p>
 
-      <Image src={getImageUrl(clothes.img_path)} alt='' width={100} height={100} />
+      <Image src={getImageUrl(clothes.img_path)} alt='' width={300} height={300} />
 
       <h3>メモ</h3>
       <p>{clothes.memo}</p>
@@ -121,9 +121,36 @@ export default async function ClothesDetail(props) {
       <p>{clothes.t_categories.name}</p>
 
       <h3>使用コーデ</h3>
-        {clothes.t_coode_clothes?.map((cc) => {
+
+      {!clothes.t_coode_clothes || clothes.t_coode_clothes.length === 0 ? (
+        <p>使用コーデはありません</p>
+      ) : (
+
+        clothes.t_coode_clothes?.map((cc) => {
           const coode = cc.t_coordinations;
-          if (!coode) return null;
+          return (
+            <Link key={coode.id} href={`/coode-details/${coode.id}?from=${currentPath}`}>
+              <div>
+                {coode.t_coode_clothes?.map((cc2) => (
+                  <Image
+                    key={cc2.t_clothes.id}
+                    src={getImageUrl(cc2.t_clothes.img_path)}
+                    alt=""
+                    width={100}
+                    height={100}
+                  />
+                ))}
+              </div>
+            </Link>
+          );
+        })
+      )
+    }
+
+        {/* {clothes.t_coode_clothes?.map((cc) => {
+          const coode = cc.t_coordinations;
+
+          if (!coode) return ;
 
           return (
             <Link key={coode.id} href={`/coode-details/${coode.id}?from=${currentPath}`}>
@@ -154,7 +181,7 @@ export default async function ClothesDetail(props) {
             //   </div>
             // </Link>
           );
-        })}
+        })} */}
 
       <Link href={`/clothes-details/${clothesId}/edit-clothes/${clothesId}`}>
         <button>編集</button>
