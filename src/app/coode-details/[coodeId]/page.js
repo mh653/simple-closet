@@ -1,4 +1,7 @@
-export const dynamic = "force-dynamic"
+// サーバーコンポーネントのVercelのキャッシュ対策
+export const revalidate = 0
+
+// export const dynamic = "force-dynamic"
 
 import { supabase } from "@/lib/supabaseClient";
 import Image from "next/image";

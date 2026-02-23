@@ -1,4 +1,4 @@
-// サーバーコンポーネントだとVercelがキャッシュしてしまうので
+// サーバーコンポーネントのVercelのキャッシュ対策
 export const revalidate = 0
 
 import { supabase } from "@/lib/supabaseClient";
