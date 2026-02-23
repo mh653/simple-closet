@@ -315,6 +315,13 @@ for delete
 to anon
 using (bucket_id = 'clothes_image');
 
+-- 2/23 バケットから削除が上手くいってなかったが、selectポリシーも追加すると削除できるようになりました（clothesではなくitemsにしました）
+create policy "auth select items image"
+on storage.objects
+for select
+to authenticated
+using (bucket_id = 'clothes_image');
+
 
 -- 2/18 コーデ更新のトランザクション化のため、SQL Editeorで下記RPCを追加
 -- create or replace function update_coordination(
