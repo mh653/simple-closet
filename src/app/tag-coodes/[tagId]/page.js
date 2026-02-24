@@ -50,30 +50,33 @@ export default async function tagCoode(props) {
   }
 
   return (
-    <>
+    <main>
       <h2>タグでコーデを検索</h2>
-      <p>{tagData.name} の検索結果</p>
 
-      {!coodes || coodes.length === 0 ? (
-        <p>このタグに登録されているコーデはありません</p>
-      ) : (
-        coodes.map((c) => (
+      <section>
+        <p><span className="tag">{tagData.name}</span> の検索結果</p>
 
-          <Link key={c.id} href={`/coode-details/${c.id}?from=${currentPath}`}>
-            <div>
-              <p>コーデID:{c.id}</p>
+        {!coodes || coodes.length === 0 ? (
+          <p>このタグに登録されているコーデはありません</p>
+        ) : (
+          coodes.map((c) => (
 
-              {c.t_coode_clothes.map((item) => (
-                  <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
-              ))}
+            <Link key={c.id} href={`/coode-details/${c.id}?from=${currentPath}`}>
+              <div>
+                <p className="idNum">ID:{c.id}</p>
 
-            </div>
-          </Link>
+                {c.t_coode_clothes.map((item) => (
+                    <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
+                ))}
 
-        ))
-      )}
+              </div>
+            </Link>
 
-    </>
+          ))
+        )}        
+      </section>
+
+    </main>
   )
 }
 
