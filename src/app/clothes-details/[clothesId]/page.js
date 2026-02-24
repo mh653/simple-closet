@@ -116,8 +116,8 @@ export default async function ClothesDetail(props) {
           <button>編集</button>
         </Link>
         <Link href={`/clothes-details/${clothesId}/delete-clothes/${clothesId}?from=${from}`}>
-          {/* <button>削除</button> */}
-          <button className="deleteButton"><BsTrash3Fill/></button>
+          <button>削除</button>
+          {/* <button className="deleteButton"><BsTrash3Fill/></button> */}
         </Link>
       </div>
 

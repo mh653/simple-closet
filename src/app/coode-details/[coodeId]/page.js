@@ -91,9 +91,11 @@ export default async function CoodeDetail(props) {
             <p>登録されているタグはありません</p>
           </div>
         ) : (
-          coode.t_coode_tags.map((tag) => (
-              <p key={tag.t_tags.id}>{tag.t_tags.name}</p>
-          ))
+          <div className="tagArea">
+            {coode.t_coode_tags.map((tag) => (
+                <p key={tag.t_tags.id} className="tag">{tag.t_tags.name}</p>
+            ))}
+          </div>
         )}
       </section>
 
@@ -112,8 +114,8 @@ export default async function CoodeDetail(props) {
           <button>編集</button>
         </Link>
         <Link href={`/coode-details/${coodeId}/delete-coordinations/${coodeId}?from=${from}`}>
-          {/* <button>削除</button> */}
-          <button className="deleteButton"><BsTrash3Fill/></button>
+          <button>削除</button>
+          {/* <button className="deleteButton"><BsTrash3Fill/></button> */}
         </Link>
       </div>
 

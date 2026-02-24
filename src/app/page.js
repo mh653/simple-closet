@@ -84,7 +84,7 @@ export default async function Home() {
             {tags ? (
               tags.map((t) => (
                   <Link key={t.id} href={`/tag-coodes/${t.id}`}>
-                    <div className="tag">{t.name}</div>
+                    <div className="tag clickableTag">{t.name}</div>
                   </Link>
               ))
             ):(

@@ -64,7 +64,7 @@ export default function Header() {
         // 位置情報の取得に成功した時
         const { latitude, longitude } = pos.coords;
         localStorage.setItem("weatherQuery", `${latitude},${longitude}`);
-        alert("天気の地点を変更しました！")
+        alert("天気の場所を変更しました！")
         setLoading(false)
       },
       (error) => {
@@ -81,43 +81,51 @@ export default function Header() {
   }
 
   return (
-    <div>
+    <main>
       <h2>設定</h2>
 
-      <h3>ログイン</h3>
-      <p>デフォルトでは閲覧のみ可能です。</p>
-      <p>ポートフォリオサイトに記載のIDとパスワードでログインして頂くと、登録・削除のアクションが可能になります。</p>
-      <p>定期的にデータベースをリセットしていますので、お気軽にお試しください。</p>
+      <section>
+        <h3>・ログイン</h3>
+        <p>デフォルトでは閲覧のみ可能です。</p>
+        <p>ポートフォリオサイトに記載のIDとパスワードでログインして頂くと、登録・削除が可能になります。</p>
+        <p>定期的にDBをリセットしていますので、お気軽にお試しください。</p>
+        <div className="loginSec">
+          {user ? (
+            <button onClick={() => logout()}>ログアウトする</button>
+          ) : (
+            <>
+              <label><p>ID</p><input type="text" onChange={(e) => setEmail(e.target.value)} value={email}></input></label>
+              <label><p>パスワード</p><input type="password" onChange={(e) => setPassword(e.target.value)} value={password}></input></label>
+              <br></br>
+              <button onClick={() => login()}>ログイン</button>        
+            </>
+          )}        
+        </div>
+      </section>
 
-      {user ? (
-        <button onClick={() => logout()}>ログアウトする</button>
-      ) : (
-        <>
-          <label><p>ID：</p><input type="text" onChange={(e) => setEmail(e.target.value)} value={email}></input></label>
-          <label><p>パスワード：</p><input type="password" onChange={(e) => setPassword(e.target.value)} value={password}></input></label>
-          <br></br>
-          <button onClick={() => login()}>ログイン</button>        
-        </>
-      )}
+      <section>
+        <h3>・天気の場所</h3>
+        <p>デフォルトで東京の天気を表示しています。</p>
+        <p>下記ボタンで位置情報を取得し、現在地に変更頂けます。</p>
+        <p>（位置情報はローカルストレージに保存されます）</p>
 
-      <h3>天気の地点</h3>
-      <p>初期設定で東京の天気を表示しています。</p>
-      <p>下記ボタンで位置情報を取得し、現在地に変更頂けます。</p>
-      <p>（位置情報はローカルストレージに保存されます）</p>
+        {loading ? (
+          <button disabled>取得中…</button>
+        ) : (
+          <button onClick={() => fetchLocation()}>位置情報を取得する</button>
+        )}
+      </section>
 
-      {loading ? (
-        <button disabled>取得中…</button>
-      ) : (
-        <button onClick={() => fetchLocation()}>位置情報を取得する</button>
-      )}
+      <section>
+        <h3>・タグの編集</h3>
+        <p>下記ボタンからタグを新規作成・編集・削除して頂けます。</p>
+        <Link href={"settings/tag-settings"}>
+          <button>タグを編集する</button>
+        </Link>        
+      </section>
 
-      <h3>タグの編集</h3>
-      <p>下記ボタンからタグを新規作成・編集・削除して頂けます。</p>
-      <Link href={"settings/tag-settings"}>
-        <button>タグを編集する</button>
-      </Link>
 
-    </div>
+    </main>
   );
 }
 

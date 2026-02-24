@@ -89,7 +89,7 @@ export default function Weather() {
             const officialIcon = "https:" + weatherIconMap[weather.forecast.forecastday[0].hour[t].condition.icon];
             return(
                 <div key={t} className="weatherEach">
-                  <Icon size={30} />
+                  <Icon size={30} className="weatherIcon"/>
                   <div className="timeTemp">
                     <p className="time">{formatHour(weather.forecast.forecastday[0].hour[t].time)}</p>
                     <p className="temp">{weather.forecast.forecastday[0].hour[t].temp_c}℃</p>

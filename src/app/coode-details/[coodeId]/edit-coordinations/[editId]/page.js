@@ -195,10 +195,11 @@ export default function EditCoordinations() {
   };
 
   return (
-    <>
+    <main>
       <button onClick={() => router.back()}>変更せず戻る</button>
       <h2>コーデ編集</h2>
 
+      <section>
         <h3>使用アイテム(6点まで)</h3>
 
         <button onClick={() => setIsOpen(true)}>アイテムを選択</button>
@@ -212,19 +213,24 @@ export default function EditCoordinations() {
           </div>
         )}
 
-        {
-          selectedClothes.length > 0 ? (
-            selectedClothes.map((s) => (
+        {selectedClothes.length > 0 ? (
+          <div className="selectedClothes">
+            {selectedClothes.map((s) => (
               <Image key={s.id} src={getImageUrl(s.img_path)} alt='' width={100} height={100} />
-            ))
+            ))}
+          </div>
           ):(
             null
-          )
-        }
+        )}
 
+      </section>
+
+      <section>
         <h3>メモ</h3>
-        <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>
+        <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>        
+      </section>
 
+      <section>
         <h3>タグ</h3>
         {
           tags.length > 0 ? (
@@ -234,29 +240,32 @@ export default function EditCoordinations() {
                   checked={tagsId.includes(tag.id)}
                   onChange={() => toggleTag(tag.id)}
                 />
-                <label htmlFor={tag.id}>{tag.name}</label>
+                <label htmlFor={tag.id}><span className="checkboxRadioText">{tag.name}</span></label>
               </span>
             ))
           ):(
             <p>作成されたタグがありません</p>
           )
         }
-        <br></br>
-        <input type="text" placeholder="タグ名を入力" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
-        <button onClick={() => handleAddTag()}>タグを作成</button>
+        <div className="tagCreateWrapper">
+          <input type="text" placeholder="タグ名を入力" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
+          <button onClick={() => handleAddTag()}>タグを作成</button>
+        </div>
+      </section>
 
+      <section>
         <h3>トップ画面にピン留めする？</h3>
         <input type="radio" id="yes" name="ispin" checked={isPin === true} onChange={() => setIsPin(true)}/>
-        <label htmlFor="yes">する</label>
+        <label htmlFor="yes"><span className="checkboxRadioText">する</span></label>
         <input type="radio" id="no" name="ispin" checked={isPin === false} onChange={() => setIsPin(false)}/>
-        <label htmlFor="no">しない</label>
-        <br></br>
-        
-        <button onClick={() => changeCoordination()}>変更</button>
+        <label htmlFor="no"><span className="checkboxRadioText">しない</span></label>
+      </section>
 
-        <Note />
+      <button onClick={() => changeCoordination()}>変更</button>
 
-    </>
+      <Note />
+
+    </main>
   )
 }
 

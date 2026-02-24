@@ -68,13 +68,17 @@ export default function DeleteClothes() {
   };
 
   return (
-    <div>
+    <main>
       <h2>本当に削除しますか？</h2>
       <p>削除したアイテムは元に戻せません</p>
-      <br></br>
-      <button onClick={() => router.back()}>いいえ</button>
-      <button onClick={() => deleteClothes(deleteId)}>はい</button>
+      <section>
+        <div className="yesNo">
+          <button onClick={() => deleteClothes(deleteId)}>削除する</button>
+          <button onClick={() => router.back()}>削除しない</button>            
+        </div>
+      </section>
+
       <Note />
-    </div>
+    </main>
   );
 }

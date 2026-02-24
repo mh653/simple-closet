@@ -92,11 +92,9 @@ export default function EditCoordinations() {
   };
 
   return (
-    <>
-      {/* <button onClick={() => router.push(`/clothes-details/${clothesId}`)}>変更せず戻る</button> */}
+    <main>
       <button onClick={() => router.back()}>変更せず戻る</button>
       <h2>アイテム編集</h2>
-
         <p>ID:{clothesId}</p>
 
         {imgPath && (
@@ -108,29 +106,32 @@ export default function EditCoordinations() {
           />
         )}
 
-        <h3>メモ</h3>
-        <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>
+        <section>
+          <h3>メモ</h3>
+          <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>          
+        </section>
 
-        <h3>カテゴリ（必須）</h3>
-        <select value={categoryId} onChange={(e) => setCategoryId(Number(e.target.value))}>
-          <option value={1}>トップス - 半袖/袖なし</option>
-          <option value={2}>トップス - 長袖</option>
-          <option value={3}>トップス - その他</option>
-          <option value={4}>ボトムス</option>
-          <option value={5}>オールインワン</option>
-          <option value={6}>アウター</option>
-          <option value={7}>靴</option>
-          <option value={8}>靴下</option>
-          <option value={9}>バッグ</option>
-          <option value={10}>アクセサリー</option>
-          <option value={11}>その他</option>
-        </select>
+        <section>
+          <h3>カテゴリ（必須）</h3>
+          <select value={categoryId} onChange={(e) => setCategoryId(Number(e.target.value))}>
+            <option value={1}>トップス - 半袖/袖なし</option>
+            <option value={2}>トップス - 長袖</option>
+            <option value={3}>トップス - その他</option>
+            <option value={4}>ボトムス</option>
+            <option value={5}>オールインワン</option>
+            <option value={6}>アウター</option>
+            <option value={7}>靴</option>
+            <option value={8}>靴下</option>
+            <option value={9}>バッグ</option>
+            <option value={10}>アクセサリー</option>
+            <option value={11}>その他</option>
+          </select>          
+        </section>
 
-        <br></br>
         <button onClick={() => changeClothes()}>変更</button>
 
         <Note />
-    </>
+    </main>
   )
 }
 

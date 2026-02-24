@@ -152,11 +152,11 @@ export default function AddCoodinations() {
   };
 
   return (
-    <>
+    <main>
       <h2>コーデ登録</h2>
 
-        <h3>使用アイテム(6点まで)</h3>
-
+      <section>
+        <h3>使用アイテム(6点まで)</h3>        
         <button onClick={() => setIsOpen(true)}>アイテムを選択</button>
         {isOpen && (
           <div className="modal">
@@ -167,20 +167,25 @@ export default function AddCoodinations() {
             />
           </div>
         )}
-
-        {
-          selectedClothes.length > 0 ? (
-            selectedClothes.map((s) => (
+        
+        {selectedClothes.length > 0 ? (
+          <div className="selectedClothes">
+            {selectedClothes.map((s) => (
               <Image key={s.id} src={getImageUrl(s.img_path)} alt='' width={100} height={100} />
-            ))
+            ))}
+          </div>
           ):(
             null
-          )
-        }
+        )}
+     
+      </section>
 
+      <section>
         <h3>メモ</h3>
-        <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>
+        <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>        
+      </section>
 
+      <section>
         <h3>タグ</h3>
         {
           tags.length > 0 ? (
@@ -190,28 +195,31 @@ export default function AddCoodinations() {
                   checked={tagsId.includes(tag.id)}
                   onChange={() => toggleTag(tag.id)}
                 />
-                <label htmlFor={tag.id}>{tag.name}</label>
+                <label htmlFor={tag.id}><span className="checkboxRadioText">{tag.name}</span></label>
               </span>
             ))
           ):(
             <p>作成されたタグがありません</p>
           )
         }
-        <br></br>
-        <input type="text" placeholder="タグ名を入力" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
-        <button onClick={() => handleAddTag()}>タグを作成</button>
+        <div className="tagCreateWrapper">
+          <input type="text" placeholder="タグ名を入力" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
+          <button onClick={() => handleAddTag()}>タグを作成</button>
+        </div>
+      </section>
 
+      <section>
         <h3>トップ画面にピン留めする？</h3>
         <input type="radio" id="yes" name="ispin" value={true} onChange={(e) => setIsPin(e.target.value)}/>
-        <label htmlFor="yes">する</label>
+        <label htmlFor="yes"><span className="checkboxRadioText">する</span></label>
         <input type="radio" id="no" name="ispin" value={false} defaultChecked onChange={(e) => setIsPin(e.target.value)}/>
-        <label htmlFor="no">しない</label>
-        <br></br>
+        <label htmlFor="no"><span className="checkboxRadioText">しない</span></label>
+      </section>
 
-        <button onClick={() => addCoordination()}>登録</button>
+      <button onClick={() => addCoordination()}>登録</button>
         
-        <Note />
+      <Note />
 
-    </>
+    </main>
   )
 }

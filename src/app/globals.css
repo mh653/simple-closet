@@ -1,7 +1,13 @@
+/* lightAzure #c9e8eb */
+/* lightCyan #b8e3e5 */
+/* kusumiCyan #99d7db */
+
+
 /* 共通部分 */
 body {
   color: #666;
   font-size: 14px;
+  line-height: 1.2em;
 }
 main {
   padding: 0px 10px 180px 10px;
@@ -12,9 +18,17 @@ section {
 }
 button {
   margin-top: 10px;
-  padding: 7px;
-  background-color: #d9d9d9;
+  padding: 10px 12px;
+  /* background-color: #d9d9d9; */
+  background-color: #eee;
+  border: #666 solid 1px;
+  /* background-color: #bbb;
+  color: #fff; */
   border-radius: 5px;
+}
+button:hover {
+  background-color: #d9d9d9;
+  /* background-color: #999; */
 }
 h1 {
   font-size: 20px;
@@ -32,6 +46,70 @@ h3 {
   font-size: 18px;
   letter-spacing: .03em;
 }
+p {
+  padding: 2px 0;
+}
+input[type="text"] {
+  height: 30px;
+  border: #666 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+}
+input[type="text"]:focus {
+  outline: none;
+  border: #99d7db 3px solid;
+}
+input[type="password"] {
+  height: 30px;
+  border: #666 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+}
+input[type="password"]:focus {
+  outline: none;
+  border: #99d7db 3px solid;
+}
+input[type="file"] {
+  margin-top: 5px;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  appearance: auto;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+.checkboxRadioText {
+  padding-left: 4px;
+  padding-right: 15px;
+}
+textarea {
+  width: 100%;
+  min-height: 50px;
+  border: #666 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+}
+textarea:focus {
+  outline: none;
+  border: #99d7db 3px solid;
+}
+select {
+  width: 200px;
+  height: 30px;
+  border: #666 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+/* 注意書き */
+.note {
+  margin: 5px 0;
+  padding: 20px;
+  background-color: #ffd6d1;
+  border: #ff6450 1px solid;
+  /* border-radius: 5px; */
+}
 
 /* タグ */
 .tagArea {
@@ -39,15 +117,22 @@ h3 {
   gap: 10px;
 }
 .tag {
-  padding: 7px 10px;
-  background-color: #d9d9d9;
-  border-radius: 5px;
+  padding: 10px 15px;
+  /* background-color: #d9d9d9; */
+  background-color: #c9e8eb;
+  border-radius: 20px;
+}
+.clickableTag:hover {
+  padding: 10px 15px;
+  /* background-color: #d9d9d9; */
+  background-color: #99d7db;
+  border-radius: 20px;
 }
 
 /* メモ */
 .memoArea {
   width: 100%;
-  min-height: 50px;
+  height: 50px;
   padding: 5px;
   border: #888 solid 1px;
   border-radius: 5px;
@@ -118,11 +203,45 @@ h3 {
 .deleteButton {
   background-color: #fff;
   font-size: 20px;
+  border: none;
+}
+
+
+/* コーデ登録画面 */
+.selectedClothes {
+  margin: 10px 0;
+}
+
+/* コーデ削除画面 */
+.yesNo {
+  display: flex;
+  gap: 10px;
 }
 
 
 
 
+
+/* 設定画面 */
+.loginSec {
+  margin-top: 10px;
+}
+
+/* タグ設定画面 */
+.tagCreateWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tagSetWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tagBtns {
+  display: flex;
+  gap: 10px;
+}
 
 
 
@@ -134,7 +253,8 @@ header {
   position: relative;
   display: flex;
   justify-content: center;
-  background-color: #d9d9d9;
+  /* background-color: #d9d9d9; */
+  background-color: #c9e8eb;
   color: #fff;
 }
 .settingIcon {
@@ -151,7 +271,8 @@ nav {
   position: fixed;
   bottom: 0;
   left: 0;
-  background-color: #d9d9d9;
+  /* background-color: #d9d9d9; */
+  background-color: #c9e8eb;
 }
 nav ul {
   display: flex;
@@ -246,8 +367,9 @@ nav ul li p {
   font-size: 12px;
   line-height: 1.5em;
 }
-
-
+/* .weatherIcon {
+  color: #99d7db;
+} */
 
 
 

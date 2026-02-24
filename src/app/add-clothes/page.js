@@ -104,13 +104,16 @@ export default function AddClothes() {
   }
 
   return (
-    <>
+    <main>
       <h2>アイテム登録</h2>
-
+      
+      <section>
         <h3>アイテム画像（必須）</h3>
-        <p>※JPEGのみアップロード可能です</p>
-        <input type="file" accept="image/jpeg,image/heic,image/heif" onChange={(e) => setFile(e.target.files[0])}/>
+        <p>※JPEG推奨</p>
+        <input type="file" accept="image/jpeg,image/heic,image/heif" onChange={(e) => setFile(e.target.files[0])}/>        
+      </section>
 
+      <section>
         <h3>カテゴリ（必須）</h3>
         <select onChange={(e) => setCategoryId(Number(e.target.value))}>
           <option value={""}>--選択してください--</option>
@@ -125,14 +128,18 @@ export default function AddClothes() {
           <option value={9}>バッグ</option>
           <option value={10}>アクセサリー</option>
           <option value={11}>その他</option>
-        </select>
+        </select>        
+      </section>
 
+      <section>
         <h3>メモ</h3>
-        <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>
+        <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>        
+      </section>
 
-        <button onClick={() => addClothes()}>登録</button>
-        <Note />
+      <button onClick={() => addClothes()}>登録</button>
+      
+      <Note />
 
-    </>
+    </main>
   )
 }

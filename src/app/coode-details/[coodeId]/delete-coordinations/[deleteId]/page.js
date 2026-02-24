@@ -50,14 +50,17 @@ export default function DeleteCoordination() {
   };
 
   return (
-    <div>
+    <main>
       <h2>本当に削除しますか？</h2>
       <p>削除したコーディネートは元に戻せません</p>
-      <br></br>
-      <button onClick={() => router.back()}>いいえ</button>
-      <button onClick={() => deleteCoordination(deleteId)}>はい</button>
+      <section>
+        <div className="yesNo">
+          <button onClick={() => deleteCoordination(deleteId)}>削除する</button>   
+          <button onClick={() => router.back()}>削除しない</button>
+        </div>        
+      </section>
 
       <Note />
-    </div>
+    </main>
   );
 }
