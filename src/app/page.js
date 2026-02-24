@@ -49,40 +49,45 @@ export default async function Home() {
   return (
     <>
       <Weather />
-      
-      <h2>ピン留めしたコーデ</h2>
-      {
-      coodes ? (
-        coodes.map((c) => (
-          <Link key={c.id} href={`/coode-details/${c.id}`}>
-            <div>
-              <p>コーデID:{c.id}</p>
 
-              {c.t_coode_clothes.map((item) => (
-                  <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
-              ))}
+      <main>
+        <h3>ピン留めしたコーデ</h3>
+        {
+        coodes ? (
+          coodes.map((c) => (
+            <Link key={c.id} href={`/coode-details/${c.id}`}>
+              <div>
+                <p>コーデID:{c.id}</p>
 
+                {c.t_coode_clothes.map((item) => (
+                    <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
+                ))}
+
+              </div>
+            </Link>
+          ))
+        ):(
+          <p>ピン留めされているコーデはありません</p>
+        )
+        }
+
+        <h3>タグでコーデを検索</h3>
+        {tags ? (
+          tags.map((t) => (
+            <div key={t.id}>
+              <Link href={`/tag-coodes/${t.id}`}>{t.name}</Link>
+              <hr></hr>
             </div>
-          </Link>
-        ))
-      ):(
-        <p>ピン留めされているコーデはありません</p>
-      )
-      }
+          ))
+        ):(
+          <p>登録されているタグはありません</p>
+        )
+        }
 
-      <h2>タグでコーデを検索</h2>
-      {tags ? (
-        tags.map((t) => (
-          <div key={t.id}>
-            <Link href={`/tag-coodes/${t.id}`}>{t.name}</Link>
-            <hr></hr>
-          </div>
-        ))
-      ):(
-        <p>登録されているタグはありません</p>
-      )
-      }
-      
+
+      </main>
+
+
     </>
   );
 }

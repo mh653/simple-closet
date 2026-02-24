@@ -58,31 +58,67 @@ export default function Weather() {
     getWeather()
   }, [])
 
+  // 変換用
+  const formatDate = (dateStr) => {
+  const d = new Date(dateStr);
+  return `${d.getMonth() + 1}月${d.getDate()}日`;
+  };
+  const formatHour = (dateStr) => {
+    const d = new Date(dateStr);
+    return `${d.getHours()}時`;
+  };
+
   if(!weather) return (
     <div className="weather">
-      <p>天気を取得しています…</p>
+      <div className="weatherLoading">
+        <p>天気を取得しています…</p>
+      </div>
     </div>
   );
 
   return (
-   <div className="weather">
-      <p>Weather</p>
-        <p>日付：{weather.location.localtime}</p>
-        <p>場所：{weather.location.name}</p>
+    <div className="weather">
+        <div className="dateSec">
+          <p>{formatDate(weather.location.localtime)}</p>
+          <p>{weather.location.name}</p>
+        </div>
 
-        {times.map((t) => {
-          const Icon = weatherIconMap[weather.forecast.forecastday[0].hour[t].condition.code];
-          const officialIcon = "https:" + weatherIconMap[weather.forecast.forecastday[0].hour[t].condition.icon];
-          return(
-              <div key={t}>
-                <p>時刻：{weather.forecast.forecastday[0].hour[t].time}</p>
-                <p>天気：{weather.forecast.forecastday[0].hour[t].condition.text}</p>
-                <p>天気コード：{weather.forecast.forecastday[0].hour[t].condition.code}</p>
-                <p>気温：{weather.forecast.forecastday[0].hour[t].temp_c}℃</p>
-                <Icon size={40} />
-              </div>
-          )
-        })}
+        <div className="weatherSec">
+          {times.map((t) => {
+            const Icon = weatherIconMap[weather.forecast.forecastday[0].hour[t].condition.code];
+            const officialIcon = "https:" + weatherIconMap[weather.forecast.forecastday[0].hour[t].condition.icon];
+            return(
+                <div key={t} className="weatherEach">
+                  <Icon size={30} />
+                  <div className="timeTemp">
+                    <p className="time">{formatHour(weather.forecast.forecastday[0].hour[t].time)}</p>
+                    <p className="temp">{weather.forecast.forecastday[0].hour[t].temp_c}℃</p>
+                  </div>
+                </div>
+            )
+          })}
+        </div>
+
     </div>
   );
 }
+
+  //  <div className="weather">
+  //     <p>Weather</p>
+  //       <p>日付：{weather.location.localtime}</p>
+  //       <p>場所：{weather.location.name}</p>
+
+  //       {times.map((t) => {
+  //         const Icon = weatherIconMap[weather.forecast.forecastday[0].hour[t].condition.code];
+  //         const officialIcon = "https:" + weatherIconMap[weather.forecast.forecastday[0].hour[t].condition.icon];
+  //         return(
+  //             <div key={t}>
+  //               <p>時刻：{weather.forecast.forecastday[0].hour[t].time}</p>
+  //               <p>天気：{weather.forecast.forecastday[0].hour[t].condition.text}</p>
+  //               <p>天気コード：{weather.forecast.forecastday[0].hour[t].condition.code}</p>
+  //               <p>気温：{weather.forecast.forecastday[0].hour[t].temp_c}℃</p>
+  //               <Icon size={40} />
+  //             </div>
+  //         )
+  //       })}
+  //   </div>
