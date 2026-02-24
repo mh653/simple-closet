@@ -6,6 +6,7 @@ import { redirect } from "next/navigation"
 import Image from "next/image";
 import Link from "next/link";
 import FromBackButton from "@/app/ui/FromBackButton";
+import { BsTrash3Fill } from "react-icons/bs";
 
 export default async function ClothesDetail(props) {
   // パラメータ受け取り
@@ -56,55 +57,71 @@ export default async function ClothesDetail(props) {
   }
 
   return (
-    <>
+    <main>
       <FromBackButton />
 
       <h2>アイテム詳細</h2>
 
-      <p>ID:{clothesId}</p>
-      <Image src={getImageUrl(clothes.img_path)} alt='' width={300} height={300} />
+      <section>
+        <p className="idNum">ID:{clothesId}</p>
+        <Image src={getImageUrl(clothes.img_path)} alt='アイテム画像' width={300} height={300} className="image" />
+      </section>
 
-      <h3>メモ</h3>
-      <p>{clothes.memo}</p>
+      <section>
+        <h3>メモ</h3>
+        <div className="memoArea">{clothes.memo}</div>
+      </section>
 
-      <h3>カテゴリ</h3>
-      <p>{clothes.t_categories.name}</p>
+      <section>
+        <h3>カテゴリ</h3>
+        <p>{clothes.t_categories.name}</p>
+      </section>
 
-      <h3>使用コーデ</h3>
+      <section>
+        <h3>使用コーデ</h3>
 
-      {!clothes.t_coode_clothes || clothes.t_coode_clothes.length === 0 ? (
-        <p>使用コーデはありません</p>
-      ) : (
+        {!clothes.t_coode_clothes || clothes.t_coode_clothes.length === 0 ? (
+          <p>使用コーデはありません</p>
+        ) : (
 
-        clothes.t_coode_clothes?.map((cc) => {
-          const coode = cc.t_coordinations;
-          return (
-            <Link key={coode.id} href={`/coode-details/${coode.id}?from=${currentPath}`}>
-              <div>
-                {coode.t_coode_clothes?.map((cc2) => (
-                  <Image
-                    key={cc2.t_clothes.id}
-                    src={getImageUrl(cc2.t_clothes.img_path)}
-                    alt=""
-                    width={100}
-                    height={100}
-                  />
-                ))}
-              </div>
-            </Link>
-          );
-        })
-      )
-    }
+          <div className="coodeThumbArea">
 
-      <Link href={`/clothes-details/${clothesId}/edit-clothes/${clothesId}`}>
-        <button>編集</button>
-      </Link>
-      <Link href={`/clothes-details/${clothesId}/delete-clothes/${clothesId}?from=${from}`}>
-        <button>削除</button>
-      </Link>
+            {clothes.t_coode_clothes?.map((cc) => {
+              const coode = cc.t_coordinations;
+              return (
+                <Link key={coode.id} href={`/coode-details/${coode.id}?from=${currentPath}`}>
+                  <div className="coodeThumbWrapper">
+                    <p className="idNum">ID:{coode.id}</p>
+                    <div className="coodeThumbImgWrapper">
+                      {coode.t_coode_clothes?.map((cc2) => (
+                        <Image key={cc2.t_clothes.id}
+                          src={getImageUrl(cc2.t_clothes.img_path)} alt="アイテムサムネイル画像"
+                          width={70} height={70} className="coodeThumbImg"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
 
-    </>
+          </div>
+
+        )
+        }
+      </section>
+
+      <div className="editDeleteButtons">
+        <Link href={`/clothes-details/${clothesId}/edit-clothes/${clothesId}`}>
+          <button>編集</button>
+        </Link>
+        <Link href={`/clothes-details/${clothesId}/delete-clothes/${clothesId}?from=${from}`}>
+          {/* <button>削除</button> */}
+          <button className="deleteButton"><BsTrash3Fill/></button>
+        </Link>
+      </div>
+
+    </main>
   );
 }
 

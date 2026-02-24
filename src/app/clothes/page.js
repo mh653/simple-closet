@@ -31,32 +31,39 @@ export default async function Clothes() {
   }
 
   return (
-    <>
+    <main>
       <h2>アイテム一覧</h2>
 
         {
         categoryClothes.map((ca) => (
-          <div key={ca.id}>
+          <section key={ca.id} className="itemsList">
             <h3>{ca.name}</h3>
+
             {
             ca.t_clothes.length > 0 ? (
-              ca.t_clothes.map((cl) => (
+
+            <div className="categoryItems">
+
+              {ca.t_clothes.map((cl) => (
                 <Link key={cl.id} href={`/clothes-details/${cl.id}?from=${currentPath}`}>
                   <div>
                     <Image src={getImageUrl(cl.img_path)} alt='' width={100} height={100} />
                   </div>
                 </Link>
-              ))
+              ))}
+
+            </div>
+
             ):(
-              <p>このカテゴリのアイテムはありません</p>
+              <p>アイテムはありません</p>
             )
             }
-          <hr></hr>
-          </div>
+
+          </section>
         ))
         }
 
-    </>
+    </main>
   )
 }
 

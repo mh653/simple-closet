@@ -73,10 +73,7 @@ export default async function Home() {
               ))}
             </div>
           ):(
-            <div className="coodeThumbNone">
               <p>ピン留めされているコーデはありません</p>
-            </div>
-
           )
           }
         </section>
