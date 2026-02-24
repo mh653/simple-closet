@@ -4,7 +4,11 @@ body {
   font-size: 14px;
 }
 main {
-  padding: 0px 10px 60px 10px;
+  padding: 0px 10px 150px 10px;
+}
+section {
+  padding-top: 10px;
+  padding-bottom: 20px;
 }
 button {
   padding: 7px;
@@ -20,10 +24,56 @@ h2 {
   letter-spacing: .03em;
 }
 h3 {
+  margin-top: 10px;
+  margin-bottom: 15px;
   font-size: 18px;
   letter-spacing: .03em;
 }
+.tag {
+  padding: 7px;
+  background-color: #d9d9d9;
+  border-radius: 5px;
+}
+.idNum {
+  font-size: 11px;
+  color: #d9d9d9;
+  text-align: left;
+}
 
+/* コーデサムネイル */
+.coodeThumbArea {
+  display: grid;
+  grid-template-columns: 45% 45%;
+  gap: 10px;
+}
+.coodeThumbWrapper {
+  width: 160px;
+  height: 240px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
+  border: #888 1px solid;
+  border-radius: 10px;
+}
+.coodeThumbImgWrapper {
+  display: grid;
+  grid-template-columns: 70px 70px;
+
+  gap: 2px;
+}
+.coodeThumbImg {
+  border-radius: 5px;
+}
+
+
+
+/* トップ */
+.tagArea {
+  display: flex;
+  gap: 10px;
+}
 
 
 
@@ -87,9 +137,11 @@ nav ul li p {
   position: absolute;
   right: 3px;
   bottom: 3px;
+  color: #888;
 }
 .navHomeIcon {
   font-size: 30px;
+  color: #888;
 }
 
 /* 天気 */

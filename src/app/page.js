@@ -51,42 +51,54 @@ export default async function Home() {
       <Weather />
 
       <main>
-        <h3>ピン留めしたコーデ</h3>
-        {
-        coodes ? (
-          coodes.map((c) => (
-            <Link key={c.id} href={`/coode-details/${c.id}`}>
-              <div>
-                <p>コーデID:{c.id}</p>
+        <section>
+          <h3>ピン留めしたコーデ</h3>
 
-                {c.t_coode_clothes.map((item) => (
-                    <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
-                ))}
-
-              </div>
-            </Link>
-          ))
-        ):(
-          <p>ピン留めされているコーデはありません</p>
-        )
-        }
-
-        <h3>タグでコーデを検索</h3>
-        {tags ? (
-          tags.map((t) => (
-            <div key={t.id}>
-              <Link href={`/tag-coodes/${t.id}`}>{t.name}</Link>
-              <hr></hr>
+          {
+          coodes ? (
+            <div className="coodeThumbArea">
+              {coodes.map((c) => (
+                <Link key={c.id} href={`/coode-details/${c.id}`}>
+                  <div className="coodeThumbWrapper">
+                    <p className="idNum">ID:{c.id}</p>
+                    <div className="coodeThumbImgWrapper">
+                      {c.t_coode_clothes.map((item) => (
+                          <Image key={item.t_clothes.id}
+                          src={getImageUrl(item.t_clothes.img_path)} alt='アイテムサムネイル画像'
+                          width={70} height={70} className="coodeThumbImg"/>
+                      ))}
+                    </div>
+                  </div>
+                </Link>
+              ))}
             </div>
-          ))
-        ):(
-          <p>登録されているタグはありません</p>
-        )
-        }
+          ):(
+            <div className="coodeThumbNone">
+              <p>ピン留めされているコーデはありません</p>
+            </div>
 
+          )
+          }
+        </section>
+
+        <section>
+          <h3>タグでコーデを検索</h3>
+          <div className="tagArea">
+            {tags ? (
+              tags.map((t) => (
+                  <Link key={t.id} href={`/tag-coodes/${t.id}`}>
+                    <div className="tag">{t.name}</div>
+                  </Link>
+              ))
+            ):(
+              <p>登録されているタグはありません</p>
+            )
+            }
+          </div>
+
+        </section>
 
       </main>
-
 
     </>
   );
