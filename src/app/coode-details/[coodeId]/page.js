@@ -6,6 +6,7 @@ import { redirect } from "next/navigation"
 import Image from "next/image";
 import Link from "next/link";
 import FromBackButton from "@/app/ui/FromBackButton";
+import { BsTrash3Fill } from "react-icons/bs";
 
 export default async function CoodeDetail(props) {
   // パラメータ受け取り
@@ -56,57 +57,67 @@ export default async function CoodeDetail(props) {
   }
 
   return (
-    <>
+    <main>
       <FromBackButton />
 
       <h2>コーデ詳細</h2>
+      <p className="idNum">ID:{coodeId}</p>
 
-      <p>ID:{coodeId}</p>
+      <section>
+        <h3>使用アイテム</h3>
+        {!coode.t_coode_clothes || coode.t_coode_clothes.length === 0 ? (
+          <div>
+            <p>アイテムが削除されたようです。</p>
+            <p>「編集」ボタンからアイテムを選択し直すか、「削除」ボタンでコーデを削除してください。</p>
+          </div>
+        ) : (
+          coode.t_coode_clothes.map((item) => (
+            <Link key={item.t_clothes.id} href={`/clothes-details/${item.t_clothes.id}?from=${currentPath}`}>
+              <Image src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
+            </Link>
+          ))
+        )}
+      </section>
 
-      <h3>使用アイテム</h3>
-      {!coode.t_coode_clothes || coode.t_coode_clothes.length === 0 ? (
-        <div>
-          <p>アイテムが削除されたようです。</p>
-          <p>「編集」ボタンからアイテムを選択し直すか、「削除」ボタンでコーデを削除してください。</p>      
-        </div>
-      ) : (
-        coode.t_coode_clothes.map((item) => (
-          <Link key={item.t_clothes.id} href={`/clothes-details/${item.t_clothes.id}?from=${currentPath}`}>
-            <Image src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
-          </Link>
-        ))
-      )}
+      <section>
+        <h3>メモ</h3>
+        <div className="memoArea">{coode.memo}</div>
+      </section>
 
-      <h3>メモ</h3>
-      <p>{coode.memo}</p>
+      <section>
+        <h3>タグ</h3>
+        {!coode.t_coode_tags || coode.t_coode_tags.length === 0 ? (
+          <div>
+            <p>登録されているタグはありません</p>
+          </div>
+        ) : (
+          coode.t_coode_tags.map((tag) => (
+              <p key={tag.t_tags.id}>{tag.t_tags.name}</p>
+          ))
+        )}
+      </section>
 
-      <h3>タグ</h3>
-      {!coode.t_coode_tags || coode.t_coode_tags.length === 0 ? (
-        <div>
-          <p>登録されているタグはありません</p>
-        </div>
-      ) : (
-        coode.t_coode_tags.map((tag) => (
-            <p key={tag.t_tags.id}>{tag.t_tags.name}</p>
-        ))
-      )}
+      <section>
+        <h3>トップ画面にピン留めする？</h3>
+          {coode.pin ? (
+              <p>はい</p>
+            ) : (
+              <p>いいえ</p>
+            )
+          }
+      </section>
 
-      <h3>トップ画面にピン留めする？</h3>
-        {coode.pin ? (
-            <p>はい</p>
-          ) : (
-            <p>いいえ</p>            
-          )
-        }
+      <div className="editDeleteButtons">
+        <Link href={`/coode-details/${coodeId}/edit-coordinations/${coodeId}`}>
+          <button>編集</button>
+        </Link>
+        <Link href={`/coode-details/${coodeId}/delete-coordinations/${coodeId}?from=${from}`}>
+          {/* <button>削除</button> */}
+          <button className="deleteButton"><BsTrash3Fill/></button>
+        </Link>
+      </div>
 
-      <Link href={`/coode-details/${coodeId}/edit-coordinations/${coodeId}`}>
-        <button>編集</button>
-      </Link>
-      <Link href={`/coode-details/${coodeId}/delete-coordinations/${coodeId}?from=${from}`}>
-        <button>削除</button>
-      </Link>
-
-    </>
+    </main>
   );
 }
 
