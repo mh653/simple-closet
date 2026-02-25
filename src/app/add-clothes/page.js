@@ -109,7 +109,7 @@ export default function AddClothes() {
 
       <section>
         <h3>アイテム画像（必須）</h3>
-        <p>※JPEG推奨</p>
+        <p>※正方形、JPEG推奨</p>
         <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files[0])}/>
       </section>
 

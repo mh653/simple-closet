@@ -93,10 +93,10 @@ input[type="file"] {
 input[type="file"]::file-selector-button {
   color: #666;
   cursor: pointer;
-  padding: 10px 12px;
+  padding: 8px 12px;
   background-color: #eee;
   border: #666 solid 1px;
-  border-radius: 5px;
+  border-radius: 20px;
 }
 input[type="file"]::file-selector-button:hover {
   background-color: #d9d9d9;
@@ -371,7 +371,7 @@ header {
 }
 .settingIcon {
   position: absolute;
-  top: 12px;
+  top: 10px;
   left: 10px;
   font-size: 25px;
 }
