@@ -264,9 +264,10 @@ export default function EditCoordinations() {
         <label htmlFor="no"><span className="checkboxRadioText">しない</span></label>
       </section>
 
-      <button onClick={() => changeCoordination()}>変更</button>
-
-      <Note />
+      <div className="btnArea">
+        <button onClick={() => changeCoordination()}>変更</button>
+        <Note />
+      </div>
 
     </main>
   )

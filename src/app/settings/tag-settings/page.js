@@ -3,6 +3,7 @@
 import { supabase } from "@/lib/supabaseClient"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
+import Note from "@/app/ui/Note";
 
 export default function TagSettings() {
   // ルータ
@@ -101,6 +102,10 @@ export default function TagSettings() {
       alert("権限がありません（ログインしてください）");
       return;
     }
+    const result = confirm("本当に削除しますか？");
+    if (!result) {
+      return
+    }
     const { error } = await supabase
       .from("t_tags")
       .delete()
@@ -119,7 +124,9 @@ export default function TagSettings() {
     <main>
       <button onClick={() => router.push("/settings")}>戻る</button>
       <h2>タグの編集</h2>
-      <p className="note">※ログイン時のみ操作可能です</p>
+
+      {/* {!user && <p className="note">※ログイン時のみ操作可能です</p>} */}
+
 
       <section>
         <h3>タグを新規作成する</h3>
@@ -162,6 +169,8 @@ export default function TagSettings() {
         </div>
 
       </section>
+
+      <Note />
 
     </main>
   )

@@ -51,6 +51,36 @@ export default async function Home() {
       <Weather />
 
       <main>
+
+        <section>
+          <h3>タグでコーデを検索</h3>
+          <div className="tagArea">
+            {tags ? (
+              tags.map((t) => (
+                  <Link key={t.id} href={`/tag-coodes/${t.id}`}>
+                    <div className="tag clickableTag">{t.name}</div>
+                  </Link>
+              ))
+            ):(
+              <p>登録されているタグはありません</p>
+            )
+            }
+          </div>
+          {/* <div className="tagArea">
+            {tags ? (
+              tags.map((t) => (
+                  <Link key={t.id} href={`/tag-coodes/${t.id}`}>
+                    <div className="tag clickableTag">{t.name}</div>
+                  </Link>
+              ))
+            ):(
+              <p>登録されているタグはありません</p>
+            )
+            }
+          </div> */}
+
+        </section>
+
         <section>
           <h3>ピン留めしたコーデ</h3>
 
@@ -90,35 +120,6 @@ export default async function Home() {
               <p>ピン留めされているコーデはありません</p>
           )
           }
-        </section>
-
-        <section>
-          <h3>タグでコーデを検索</h3>
-          <div className="tagArea">
-            {tags ? (
-              tags.map((t) => (
-                  <Link key={t.id} href={`/tag-coodes/${t.id}`}>
-                    <div className="tag clickableTag">{t.name}</div>
-                  </Link>
-              ))
-            ):(
-              <p>登録されているタグはありません</p>
-            )
-            }
-          </div>
-          {/* <div className="tagArea">
-            {tags ? (
-              tags.map((t) => (
-                  <Link key={t.id} href={`/tag-coodes/${t.id}`}>
-                    <div className="tag clickableTag">{t.name}</div>
-                  </Link>
-              ))
-            ):(
-              <p>登録されているタグはありません</p>
-            )
-            }
-          </div> */}
-
         </section>
 
       </main>
