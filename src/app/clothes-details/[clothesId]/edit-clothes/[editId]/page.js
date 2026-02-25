@@ -101,8 +101,9 @@ export default function EditCoordinations() {
           <Image
             src={getImageUrl(imgPath)}
             alt=""
-            width={300}
-            height={300}
+            width={500}
+            height={500}
+            className="image"
           />
         )}
 

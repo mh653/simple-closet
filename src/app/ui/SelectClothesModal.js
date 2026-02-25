@@ -65,7 +65,7 @@ export default function SelectClothesModal({ clothes, setClothes, onClose }) {
             {
             ca.t_clothes.length > 0 ? (
 
-              <div className="categoryItems">
+              <div className="categoryItems categoryItemsModal">
 
                 {ca.t_clothes.map((cl) => (
                   <div key={cl.id} onClick={() => toggleClothes(cl.id)} className="modalSelectWrapper">
@@ -73,7 +73,10 @@ export default function SelectClothesModal({ clothes, setClothes, onClose }) {
                     <Image src={getImageUrl(cl.img_path)} width={100} height={100} alt="アイテム画像"/>
 
                     {clothes.includes(cl.id) && (
-                      <p className="modalSelected">選択中</p>
+                      <div className="modalSelected">
+                        <p>選択中</p>
+                      </div>
+
                     )}
 
                   </div>

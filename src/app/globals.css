@@ -34,6 +34,7 @@ button:hover {
   margin-top: 40px;
 }
 
+
 h1 {
   font-size: 20px;
   letter-spacing: .03em;
@@ -222,6 +223,16 @@ select {
   border-radius: 5px;
 } */
 
+
+/* 登録完了画面 */
+.resultButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+
 /* アイテム一覧 */
 .itemsList {
   border-top: #d9d9d9 1px solid;
@@ -344,6 +355,7 @@ header {
   position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
   /* background-color: #d9d9d9; */
   background-color: #c9e8eb;
   color: #fff;
@@ -352,7 +364,10 @@ header {
   position: absolute;
   top: 10px;
   left: 10px;
-  font-size: 20px;
+  font-size: 25px;
+}
+.settingIcon:hover {
+  color: #99d7db;
 }
 
 /* ナビ */
@@ -393,6 +408,9 @@ nav ul li p {
   font-size: 30px;
   color: #fff;
 }
+.navIcon:hover {
+  color: #99d7db;
+}
 .navPlusIcon {
   position: absolute;
   right: 3px;
@@ -402,6 +420,9 @@ nav ul li p {
 .navHomeIcon {
   font-size: 30px;
   color: #888;
+}
+.navHomeIcon:hover {
+  color: #99d7db;
 }
 
 /* 天気 */
@@ -482,7 +503,7 @@ nav ul li p {
   width: 95%;
   height: 80%;
   /* margin: 5vh; */
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
 }
 .modalClothes {
@@ -511,7 +532,10 @@ nav ul li p {
   align-items: center;
   color: #fff;
 }
-
+.categoryItemsModal {
+  /* grid-template-columns: repeat(auto-fit, 100px); */
+  gap: 5px;
+}
 
 
 /* :root {
