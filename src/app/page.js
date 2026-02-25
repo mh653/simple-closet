@@ -56,10 +56,9 @@ export default async function Home() {
 
           {
           coodes ? (
-            <div className="coodeThumbArea">
+              <div className="coodeThumbArea">
               {coodes.map((c) => (
-                <Link key={c.id} href={`/coode-details/${c.id}`}>
-                  <div className="coodeThumbWrapper">
+                <Link key={c.id} href={`/coode-details/${c.id}`} className="coodeThumbWrapper">
                     <p className="idNum">ID:{c.id}</p>
                     <div className="coodeThumbImgWrapper">
                       {c.t_coode_clothes.map((item) => (
@@ -68,10 +67,25 @@ export default async function Home() {
                           width={70} height={70} className="coodeThumbImg"/>
                       ))}
                     </div>
-                  </div>
                 </Link>
               ))}
             </div>
+            // <div className="coodeThumbArea">
+            //   {coodes.map((c) => (
+            //     <Link key={c.id} href={`/coode-details/${c.id}`}>
+            //       <div className="coodeThumbWrapper">
+            //         <p className="idNum">ID:{c.id}</p>
+            //         <div className="coodeThumbImgWrapper">
+            //           {c.t_coode_clothes.map((item) => (
+            //               <Image key={item.t_clothes.id}
+            //               src={getImageUrl(item.t_clothes.img_path)} alt='アイテムサムネイル画像'
+            //               width={70} height={70} className="coodeThumbImg"/>
+            //           ))}
+            //         </div>
+            //       </div>
+            //     </Link>
+            //   ))}
+            // </div>
           ):(
               <p>ピン留めされているコーデはありません</p>
           )
@@ -92,6 +106,18 @@ export default async function Home() {
             )
             }
           </div>
+          {/* <div className="tagArea">
+            {tags ? (
+              tags.map((t) => (
+                  <Link key={t.id} href={`/tag-coodes/${t.id}`}>
+                    <div className="tag clickableTag">{t.name}</div>
+                  </Link>
+              ))
+            ):(
+              <p>登録されているタグはありません</p>
+            )
+            }
+          </div> */}
 
         </section>
 

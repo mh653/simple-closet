@@ -30,8 +30,8 @@ export default function AddClothes() {
   new Promise((resolve) => {
     FileResizer.imageFileResizer(
       file,    // リサイズ対象のファイル
-      500,     // 横500px固定
-      3000,    // 縦は十分大きくして自動計算させる
+      800,     // 横1000px固定
+      4000,    // 縦は十分大きくして自動計算させる
       "JPEG",  // 出力形式
       90,      // 画質（JPEGの場合1〜100）
       0,       // 回転角度
@@ -61,10 +61,10 @@ export default function AddClothes() {
       alert("画像を選択してください")
       return
     }
-    if (!["image/jpeg", "image/heic", "image/heif"].includes(file.type)) {
-      alert("JPEGのみアップロード可能です");
-      return;
-    }
+    // if (!["image/jpeg", "image/heic", "image/heif"].includes(file.type)) {
+    //   alert("JPEGのみアップロード可能です");
+    //   return;
+    // }
     if(!categoryId) {
       alert("カテゴリを選択してください")
       return
@@ -106,11 +106,11 @@ export default function AddClothes() {
   return (
     <main>
       <h2>アイテム登録</h2>
-      
+
       <section>
         <h3>アイテム画像（必須）</h3>
         <p>※JPEG推奨</p>
-        <input type="file" accept="image/jpeg,image/heic,image/heif" onChange={(e) => setFile(e.target.files[0])}/>        
+        <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files[0])}/>
       </section>
 
       <section>
@@ -128,17 +128,19 @@ export default function AddClothes() {
           <option value={9}>バッグ</option>
           <option value={10}>アクセサリー</option>
           <option value={11}>その他</option>
-        </select>        
+        </select>
       </section>
 
       <section>
         <h3>メモ</h3>
-        <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>        
+        <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>
       </section>
 
+    <div className="btnArea">
       <button onClick={() => addClothes()}>登録</button>
-      
       <Note />
+    </div>
+
 
     </main>
   )

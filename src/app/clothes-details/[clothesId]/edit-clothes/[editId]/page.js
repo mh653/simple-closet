@@ -108,7 +108,7 @@ export default function EditCoordinations() {
 
         <section>
           <h3>メモ</h3>
-          <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>          
+          <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>
         </section>
 
         <section>
@@ -125,12 +125,14 @@ export default function EditCoordinations() {
             <option value={9}>バッグ</option>
             <option value={10}>アクセサリー</option>
             <option value={11}>その他</option>
-          </select>          
+          </select>
         </section>
 
-        <button onClick={() => changeClothes()}>変更</button>
+        <div className="btnArea">
+          <button onClick={() => changeClothes()}>変更</button>
+          <Note />
+        </div>
 
-        <Note />
     </main>
   )
 }

@@ -156,7 +156,7 @@ export default function AddCoodinations() {
       <h2>コーデ登録</h2>
 
       <section>
-        <h3>使用アイテム(6点まで)</h3>        
+        <h3>使用アイテム(6点まで)</h3>
         <button onClick={() => setIsOpen(true)}>アイテムを選択</button>
         {isOpen && (
           <div className="modal">
@@ -167,7 +167,7 @@ export default function AddCoodinations() {
             />
           </div>
         )}
-        
+
         {selectedClothes.length > 0 ? (
           <div className="selectedClothes">
             {selectedClothes.map((s) => (
@@ -177,34 +177,37 @@ export default function AddCoodinations() {
           ):(
             null
         )}
-     
+
       </section>
 
       <section>
         <h3>メモ</h3>
-        <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>        
+        <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>
       </section>
 
       <section>
         <h3>タグ</h3>
-        {
-          tags.length > 0 ? (
-            tags.map((tag) => (
-              <span key={tag.id}>
-                <input type="checkbox" id={tag.id} name="istag" value={tag.id}
-                  checked={tagsId.includes(tag.id)}
-                  onChange={() => toggleTag(tag.id)}
-                />
-                <label htmlFor={tag.id}><span className="checkboxRadioText">{tag.name}</span></label>
-              </span>
-            ))
-          ):(
-            <p>作成されたタグがありません</p>
-          )
-        }
+        <div className="tagArea">
+          {
+            tags.length > 0 ? (
+              tags.map((tag) => (
+                <span key={tag.id}>
+                  <input type="checkbox" id={tag.id} name="istag" value={tag.id}
+                    checked={tagsId.includes(tag.id)}
+                    onChange={() => toggleTag(tag.id)}
+                  />
+                  <label htmlFor={tag.id}><span className="checkboxRadioText">{tag.name}</span></label>
+                </span>
+              ))
+            ):(
+              <p>作成されたタグがありません</p>
+            )
+          }
+        </div>
+
         <div className="tagCreateWrapper">
           <input type="text" placeholder="タグ名を入力" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
-          <button onClick={() => handleAddTag()}>タグを作成</button>
+          <button onClick={() => handleAddTag()}>タグ作成</button>
         </div>
       </section>
 
@@ -216,9 +219,10 @@ export default function AddCoodinations() {
         <label htmlFor="no"><span className="checkboxRadioText">しない</span></label>
       </section>
 
-      <button onClick={() => addCoordination()}>登録</button>
-        
-      <Note />
+      <div className="btnArea">
+        <button onClick={() => addCoordination()}>登録</button>
+        <Note />
+      </div>
 
     </main>
   )

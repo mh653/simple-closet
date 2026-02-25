@@ -227,26 +227,29 @@ export default function EditCoordinations() {
 
       <section>
         <h3>メモ</h3>
-        <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>        
+        <textarea value={memo} onChange={(e) => setMemo(e.target.value)} rows={3}/>
       </section>
 
       <section>
         <h3>タグ</h3>
-        {
-          tags.length > 0 ? (
-            tags.map((tag) => (
-              <span key={tag.id}>
-                <input type="checkbox" id={tag.id} name="istag" value={tag.id}
-                  checked={tagsId.includes(tag.id)}
-                  onChange={() => toggleTag(tag.id)}
-                />
-                <label htmlFor={tag.id}><span className="checkboxRadioText">{tag.name}</span></label>
-              </span>
-            ))
-          ):(
-            <p>作成されたタグがありません</p>
-          )
-        }
+        <div className="tagArea">
+          {
+            tags.length > 0 ? (
+              tags.map((tag) => (
+                <span key={tag.id}>
+                  <input type="checkbox" id={tag.id} name="istag" value={tag.id}
+                    checked={tagsId.includes(tag.id)}
+                    onChange={() => toggleTag(tag.id)}
+                  />
+                  <label htmlFor={tag.id}><span className="checkboxRadioText">{tag.name}</span></label>
+                </span>
+              ))
+            ):(
+              <p>作成されたタグがありません</p>
+            )
+          }
+        </div>
+
         <div className="tagCreateWrapper">
           <input type="text" placeholder="タグ名を入力" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
           <button onClick={() => handleAddTag()}>タグを作成</button>
