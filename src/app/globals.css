@@ -33,6 +33,7 @@ button:hover {
 .btnArea {
   margin-top: 40px;
 }
+
 h1 {
   font-size: 20px;
   letter-spacing: .03em;
@@ -63,7 +64,8 @@ input[type="text"] {
 }
 input[type="text"]:focus {
   outline: none;
-  border: #99d7db 3px solid;
+  /* border: #99d7db 3px solid; */
+  border: #015cc8 1px solid;
 }
 input[type="password"] {
   /* height: 30px; */
@@ -75,7 +77,8 @@ input[type="password"] {
 }
 input[type="password"]:focus {
   outline: none;
-  border: #99d7db 3px solid;
+  /* border: #99d7db 3px solid; */
+  border: #015cc8 1px solid;
 }
 input[type="file"] {
   margin-top: 5px;
@@ -111,7 +114,8 @@ textarea {
 }
 textarea:focus {
   outline: none;
-  border: #99d7db 3px solid;
+  /* border: #99d7db 3px solid; */
+  border: #015cc8 1px solid;
 }
 select {
   width: 200px;
@@ -170,7 +174,7 @@ select {
 /* コーデサムネイル */
 .coodeThumbArea {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+  grid-template-columns: repeat(2, minmax(155px, 1fr));
   gap: 10px;
 }
 .coodeThumbWrapper {
@@ -191,7 +195,8 @@ select {
 .coodeThumbImg {
   width: 100%;
   height: auto;
-  border-radius: 5px;
+  /* border-radius: 5px; */
+  border-radius: calc(infinity * 1px);
 }
 /* .coodeThumbArea {
   display: grid;
@@ -223,7 +228,8 @@ select {
 }
 .categoryItems {
   display: grid;
-  grid-template-columns: repeat(3, 100px);
+  /* grid-template-columns: repeat(3, 100px); */
+  grid-template-columns: repeat(auto-fit, 100px);
   gap: 10px;
 }
 
@@ -258,10 +264,22 @@ select {
 }
 
 
+/* コーデ詳細画面 */
 /* コーデ登録画面 */
 .selectedClothes {
+  max-width: 500px;
   margin: 10px 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(155px, 1fr));
+  gap: 10px;
 }
+.selectedClothesImg {
+  width: 100%;
+  height: auto;
+}
+
+
+
 
 /* コーデ削除画面 */
 .yesNo {
@@ -277,6 +295,9 @@ select {
 .loginSec {
   margin-top: 10px;
 }
+.settings button {
+  margin-top: 10px;
+}
 
 /* タグ設定画面 */
 .tagCreateWrapper {
@@ -285,10 +306,20 @@ select {
   align-items: stretch;
   gap: 10px;
 }
+.tagEditDeleteWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 .tagSetWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.tagEditWrapper {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
 }
 .tagBtns {
   display: flex;
@@ -296,6 +327,14 @@ select {
 }
 
 
+/* タグでコーデを検索 */
+.tagResult {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
 /* ヘッダー */
 header {
@@ -426,7 +465,7 @@ nav ul li p {
 
 
 
-
+/* コーデアイテム選択モーダル */
 .modal {
   position: fixed;
   inset: 0;
@@ -440,22 +479,38 @@ nav ul li p {
 }
 .modalContent {
   background: white;
-  height: 80vh;
-  width: 90vw;
-  margin: 5vh;
+  width: 95%;
+  height: 80%;
+  /* margin: 5vh; */
   padding: 20px;
   border-radius: 10px;
 }
 .modalClothes {
-  background: white;
-  border: 1px solid black;
-  height: 60vh;
-  width: 80vw;
+  height: 90%;
+  width: 99%;
+  margin-top: 10px;
   padding: 10px;
-  max-height: 80vh;   /* 画面の80%まで */
+  background: white;
+  border: 1px solid #666;
+
+  /* max-height: 80vh;   画面の80%まで */
   overflow-y: auto;   /* 縦スクロール */
 }
-
+.modalSelectWrapper {
+  position: relative;
+}
+.modalSelected {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
 
 
 

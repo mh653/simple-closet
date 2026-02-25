@@ -81,7 +81,7 @@ export default function Header() {
   }
 
   return (
-    <main>
+    <main className="settings">
       <h2>設定</h2>
 
       <section>
@@ -97,9 +97,12 @@ export default function Header() {
               <label><p>ID</p><input type="text" onChange={(e) => setEmail(e.target.value)} value={email}></input></label>
               <label><p>パスワード</p><input type="password" onChange={(e) => setPassword(e.target.value)} value={password}></input></label>
               <br></br>
-              <button onClick={() => login()}>ログイン</button>        
+              <div>
+
+              </div>
+              <button onClick={() => login()}>ログイン</button>
             </>
-          )}        
+          )}
         </div>
       </section>
 
@@ -121,7 +124,7 @@ export default function Header() {
         <p>下記ボタンからタグを新規作成・編集・削除して頂けます。</p>
         <Link href={"settings/tag-settings"}>
           <button>タグを編集する</button>
-        </Link>        
+        </Link>
       </section>
 
 

@@ -71,11 +71,15 @@ export default async function CoodeDetail(props) {
             <p>「編集」ボタンからアイテムを選択し直すか、「削除」ボタンでコーデを削除してください。</p>
           </div>
         ) : (
-          coode.t_coode_clothes.map((item) => (
-            <Link key={item.t_clothes.id} href={`/clothes-details/${item.t_clothes.id}?from=${currentPath}`}>
-              <Image src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
-            </Link>
-          ))
+          <div className="selectedClothes">
+            {coode.t_coode_clothes.map((item) => (
+              <Link key={item.t_clothes.id} href={`/clothes-details/${item.t_clothes.id}?from=${currentPath}`}>
+                <Image src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} className="selectedClothesImg"/>
+              </Link>
+            ))}
+
+          </div>
+
         )}
       </section>
 

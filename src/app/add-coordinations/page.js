@@ -171,7 +171,7 @@ export default function AddCoodinations() {
         {selectedClothes.length > 0 ? (
           <div className="selectedClothes">
             {selectedClothes.map((s) => (
-              <Image key={s.id} src={getImageUrl(s.img_path)} alt='' width={100} height={100} />
+              <Image key={s.id} src={getImageUrl(s.img_path)} alt='' width={100} height={100} className="selectedClothesImg"/>
             ))}
           </div>
           ):(

@@ -51,29 +51,56 @@ export default async function tagCoode(props) {
 
   return (
     <main>
-      <h2>タグでコーデを検索</h2>
+      {/* <h2>タグでコーデを検索</h2> */}
 
       <section>
-        <p><span className="tag">{tagData.name}</span> の検索結果</p>
+        <div className="tagResult">
+          <div className="tag">{tagData.name}</div>
+          <p>の検索結果</p>
+        </div>
 
         {!coodes || coodes.length === 0 ? (
           <p>このタグに登録されているコーデはありません</p>
         ) : (
-          coodes.map((c) => (
 
-            <Link key={c.id} href={`/coode-details/${c.id}?from=${currentPath}`}>
-              <div>
-                <p className="idNum">ID:{c.id}</p>
 
-                {c.t_coode_clothes.map((item) => (
-                    <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
-                ))}
+            <div className="coodeThumbArea">
+              {coodes.map((c) => (
+                <Link key={c.id} href={`/coode-details/${c.id}?from=${currentPath}`} className="coodeThumbWrapper">
+                    <p className="idNum">ID:{c.id}</p>
+                    <div className="coodeThumbImgWrapper">
+                      {c.t_coode_clothes.map((item) => (
+                          <Image key={item.t_clothes.id}
+                          src={getImageUrl(item.t_clothes.img_path)} alt='アイテムサムネイル画像'
+                          width={70} height={70} className="coodeThumbImg"/>
+                      ))}
+                    </div>
+                </Link>
+              ))}
+            </div>
 
-              </div>
-            </Link>
 
-          ))
-        )}        
+
+
+          // coodes.map((c) => (
+
+          //   <Link key={c.id} href={`/coode-details/${c.id}?from=${currentPath}`}>
+          //     <div>
+          //       <p className="idNum">ID:{c.id}</p>
+
+          //       {c.t_coode_clothes.map((item) => (
+          //           <Image key={item.t_clothes.id} src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} />
+          //       ))}
+
+          //     </div>
+          //   </Link>
+
+          // ))
+
+
+
+
+        )}
       </section>
 
     </main>

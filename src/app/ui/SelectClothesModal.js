@@ -54,32 +54,39 @@ export default function SelectClothesModal({ clothes, setClothes, onClose }) {
   return (
     <div className="modalContent">
       <button onClick={onClose}>選択して閉じる</button>
-      <p>アイテムを選択してください</p>
+      {/* <p>アイテムを選択してください</p> */}
       <div className="modalClothes">
 
         {
         categoryClothes.map((ca) => (
-          <div key={ca.id}>
+          <section key={ca.id} className="itemsList">
             <h3>{ca.name}</h3>
+
             {
             ca.t_clothes.length > 0 ? (
-              ca.t_clothes.map((cl) => (
-                <div key={cl.id} onClick={() => toggleClothes(cl.id)}>
 
-                  <Image src={getImageUrl(cl.img_path)} width={100} height={100} alt=""/>
+              <div className="categoryItems">
 
-                  {clothes.includes(cl.id) && (
-                    <p>選択中</p>
-                  )}
+                {ca.t_clothes.map((cl) => (
+                  <div key={cl.id} onClick={() => toggleClothes(cl.id)} className="modalSelectWrapper">
 
-                </div>
-              ))
-            ):(
-              <p>このカテゴリのアイテムはありません</p>
-            )
-            }
-          <hr></hr>
-          </div>
+                    <Image src={getImageUrl(cl.img_path)} width={100} height={100} alt="アイテム画像"/>
+
+                    {clothes.includes(cl.id) && (
+                      <p className="modalSelected">選択中</p>
+                    )}
+
+                  </div>
+                ))}
+
+              </div>
+
+              ):(
+                <p>アイテムはありません</p>
+              )
+              }
+
+          </section>
         ))
         }
 

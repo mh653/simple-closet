@@ -119,45 +119,48 @@ export default function TagSettings() {
     <main>
       <button onClick={() => router.push("/settings")}>戻る</button>
       <h2>タグの編集</h2>
-      <p>※ログイン時のみ操作可能です</p>
+      <p className="note">※ログイン時のみ操作可能です</p>
 
       <section>
         <h3>タグを新規作成する</h3>
         <div className="tagCreateWrapper">
           <input type="text" placeholder="タグ名を入力" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
-          <button onClick={() => handleAddTag()}>作成</button>    
+          <button onClick={() => handleAddTag()}>タグ作成</button>
         </div>
       </section>
 
       <section>
         <h3>タグを編集・削除する</h3>
-        {
-          tags.length > 0 ? (
-            tags.map((tag) => (
-              <div key={tag.id}>
-                {tag.id === editingId ? (
-                  <div className="tagCreateWrapper">
-                    <input type="text" value={editTag} onChange={(e => setEditTag(e.target.value))}></input>
-                    <button onClick={() => handleUpdateTag(tag.id,editTag)}>保存</button>
-                  </div>
-                ) : (
-                  <div className="tagSetWrapper">
-                    <p className="tag">{tag.name}</p>
-                    <div className="tagBtns">
-                      <button onClick={() => {
-                        setEditingId(tag.id)
-                        setEditTag(tag.name)
-                        }}>編集</button>
-                      <button onClick={() => handleDeleteTag(tag.id)}>削除</button>                      
+        <div className="tagEditDeleteWrapper">
+          {
+            tags.length > 0 ? (
+              tags.map((tag) => (
+                <div key={tag.id}>
+                  {tag.id === editingId ? (
+                    <div className="tagEditWrapper">
+                      <input type="text" value={editTag} onChange={(e => setEditTag(e.target.value))}></input>
+                      <button onClick={() => handleUpdateTag(tag.id,editTag)}>保存</button>
                     </div>
-                  </div>
-                )}
-              </div>
-            ))
-          ):(
-            <p>作成されたタグがありません</p>
-          )
-        }        
+                  ) : (
+                    <div className="tagSetWrapper">
+                      <p className="tag">{tag.name}</p>
+                      <div className="tagBtns">
+                        <button onClick={() => {
+                          setEditingId(tag.id)
+                          setEditTag(tag.name)
+                          }}>編集</button>
+                        <button onClick={() => handleDeleteTag(tag.id)}>削除</button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))
+            ):(
+              <p>作成されたタグがありません</p>
+            )
+          }
+        </div>
+
       </section>
 
     </main>
