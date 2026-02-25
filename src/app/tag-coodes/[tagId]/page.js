@@ -51,6 +51,9 @@ export default async function tagCoode(props) {
 
   return (
     <main>
+      <Link href="/">
+        <button>戻る</button>
+      </Link>
       {/* <h2>タグでコーデを検索</h2> */}
 
       <section>
