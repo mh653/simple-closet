@@ -61,10 +61,10 @@ export default async function CoodeDetail(props) {
       <FromBackButton />
 
       <h2>コーデ詳細</h2>
-      <p className="idNum">ID:{coodeId}</p>
 
       <section>
-        <h3>使用アイテム</h3>
+        {/* <h3>使用アイテム</h3> */}
+        <p className="idNum">No.{coodeId}</p>
         {!coode.t_coode_clothes || coode.t_coode_clothes.length === 0 ? (
           <div>
             <p>アイテムが削除されたようです。</p>
@@ -72,6 +72,7 @@ export default async function CoodeDetail(props) {
           </div>
         ) : (
           <div className="selectedClothes">
+
             {coode.t_coode_clothes.map((item) => (
               <Link key={item.t_clothes.id} href={`/clothes-details/${item.t_clothes.id}?from=${currentPath}`}>
                 <Image src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} className="selectedClothesImg"/>

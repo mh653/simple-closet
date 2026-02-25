@@ -63,9 +63,8 @@ export default async function ClothesDetail(props) {
       <h2>アイテム詳細</h2>
 
       <section>
-        <p className="idNum">ID:{clothesId}</p>
+        <p className="idNum">Item:{clothesId}</p>
         <Image src={getImageUrl(clothes.img_path)} alt='アイテム画像' width={500} height={500} className="image" />
-
       </section>
 
       <section>
@@ -92,7 +91,7 @@ export default async function ClothesDetail(props) {
               return (
                 <Link key={coode.id} href={`/coode-details/${coode.id}?from=${currentPath}`}>
                   <div className="coodeThumbWrapper">
-                    <p className="idNum">ID:{coode.id}</p>
+                    <p className="idNum">No.{coode.id}</p>
                     <div className="coodeThumbImgWrapper">
                       {coode.t_coode_clothes?.map((cc2) => (
                         <Image key={cc2.t_clothes.id}

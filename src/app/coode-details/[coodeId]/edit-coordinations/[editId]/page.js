@@ -202,7 +202,7 @@ export default function EditCoordinations() {
       <section>
         <h3>使用アイテム(6点まで)</h3>
 
-        <button onClick={() => setIsOpen(true)}>アイテムを選択</button>
+        <button onClick={() => setIsOpen(true)} className="selectItemBtn">アイテムを選択</button>
         {isOpen && (
           <div className="modal">
             <SelectClothesModal

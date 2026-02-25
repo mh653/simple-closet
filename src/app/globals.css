@@ -45,6 +45,12 @@ h2 {
   margin-top: 30px;
   margin-bottom: 30px;
 }
+/* h2.detailPage {
+  margin-bottom: 5px;
+}
+.detailId {
+  padding-bottom: 30px;
+} */
 h3 {
   margin-top: 10px;
   margin-bottom: 15px;
@@ -277,9 +283,12 @@ select {
 
 /* コーデ詳細画面 */
 /* コーデ登録画面 */
+.selectItemBtn {
+  margin-bottom: 10px;
+}
 .selectedClothes {
   max-width: 500px;
-  margin: 10px 0;
+  /* margin: 10px 0; */
   display: grid;
   grid-template-columns: repeat(2, minmax(155px, 1fr));
   gap: 10px;
