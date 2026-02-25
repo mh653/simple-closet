@@ -85,7 +85,7 @@ export default function Weather() {
 
         <div className="weatherSec">
           {times.map((t) => {
-            const Icon = weatherIconMap[weather.forecast.forecastday[0].hour[t].condition.code];
+            const Icon = weatherIconMap[weather.forecast.forecastday[0].hour[t].condition.code] ?? WiCloud;
             const officialIcon = "https:" + weatherIconMap[weather.forecast.forecastday[0].hour[t].condition.icon];
             return(
                 <div key={t} className="weatherEach">
