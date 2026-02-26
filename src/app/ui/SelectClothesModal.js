@@ -53,7 +53,7 @@ export default function SelectClothesModal({ clothes, setClothes, onClose }) {
 
   return (
     <div className="modalContent">
-      <button onClick={onClose}>選択して閉じる</button>
+      <button onClick={onClose} className="grayBtn">選択して閉じる</button>
       {/* <p>アイテムを選択してください</p> */}
       <div className="modalClothes">
 

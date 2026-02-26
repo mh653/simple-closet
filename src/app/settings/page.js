@@ -113,7 +113,7 @@ export default function Header() {
         <p>（位置情報はローカルストレージに保存されます）</p>
 
         {loading ? (
-          <button disabled>取得中…</button>
+          <button disabled className="disabledBtn">取得中…</button>
         ) : (
           <button onClick={() => fetchLocation()}>位置情報を取得する</button>
         )}

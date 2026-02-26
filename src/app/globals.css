@@ -1,6 +1,8 @@
 /* lightAzure #c9e8eb */
 /* lightCyan #b8e3e5 */
 /* kusumiCyan #99d7db */
+/* kusumiblue #97b1d0 */
+/* Turquise #28a3b5 */
 
 
 /* 共通部分 */
@@ -19,19 +21,32 @@ section {
 button {
   /* margin-top: 10px; */
   padding: 10px 12px;
-  /* background-color: #d9d9d9; */
-  background-color: #eee;
-  border: #666 solid 1px;
-  /* background-color: #bbb;
-  color: #fff; */
+  /* border: #666 solid 1px; */
+  /* background-color: #c9e8eb; */
+  background-color: #28a3b5;
+  color: #fff;
   border-radius: 5px;
+
 }
 button:hover {
-  background-color: #d9d9d9;
-  /* background-color: #999; */
+  background-color: #99d7db;
+}
+.disabledBtn {
+  background-color: #99d7db;
 }
 .btnArea {
   margin-top: 40px;
+}
+.bigBtn {
+  padding: 18px 24px;
+}
+.grayBtn {
+  color: #666;
+  background-color: #eee;
+  border: #666 solid 1px;
+}
+.grayBtn:hover {
+  background-color: #d9d9d9;
 }
 
 
@@ -152,14 +167,20 @@ select {
 .tag {
   padding: 10px 15px;
   /* background-color: #d9d9d9; */
-  background-color: #c9e8eb;
+  /* background-color: #c9e8eb; */
+  /* background-color: #97b1d0; */
+  background-color: #4181cf;
+  /* border: #4181cf 1px solid; */
+  color: #fff;
   border-radius: 20px;
 }
 .clickableTag:hover {
   padding: 10px 15px;
   /* background-color: #d9d9d9; */
-  background-color: #99d7db;
-  border-radius: 20px;
+  /* background-color: #99d7db; */
+  background-color: #99beeb;
+  /* background-color: #fff; */
+  /* color: #4181cf; */
 }
 
 /* メモ */
@@ -366,7 +387,8 @@ header {
   justify-content: center;
   align-items: center;
   /* background-color: #d9d9d9; */
-  background-color: #c9e8eb;
+  /* background-color: #c9e8eb; */
+  background-color: #99d7db;
   color: #fff;
 }
 .settingIcon {
@@ -374,20 +396,25 @@ header {
   top: 10px;
   left: 10px;
   font-size: 25px;
+  /* color: #666; */
 }
 .settingIcon:hover {
-  color: #99d7db;
+  /* color: #99d7db; */
+  /* color: #888; */
+  color: #28a3b5;
+  
 }
 
 /* ナビ */
 nav {
   width: 100%;
-  height: 100px;
+  height: 90px;
   position: fixed;
   bottom: 0;
   left: 0;
   /* background-color: #d9d9d9; */
-  background-color: #c9e8eb;
+  /* background-color: #c9e8eb; */
+  background-color: #99d7db;
 }
 nav ul {
   display: flex;
@@ -418,7 +445,11 @@ nav ul li p {
   color: #fff;
 }
 .navIcon:hover {
-  color: #99d7db;
+  /* color: #999; */
+  color: #28a3b5;
+  /* color: #c9e8eb; */
+  /* color: #d9d9d9; */
+  /* color: #99d7db; */
 }
 .navPlusIcon {
   position: absolute;
@@ -431,7 +462,8 @@ nav ul li p {
   color: #888;
 }
 .navHomeIcon:hover {
-  color: #99d7db;
+  color: #28a3b5;
+  /* color: #99d7db; */
 }
 
 /* 天気 */

@@ -202,7 +202,7 @@ export default function EditCoordinations() {
       <section>
         <h3>使用アイテム(6点まで)</h3>
 
-        <button onClick={() => setIsOpen(true)} className="selectItemBtn">アイテムを選択</button>
+        <button onClick={() => setIsOpen(true)} className="selectItemBtn grayBtn">アイテムを選択</button>
         {isOpen && (
           <div className="modal">
             <SelectClothesModal
@@ -252,7 +252,7 @@ export default function EditCoordinations() {
 
         <div className="tagCreateWrapper">
           <input type="text" placeholder="タグ名を入力" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
-          <button onClick={() => handleAddTag()}>タグを作成</button>
+          <button onClick={() => handleAddTag()} className="grayBtn">タグを作成</button>
         </div>
       </section>
 

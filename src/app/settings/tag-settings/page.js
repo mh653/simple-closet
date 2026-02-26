@@ -132,7 +132,7 @@ export default function TagSettings() {
         <h3>タグを新規作成する</h3>
         <div className="tagCreateWrapper">
           <input type="text" placeholder="タグ名を入力" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
-          <button onClick={() => handleAddTag()}>タグ作成</button>
+          <button onClick={() => handleAddTag()} className="grayBtn">タグ作成</button>
         </div>
       </section>
 
@@ -146,7 +146,7 @@ export default function TagSettings() {
                   {tag.id === editingId ? (
                     <div className="tagEditWrapper">
                       <input type="text" value={editTag} onChange={(e => setEditTag(e.target.value))}></input>
-                      <button onClick={() => handleUpdateTag(tag.id,editTag)}>保存</button>
+                      <button onClick={() => handleUpdateTag(tag.id,editTag)} className="grayBtn">保存</button>
                     </div>
                   ) : (
                     <div className="tagSetWrapper">
@@ -155,8 +155,9 @@ export default function TagSettings() {
                         <button onClick={() => {
                           setEditingId(tag.id)
                           setEditTag(tag.name)
-                          }}>編集</button>
-                        <button onClick={() => handleDeleteTag(tag.id)}>削除</button>
+                          }}
+                          className="grayBtn">編集</button>
+                        <button onClick={() => handleDeleteTag(tag.id)} className="grayBtn">削除</button>
                       </div>
                     </div>
                   )}

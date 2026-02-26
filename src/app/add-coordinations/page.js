@@ -157,7 +157,7 @@ export default function AddCoodinations() {
 
       <section>
         <h3>使用アイテム(6点まで)</h3>
-        <button onClick={() => setIsOpen(true)} className="selectItemBtn">アイテムを選択</button>
+        <button onClick={() => setIsOpen(true)} className="selectItemBtn grayBtn">アイテムを選択</button>
         {isOpen && (
           <div className="modal">
             <SelectClothesModal
@@ -207,7 +207,7 @@ export default function AddCoodinations() {
 
         <div className="tagCreateWrapper">
           <input type="text" placeholder="タグ名を入力" value={newTag} onChange={(e) => setNewTag(e.target.value)}/>
-          <button onClick={() => handleAddTag()}>タグ作成</button>
+          <button onClick={() => handleAddTag()} className="grayBtn">タグ作成</button>
         </div>
       </section>
 
