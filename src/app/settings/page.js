@@ -86,7 +86,6 @@ export default function Header() {
 
       <section>
         <h3>・ログイン</h3>
-        <p>デフォルトでは閲覧のみ可能です。</p>
         <p>ポートフォリオサイトに記載のIDとパスワードでログインして頂くと、登録や削除が可能になります。</p>
         <p>定期的にDBをリセットしていますので、お気軽にお試しください。</p>
         <div className="loginSec">

@@ -46,9 +46,7 @@ export default async function Clothes() {
 
               {ca.t_clothes.map((cl) => (
                 <Link key={cl.id} href={`/clothes-details/${cl.id}?from=${currentPath}`}>
-                  <div>
                     <Image src={getImageUrl(cl.img_path)} alt='' width={100} height={100} />
-                  </div>
                 </Link>
               ))}
 

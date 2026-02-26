@@ -213,6 +213,11 @@ select {
   flex-direction: column;
   border: #888 1px solid;
   border-radius: 10px;
+  transition: .2s;
+}
+.coodeThumbWrapper:hover {
+  /* transform: translateY(-3px); */
+  opacity: .7;
 }
 .coodeThumbImgWrapper {
   display: grid;
@@ -270,7 +275,13 @@ select {
   grid-template-columns: repeat(auto-fit, 100px);
   gap: 10px;
 }
-
+.categoryItems>a {
+  transition: .2s;
+}
+.categoryItems>a:hover {
+  /* transform: translateY(-3px); */
+  opacity: .7;
+}
 
 /* アイテム詳細画面 */
 .clothesDetailImgWrapper {
@@ -317,6 +328,13 @@ select {
 .selectedClothesImg {
   width: 100%;
   height: auto;
+}
+.selectedClothes>a {
+  transition: .2s;
+}
+.selectedClothes>a:hover {
+  /* transform: translateY(-3px); */
+  opacity: .7;
 }
 
 
@@ -412,6 +430,7 @@ nav {
   position: fixed;
   bottom: 0;
   left: 0;
+  z-index: 100;
   /* background-color: #d9d9d9; */
   /* background-color: #c9e8eb; */
   background-color: #99d7db;
