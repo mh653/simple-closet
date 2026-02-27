@@ -9,40 +9,50 @@ export default function Nav() {
     <nav>
 
       <ul>
-        <li><Link href={"/clothes"}>
-          <div className="navIconWrappwer">
-            <FaTshirt className="navIcon"/>
-          </div>
-          <p>アイテム一覧</p>
-        </Link></li>
 
-        <li><Link href={"/coordinations"}>
-          <div className="navIconWrappwer">
-            <GiClothes className="navIcon"/>
-          </div>
-          <p>コーデ一覧</p>
-        </Link></li>
+        <Link href={"/clothes"}>
+          <li>
+              <div className="navIconWrappwer">
+                <FaTshirt className="navIcon"/>
+              </div>
+              <p>アイテム一覧</p>
+          </li>
+        </Link>
 
+        <Link href={"/coordinations"}>
+          <li>
+            <div className="navIconWrappwer">
+              <GiClothes className="navIcon"/>
+            </div>
+            <p>コーデ一覧</p>
+          </li>
+        </Link>
 
-        <li className="homeBtn"><Link href={"/"}>
-          <BiHome className="navHomeIcon"/>
-        </Link></li>
+        <Link href={"/"}>
+          <li className="homeBtn">
+            <BiHome className="navHomeIcon"/>
+          </li>
+        </Link>
 
-        <li><Link href={"/add-clothes"}>
-          <div className="navIconWrappwer">
-            <FaTshirt className="navIcon"/>
-            <CgAdd className="navPlusIcon"/>
-          </div>
-          <p>アイテム登録</p>
-        </Link></li>
+        <Link href={"/add-clothes"}>
+          <li>
+            <div className="navIconWrappwer">
+              <FaTshirt className="navIcon"/>
+              <CgAdd className="navPlusIcon"/>
+            </div>
+            <p>アイテム登録</p>
+          </li>
+        </Link>
 
-        <li><Link href={"/add-coordinations"}>
-          <div className="navIconWrappwer">
-            <GiClothes className="navIcon"/>
-            <CgAdd className="navPlusIcon"/>
-          </div>
-          <p>コーデ登録</p>
-        </Link></li>
+        <Link href={"/add-coordinations"}>
+          <li>
+            <div className="navIconWrappwer">
+              <GiClothes className="navIcon"/>
+              <CgAdd className="navPlusIcon"/>
+            </div>
+            <p>コーデ登録</p>
+          </li>
+        </Link>
 
       </ul>
     </nav>

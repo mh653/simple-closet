@@ -216,7 +216,7 @@ export default function EditCoordinations() {
         {selectedClothes.length > 0 ? (
           <div className="selectedClothes">
             {selectedClothes.map((s) => (
-              <Image key={s.id} src={getImageUrl(s.img_path)} alt='' width={100} height={100} className="selectedClothesImg"/>
+              <Image key={s.id} src={getImageUrl(s.img_path)} alt='' width={250} height={250} className="selectedClothesImg"/>
             ))}
           </div>
           ):(

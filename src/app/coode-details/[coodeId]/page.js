@@ -75,7 +75,7 @@ export default async function CoodeDetail(props) {
 
             {coode.t_coode_clothes.map((item) => (
               <Link key={item.t_clothes.id} href={`/clothes-details/${item.t_clothes.id}?from=${currentPath}`}>
-                <Image src={getImageUrl(item.t_clothes.img_path)} alt='' width={100} height={100} className="selectedClothesImg"/>
+                <Image src={getImageUrl(item.t_clothes.img_path)} alt='' width={250} height={250} className="selectedClothesImg"/>
               </Link>
             ))}
 
