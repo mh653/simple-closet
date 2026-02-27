@@ -183,6 +183,11 @@ li:active .navHomeIcon {
 }
 
 /* 入力系 */
+input, textarea {
+  font-size: 16px;
+  transform: scale(0.875);
+  transform-origin: left center;
+}
 input[type="text"] {
   width: 300px;
   max-width: 60vw;
@@ -397,11 +402,12 @@ button:active {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 200;
 }
 .modalContent {
   background: white;
-  width: 95%;
-  height: 80%;
+  width: 98%;
+  height: 90%;
   padding: 10px;
   border-radius: 10px;
 }
@@ -481,6 +487,7 @@ button:active {
   background: var(--gray1);
   vertical-align: middle;
 }
+
 /* タグ設定 */
 .tagCreateWrapper {
   margin-top: 20px;
@@ -541,19 +548,15 @@ button:active {
     right: 0;
     z-index: 100;
   }
-  .pcNavWrapper {
-    max-width: 1600px;
-    margin: 0 auto;
-  }
-  .weather {
-    max-width: 1440px;
+  nav {
+    height: 62px;
   }
   main {
-    max-width: 1440px;
+    max-width: 1000px;
     margin-top: 45px;
   }
   .modalContent {
-    max-width: 1400px;
+    max-width: 1000px;
   }
   .pcDetails {
     width: 100%;
@@ -598,6 +601,25 @@ button:active {
   }
   li:hover .navHomeIcon {
     color: var(--turquoise1);
+  }
+}
+
+/* PC用 */
+@media screen and (min-width: 1536px) {
+  .pcNavWrapper {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  main {
+    max-width: 1440px;
+    margin-top: 45px;
+  }
+  .modalContent {
+    max-width: 1440px;
+  }
+  .coodeThumbArea {
+    grid-template-columns: repeat(5, minmax(0,340px));
+    gap: 15px;
   }
 }
 
