@@ -48,9 +48,8 @@ export default async function Home() {
 
   return (
     <>
-      <Weather />
-
       <main>
+        <Weather />
 
         <section>
           <h3>タグでコーデを検索</h3>

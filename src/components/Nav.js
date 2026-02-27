@@ -7,9 +7,7 @@ import { CgAdd } from "react-icons/cg";
 export default function Nav() {
   return (
     <nav>
-
-      <div className="pcWrapper">
-
+      <div className="pcNavWrapper">
         <ul>
 
           <Link href={"/clothes"}>
@@ -57,10 +55,7 @@ export default function Nav() {
           </Link>
 
         </ul>
-
       </div>
-
-
     </nav>
   );
 }

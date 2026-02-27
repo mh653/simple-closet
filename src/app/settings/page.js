@@ -85,7 +85,7 @@ export default function Header() {
       <h2>設定</h2>
 
       <section>
-        <h3>・ログイン</h3>
+        <h3>ログイン</h3>
         <p>ポートフォリオサイトに記載のIDとパスワードでログインして頂くと、登録や削除が可能になります。</p>
         <p>定期的にDBをリセットしていますので、お気軽にお試しください。</p>
         <div className="loginSec">
@@ -106,7 +106,7 @@ export default function Header() {
       </section>
 
       <section>
-        <h3>・天気の場所</h3>
+        <h3>天気の場所</h3>
         <p>デフォルトで東京の天気を表示しています。</p>
         <p>下記ボタンで位置情報を取得し、現在地に変更頂けます。</p>
         <p>（位置情報はローカルストレージに保存されます）</p>
@@ -119,7 +119,7 @@ export default function Header() {
       </section>
 
       <section>
-        <h3>・タグの編集</h3>
+        <h3>タグの編集</h3>
         <p>下記ボタンからタグを新規作成・編集・削除して頂けます。</p>
         <Link href={"settings/tag-settings"}>
           <button>タグを編集する</button>

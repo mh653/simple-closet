@@ -129,6 +129,8 @@ li:active .navHomeIcon {
 .weather {
   width: 100%;
   height: 65px;
+  margin-top: -10px;
+  margin-bottom: 10px;
   background-color: var(--white);
   color: var(--gray2);
 }
@@ -182,7 +184,7 @@ li:active .navHomeIcon {
 
 /* 入力系 */
 input[type="text"] {
-  width: 500px;
+  width: 300px;
   max-width: 60vw;
   border: var(--gray1) 1px solid;
   border-radius: 5px;
@@ -193,7 +195,7 @@ input[type="text"]:focus {
   border: var(--blue1) 1px solid;
 }
 input[type="password"] {
-  width: 500px;
+  width: 300px;
   max-width: 60vw;
   border: var(--gray1) 1px solid;
   border-radius: 5px;
@@ -230,6 +232,7 @@ input[type="radio"] {
 }
 textarea {
   width: 100%;
+  /* max-width: 900px; */
   min-height: 100px;
   border: var(--gray1) 1px solid;
   border-radius: 5px;
@@ -359,6 +362,7 @@ button:active {
 
 /* 未ログインメッセージ */
 .note {
+  max-width: 800px;
   margin: 5px 0;
   padding: 20px;
   background-color: #ffd6d1;
@@ -468,7 +472,15 @@ button:active {
 .settings button {
   margin-top: 10px;
 }
-
+.settings h3::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 5px;
+  background: var(--gray1);
+  vertical-align: middle;
+}
 /* タグ設定 */
 .tagCreateWrapper {
   margin-top: 20px;
@@ -515,7 +527,6 @@ button:active {
 
 /* PC用 */
 @media screen and (min-width: 768px) {
-  /* 1440 */
   body {
     display: flex;
     flex-direction: column;
@@ -523,21 +534,27 @@ button:active {
     align-items: center;
   }
   header {
-    max-width: 1600px;
+    margin: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
   }
-  nav {
+  .pcNavWrapper {
     max-width: 1600px;
+    margin: 0 auto;
   }
   .weather {
     max-width: 1440px;
   }
   main {
     max-width: 1440px;
+    margin-top: 45px;
   }
   .modalContent {
     max-width: 1400px;
   }
-
   .pcDetails {
     width: 100%;
     display: grid;
@@ -548,13 +565,13 @@ button:active {
     height: auto;
     min-height: 100px;
   }
-
-
+  .tagSetWrapper {
+    width: 500px;
+  }
   .coodeThumbArea {
     grid-template-columns: repeat(4, minmax(0,340px));
     gap: 15px;
   }
-
   button:hover {
     background-color: var(--turquoise2);
   }
@@ -575,7 +592,6 @@ button:active {
   }
   .settingIcon:hover {
     color: var(--turquoise1);
-
   }
   li:hover .navIcon {
     color: var(--turquoise1);
