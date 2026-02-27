@@ -62,20 +62,28 @@ export default async function ClothesDetail(props) {
 
       <h2>アイテム詳細</h2>
 
-      <section>
-        <p className="idNum">Item:{clothesId}</p>
-        <Image src={getImageUrl(clothes.img_path)} alt='アイテム画像' width={500} height={500} className="image" />
-      </section>
+      <div className="pcDetails">
 
-      <section>
-        <h3>カテゴリ</h3>
-        <p>{clothes.t_categories.name}</p>
-      </section>
+        <div className="pcLeft">
+          <section>
+            <p className="idNum">Item:{clothesId}</p>
+            <Image src={getImageUrl(clothes.img_path)} alt='アイテム画像' width={500} height={500} className="image" />
+          </section>
+        </div>
 
-      <section>
-        <h3>メモ</h3>
-        <div className="memoArea">{clothes.memo}</div>
-      </section>
+        <div className="pcRight">
+          <section>
+            <h3>カテゴリ</h3>
+            <p>{clothes.t_categories.name}</p>
+          </section>
+
+          <section>
+            <h3>メモ</h3>
+            <div className="memoArea">{clothes.memo}</div>
+          </section>
+        </div>
+
+      </div>
 
       <section>
         <h3>使用コーデ</h3>

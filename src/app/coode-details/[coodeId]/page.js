@@ -62,57 +62,65 @@ export default async function CoodeDetail(props) {
 
       <h2>コーデ詳細</h2>
 
-      <section>
-        {/* <h3>使用アイテム</h3> */}
-        <p className="idNum">No.{coodeId}</p>
-        {!coode.t_coode_clothes || coode.t_coode_clothes.length === 0 ? (
-          <div>
-            <p>アイテムが削除されたようです。</p>
-            <p>「編集」ボタンからアイテムを選択し直すか、「削除」ボタンでコーデを削除してください。</p>
-          </div>
-        ) : (
-          <div className="selectedClothes">
+      <div className="pcDetails">
 
-            {coode.t_coode_clothes.map((item) => (
-              <Link key={item.t_clothes.id} href={`/clothes-details/${item.t_clothes.id}?from=${currentPath}`}>
-                <Image src={getImageUrl(item.t_clothes.img_path)} alt='' width={250} height={250} className="selectedClothesImg"/>
-              </Link>
-            ))}
-
-          </div>
-
-        )}
-      </section>
-
-      <section>
-        <h3>メモ</h3>
-        <div className="memoArea">{coode.memo}</div>
-      </section>
-
-      <section>
-        <h3>タグ</h3>
-        {!coode.t_coode_tags || coode.t_coode_tags.length === 0 ? (
-          <div>
-            <p>登録されているタグはありません</p>
-          </div>
-        ) : (
-          <div className="tagArea">
-            {coode.t_coode_tags.map((tag) => (
-                <p key={tag.t_tags.id} className="tag">{tag.t_tags.name}</p>
-            ))}
-          </div>
-        )}
-      </section>
-
-      <section>
-        <h3>トップ画面にピン留めする？</h3>
-          {coode.pin ? (
-              <p>はい</p>
+        <div className="pcLeft">
+          <section>
+            {/* <h3>使用アイテム</h3> */}
+            <p className="idNum">No.{coodeId}</p>
+            {!coode.t_coode_clothes || coode.t_coode_clothes.length === 0 ? (
+              <div>
+                <p>アイテムが削除されたようです。</p>
+                <p>「編集」ボタンからアイテムを選択し直すか、「削除」ボタンでコーデを削除してください。</p>
+              </div>
             ) : (
-              <p>いいえ</p>
-            )
-          }
-      </section>
+              <div className="selectedClothes">
+
+                {coode.t_coode_clothes.map((item) => (
+                  <Link key={item.t_clothes.id} href={`/clothes-details/${item.t_clothes.id}?from=${currentPath}`}>
+                    <Image src={getImageUrl(item.t_clothes.img_path)} alt='' width={250} height={250} className="selectedClothesImg"/>
+                  </Link>
+                ))}
+
+              </div>
+
+            )}
+          </section>
+        </div>
+
+        <div className="pcRight">
+          <section>
+            <h3>メモ</h3>
+            <div className="memoArea">{coode.memo}</div>
+          </section>
+
+          <section>
+            <h3>タグ</h3>
+            {!coode.t_coode_tags || coode.t_coode_tags.length === 0 ? (
+              <div>
+                <p>登録されているタグはありません</p>
+              </div>
+            ) : (
+              <div className="tagArea">
+                {coode.t_coode_tags.map((tag) => (
+                    <p key={tag.t_tags.id} className="tag">{tag.t_tags.name}</p>
+                ))}
+              </div>
+            )}
+          </section>
+
+          <section>
+            <h3>トップ画面にピン留めする？</h3>
+              {coode.pin ? (
+                  <p>はい</p>
+                ) : (
+                  <p>いいえ</p>
+                )
+              }
+          </section>
+        </div>
+
+      </div>
 
       <div className="editDeleteButtons">
         <Link href={`/coode-details/${coodeId}/edit-coordinations/${coodeId}`}>

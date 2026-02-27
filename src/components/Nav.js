@@ -8,53 +8,59 @@ export default function Nav() {
   return (
     <nav>
 
-      <ul>
+      <div className="pcWrapper">
 
-        <Link href={"/clothes"}>
-          <li>
+        <ul>
+
+          <Link href={"/clothes"}>
+            <li>
+                <div className="navIconWrappwer">
+                  <FaTshirt className="navIcon"/>
+                </div>
+                <p>アイテム一覧</p>
+            </li>
+          </Link>
+
+          <Link href={"/coordinations"}>
+            <li>
+              <div className="navIconWrappwer">
+                <GiClothes className="navIcon"/>
+              </div>
+              <p>コーデ一覧</p>
+            </li>
+          </Link>
+
+          <Link href={"/"}>
+            <li className="homeBtn">
+              <BiHome className="navHomeIcon"/>
+            </li>
+          </Link>
+
+          <Link href={"/add-clothes"}>
+            <li>
               <div className="navIconWrappwer">
                 <FaTshirt className="navIcon"/>
+                <CgAdd className="navPlusIcon"/>
               </div>
-              <p>アイテム一覧</p>
-          </li>
-        </Link>
+              <p>アイテム登録</p>
+            </li>
+          </Link>
 
-        <Link href={"/coordinations"}>
-          <li>
-            <div className="navIconWrappwer">
-              <GiClothes className="navIcon"/>
-            </div>
-            <p>コーデ一覧</p>
-          </li>
-        </Link>
+          <Link href={"/add-coordinations"}>
+            <li>
+              <div className="navIconWrappwer">
+                <GiClothes className="navIcon"/>
+                <CgAdd className="navPlusIcon"/>
+              </div>
+              <p>コーデ登録</p>
+            </li>
+          </Link>
 
-        <Link href={"/"}>
-          <li className="homeBtn">
-            <BiHome className="navHomeIcon"/>
-          </li>
-        </Link>
+        </ul>
 
-        <Link href={"/add-clothes"}>
-          <li>
-            <div className="navIconWrappwer">
-              <FaTshirt className="navIcon"/>
-              <CgAdd className="navPlusIcon"/>
-            </div>
-            <p>アイテム登録</p>
-          </li>
-        </Link>
+      </div>
 
-        <Link href={"/add-coordinations"}>
-          <li>
-            <div className="navIconWrappwer">
-              <GiClothes className="navIcon"/>
-              <CgAdd className="navPlusIcon"/>
-            </div>
-            <p>コーデ登録</p>
-          </li>
-        </Link>
 
-      </ul>
     </nav>
   );
 }
