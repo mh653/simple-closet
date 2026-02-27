@@ -8,7 +8,7 @@ export default function manifest() {
     start_url: '/',  // アプリ起動時に開くパス
     display: 'standalone', // アプリケーションの表示モードを指定する
     background_color: '#ffffff',　// コンテンツ表示されるまでの背景色
-    theme_color: 'rgba(255,255,255,0.5)',       // ブラウザのアドレスバーやステータスバーの色
+    theme_color: '#ffffff',       // ブラウザのアドレスバーやステータスバーの色
     icons: [　                    // ホーム画面に表示させるicon画像
       {
         src: '/icon-192x192.png',
