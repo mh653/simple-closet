@@ -104,7 +104,7 @@ export default async function ClothesDetail(props) {
                       {coode.t_coode_clothes?.map((cc2) => (
                         <Image key={cc2.t_clothes.id}
                           src={getImageUrl(cc2.t_clothes.img_path)} alt="アイテムサムネイル画像"
-                          width={70} height={70} className="coodeThumbImg"
+                          width={200} height={200} className="coodeThumbImg"
                         />
                       ))}
                     </div>

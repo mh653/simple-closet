@@ -50,7 +50,7 @@ export default async function Home() {
                       {c.t_coode_clothes.map((item) => (
                           <Image key={item.t_clothes.id}
                           src={getImageUrl(item.t_clothes.img_path)} alt='アイテムサムネイル画像'
-                          width={70} height={70} className="coodeThumbImg"/>
+                          width={200} height={200} className="coodeThumbImg"/>
                       ))}
                     </div>
                   </div>
