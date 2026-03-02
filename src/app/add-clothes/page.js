@@ -61,7 +61,11 @@ export default function AddClothes() {
       alert("画像を選択してください")
       return
     }
-    // if (!["image/jpeg", "image/heic", "image/heif"].includes(file.type)) {
+    if (!["image/jpeg", "image/jpg","image/png", "image/webp", "image/avif"].includes(file.type)) {
+      alert("アップロード不可なファイル形式です");
+      return;
+    }
+    //     if (!["image/jpeg", "image/heic", "image/heif"].includes(file.type)) {
     //   alert("JPEGのみアップロード可能です");
     //   return;
     // }
@@ -69,6 +73,15 @@ export default function AddClothes() {
       alert("カテゴリを選択してください")
       return
     }
+
+    // let resizedFile;
+    // try {
+    //   resizedFile = await resizeImage(file);
+    // } catch (e) {
+    //   console.error("resizeエラー:", e); // ← ここで止まってるはず
+    //   alert("画像アップロードに失敗しました")
+    //   return
+    // }
 
     const resizedFile = await resizeImage(file);
     const fileName = `${Date.now()}.jpg`;
