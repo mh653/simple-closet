@@ -171,7 +171,9 @@ export default function AddCoodinations() {
         {selectedClothes.length > 0 ? (
           <div className="selectedClothes">
             {selectedClothes.map((s) => (
-              <Image key={s.id} src={getImageUrl(s.img_path)} alt='' width={250} height={250} className="selectedClothesImg"/>
+              <Image key={s.id} src={getImageUrl(s.img_path)} alt='選択したアイテムの画像' width={250} height={250} className="selectedClothesImg"
+              loading="lazy"
+              sizes="(max-width: 768px) 50vw, 250px"/>
             ))}
           </div>
           ):(

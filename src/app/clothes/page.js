@@ -1,5 +1,5 @@
 // サーバーコンポーネントのVercelのキャッシュ対策
-export const revalidate = 0
+export const revalidate = 60
 
 import { supabase } from "@/lib/supabaseClient"
 import Image from "next/image";
@@ -46,7 +46,9 @@ export default async function Clothes() {
 
               {ca.t_clothes.map((cl) => (
                 <Link key={cl.id} href={`/clothes-details/${cl.id}?from=${currentPath}`}>
-                    <Image src={getImageUrl(cl.img_path)} alt='' width={100} height={100} />
+                    <Image src={getImageUrl(cl.img_path)} alt='アイテム画像' width={100} height={100}
+                    loading="lazy"
+                    sizes="100px" />
                 </Link>
               ))}
 

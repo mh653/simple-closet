@@ -70,7 +70,9 @@ export default function SelectClothesModal({ clothes, setClothes, onClose }) {
                 {ca.t_clothes.map((cl) => (
                   <div key={cl.id} onClick={() => toggleClothes(cl.id)} className="modalSelectWrapper">
 
-                    <Image src={getImageUrl(cl.img_path)} width={100} height={100} alt="アイテム画像"/>
+                    <Image src={getImageUrl(cl.img_path)} width={100} height={100} alt="アイテム画像"
+                    loading="lazy"
+                    sizes="100px"/>
 
                     {clothes.includes(cl.id) && (
                       <div className="modalSelected">

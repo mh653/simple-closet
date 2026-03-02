@@ -104,6 +104,8 @@ export default function EditCoordinations() {
             width={500}
             height={500}
             className="image"
+            loading="lazy"
+            sizes="500px"
           />
         )}
 
