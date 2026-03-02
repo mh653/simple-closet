@@ -1,5 +1,5 @@
 // サーバーコンポーネントのVercelのキャッシュ対策
-export const revalidate = 5
+export const revalidate = 0
 
 import { supabase, getImageUrl } from "@/lib/supabaseClient";
 import Image from "next/image";
