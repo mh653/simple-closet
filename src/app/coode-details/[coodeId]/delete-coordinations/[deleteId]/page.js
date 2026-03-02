@@ -47,11 +47,13 @@ export default function DeleteCoordination() {
     // revalidatePath('/coordinations') // コーデ一覧を再検証
 
     if (from) {
+      router.refresh();
       router.push(from)
-      router.refresh();
+
     } else {
-      router.push("/")
       router.refresh();
+      router.push("/")
+
     }
     alert("コーディネートを削除しました");
   };
