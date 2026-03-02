@@ -26,6 +26,9 @@ export default function AddCoodinations() {
   const [newTag, setNewTag] = useState("");
   const [isNewTag, setIsNewTag] = useState(false);
 
+  // 連打防止
+  const[isUploading, setIsUploading] = useState(false);
+
   // ログイン判定
   const [user, setUser] = useState(null);
   const getUser = async () => {
@@ -124,31 +127,42 @@ export default function AddCoodinations() {
 
   // コーデを登録
   const addCoordination = async () => {
-    if (!user) {
-      alert("権限がありません（ログインしてください）");
+    if (isUploading) {
       return;
     }
-    if (clothesId.length < 2) {
-      alert("アイテムを2点以上選んでください");
-      return;
-    }
-    if (clothesId.length > 6) {
-      alert("使用できるアイテムは6点までです");
-      return;
-    }
+    setIsUploading(true);
 
-    const { error } = await supabase.rpc("insert_coordination", {
-      p_memo: memo,
-      p_pin: isPin,
-      p_clothes: clothesId,
-      p_tags: tagsId
-    });
-    if (error) {
-      console.error(error);
-      alert("登録に失敗しました");
-      return;
+    try {
+      if (!user) {
+        alert("権限がありません（ログインしてください）");
+        return;
+      }
+      if (clothesId.length < 2) {
+        alert("アイテムを2点以上選んでください");
+        return;
+      }
+      if (clothesId.length > 6) {
+        alert("使用できるアイテムは6点までです");
+        return;
+      }
+
+      const { error } = await supabase.rpc("insert_coordination", {
+        p_memo: memo,
+        p_pin: isPin,
+        p_clothes: clothesId,
+        p_tags: tagsId
+      });
+      if (error) {
+        console.error(error);
+        alert("登録に失敗しました");
+        return;
+      }
+
+      router.push(`/add-coordinations/result`);
+
+    } finally {
+      setIsUploading(false);
     }
-    router.push(`/add-coordinations/result`);
   };
 
   return (
@@ -222,7 +236,7 @@ export default function AddCoodinations() {
       </section>
 
       <div className="btnArea">
-        <button onClick={() => addCoordination()}>登録</button>
+        <button onClick={() => addCoordination()} disabled={isUploading}>{isUploading ? "登録中..." : "登録"}</button>
         <Note />
       </div>
 

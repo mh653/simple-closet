@@ -14,6 +14,9 @@ export default function DeleteClothes() {
   const searchParams = useSearchParams();
   const from = searchParams.get("from")
 
+  // 連打防止
+  const[isUploading, setIsUploading] = useState(false);
+
   // ログイン判定
   const [user, setUser] = useState(null);
   const getUser = async () => {
@@ -26,44 +29,54 @@ export default function DeleteClothes() {
 
   // 削除関数
   const deleteClothes = async (id) => {
-    if (!user) {
-      alert("権限がありません（ログインしてください）");
+    if (isUploading) {
       return;
     }
+    setIsUploading(true);
 
-    const { data: imgPath, error } = await supabase
-      .rpc("delete_clothes_with_image", {
-        p_clothes_id: Number(id)
-      })
-    if (error) {
-      console.error(error);
-      alert('テーブルからの削除に失敗しました')
-      return
-    }
+    try {
+      if (!user) {
+        alert("権限がありません（ログインしてください）");
+        return;
+      }
 
-    console.log(imgPath)
+      const { data: imgPath, error } = await supabase
+        .rpc("delete_clothes_with_image", {
+          p_clothes_id: Number(id)
+        })
+      if (error) {
+        console.error(error);
+        alert('テーブルからの削除に失敗しました')
+        return
+      }
 
-    if (!imgPath) {
-      console.log("imgなし")
-      alert('画像パスがありません')
-      return
-    }
+      console.log(imgPath)
 
-    const { error: storageError } = await supabase.storage
-      .from("clothes_image")
-      .remove([imgPath])
+      if (!imgPath) {
+        console.log("imgなし")
+        alert('画像パスがありません')
+        return
+      }
 
-    if (storageError) {
-      console.error(storageError)
-      alert("ストレージからの削除に失敗しました")
-      return
-    }
+      const { error: storageError } = await supabase.storage
+        .from("clothes_image")
+        .remove([imgPath])
 
-    alert("アイテムを削除しました");
-    if (from) {
-      router.push(from)
-    } else {
-      router.push("/")
+      if (storageError) {
+        console.error(storageError)
+        alert("ストレージからの削除に失敗しました")
+        return
+      }
+
+      alert("アイテムを削除しました");
+      if (from) {
+        router.push(from)
+      } else {
+        router.push("/")
+      }
+
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -73,8 +86,8 @@ export default function DeleteClothes() {
       <p>削除したアイテムは元に戻せません</p>
       <section>
         <div className="yesNo">
-          <button onClick={() => deleteClothes(deleteId)}>削除する</button>
-          <button onClick={() => router.back()}>削除しない</button>            
+          <button onClick={() => deleteClothes(deleteId)} disabled={isUploading}>{isUploading ? "削除中..." : "削除する"}</button>
+          <button onClick={() => router.back()} disabled={isUploading}>削除しない</button>
         </div>
       </section>
 

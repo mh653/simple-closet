@@ -15,6 +15,9 @@ export default function AddClothes() {
   const[categoryId, setCategoryId] = useState(null);
   const[memo, setMemo] = useState("");
 
+  // 連打防止
+  const[isUploading, setIsUploading] = useState(false);
+
   // ログイン判定
   const [user, setUser] = useState(null);
   const getUser = async () => {
@@ -53,67 +56,63 @@ export default function AddClothes() {
   // resolve(resizedFile) が呼ばれた時点で Promise が完了し、次の処理に進める
 
   const addClothes = async () => {
-    if (!user) {
-      alert("権限がありません（ログインしてください）");
+    if (isUploading) {
       return;
     }
-    if(!file) {
-      alert("画像を選択してください")
-      return
-    }
-    if (!["image/jpeg", "image/jpg","image/png", "image/webp", "image/avif"].includes(file.type)) {
-      alert("アップロード不可なファイル形式です");
-      return;
-    }
-    //     if (!["image/jpeg", "image/heic", "image/heif"].includes(file.type)) {
-    //   alert("JPEGのみアップロード可能です");
-    //   return;
-    // }
-    if(!categoryId) {
-      alert("カテゴリを選択してください")
-      return
-    }
+    setIsUploading(true);
 
-    // let resizedFile;
-    // try {
-    //   resizedFile = await resizeImage(file);
-    // } catch (e) {
-    //   console.error("resizeエラー:", e); // ← ここで止まってるはず
-    //   alert("画像アップロードに失敗しました")
-    //   return
-    // }
+    try {
+      if (!user) {
+        alert("権限がありません（ログインしてください）");
+        return;
+      }
+      if(!file) {
+        alert("画像を選択してください")
+        return
+      }
+      if (!["image/jpeg", "image/jpg", "image/png", "image/webp", "image/avif"].includes(file.type)) {
+        alert("アップロード不可なファイル形式です");
+        return;
+      }
+      if(!categoryId) {
+        alert("カテゴリを選択してください")
+        return
+      }
+      const resizedFile = await resizeImage(file);
+      const fileName = `${Date.now()}.jpg`;
 
-    const resizedFile = await resizeImage(file);
-    const fileName = `${Date.now()}.jpg`;
+      // ストレージに追加
+      const { error: uploadError } = await supabase.storage
+        .from("clothes_image")
+        .upload(fileName, resizedFile)
+      if (uploadError) {
+        console.log(uploadError);
+        alert("画像アップロードに失敗しました")
+        return;
+      }
 
-    // ストレージに追加
-    const { error: uploadError } = await supabase.storage
-      .from("clothes_image")
-      .upload(fileName, resizedFile)
-    if (uploadError) {
-      console.log(uploadError);
-      alert("画像アップロードに失敗しました")
-      return;
+      // テーブルに追加
+      const { error: insertError } = await supabase
+        .from("t_clothes")
+        .insert([
+          {
+            img_path: fileName,
+            category: categoryId,
+            memo: memo,
+          },
+        ]);
+      if (insertError) {
+        await supabase.storage.from("clothes_image").remove([fileName])
+        console.log(insertError);
+        alert("テーブル登録に失敗しました")
+        return
+      }
+
+      router.push(`/add-clothes/result`);
+
+    } finally {
+      setIsUploading(false);
     }
-
-    // テーブルに追加
-    const { error: insertError } = await supabase
-      .from("t_clothes")
-      .insert([
-        {
-          img_path: fileName,
-          category: categoryId,
-          memo: memo,
-        },
-      ]);
-    if (insertError) {
-      await supabase.storage.from("clothes_image").remove([fileName])
-      console.log(insertError);
-      alert("テーブル登録に失敗しました")
-      return
-    }
-
-    router.push(`/add-clothes/result`);
   }
 
   return (
@@ -150,7 +149,7 @@ export default function AddClothes() {
       </section>
 
     <div className="btnArea">
-      <button onClick={() => addClothes()}>登録</button>
+      <button onClick={() => addClothes()} disabled={isUploading}>{isUploading ? "登録中..." : "登録"}</button>
       <Note />
     </div>
 

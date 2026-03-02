@@ -17,6 +17,9 @@ export default function EditCoordinations() {
   const [categoryId, setCategoryId] = useState("");
   const [imgPath, setImgPath] = useState(null);
 
+  // 連打防止
+  const[isUploading, setIsUploading] = useState(false);
+
   // ログイン判定
   const [user, setUser] = useState(null);
   const getUser = async () => {
@@ -64,31 +67,40 @@ export default function EditCoordinations() {
 
   // 変更内容を登録
   const changeClothes = async () => {
-    if (!user) {
-      alert("権限がありません（ログインしてください）");
+    if (isUploading) {
       return;
     }
-    if (!categoryId) {
-      alert("カテゴリは登録必須です");
-      return;
-    }
-    const { error: insertError } = await supabase
-      .from("t_clothes")
-      .update({
-          category: categoryId,
-          memo: memo,
-        })
-      .eq('id', clothesId);
+    setIsUploading(true);
 
-    if (insertError) {
-      console.log(insertError);
-      alert("更新に失敗しました");
-      return;
+    try {
+      if (!user) {
+        alert("権限がありません（ログインしてください）");
+        return;
+      }
+      if (!categoryId) {
+        alert("カテゴリは登録必須です");
+        return;
+      }
+      const { error: insertError } = await supabase
+        .from("t_clothes")
+        .update({
+            category: categoryId,
+            memo: memo,
+          })
+        .eq('id', clothesId);
+
+      if (insertError) {
+        console.log(insertError);
+        alert("更新に失敗しました");
+        return;
+      }
+      alert("更新完了しました！");
+      router.back();
+      router.refresh()
+
+    } finally {
+      setIsUploading(false);
     }
-    alert("更新完了しました！");
-    // router.push(`/clothes-details/${clothesId}`);
-    router.back();
-    router.refresh()
   };
 
   return (
@@ -132,7 +144,7 @@ export default function EditCoordinations() {
         </section>
 
         <div className="btnArea">
-          <button onClick={() => changeClothes()}>変更</button>
+          <button onClick={() => changeClothes()} disabled={isUploading}>{isUploading ? "変更中..." : "変更"}</button>
           <Note />
         </div>
 

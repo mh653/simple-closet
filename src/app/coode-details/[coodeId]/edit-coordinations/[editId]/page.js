@@ -28,6 +28,9 @@ export default function EditCoordinations() {
   const [newTag, setNewTag] = useState("");
   const [isNewTag, setIsNewTag] = useState(false);
 
+  // 連打防止
+  const[isUploading, setIsUploading] = useState(false);
+
   // ログイン判定
   const [user, setUser] = useState(null);
   const getUser = async () => {
@@ -164,34 +167,44 @@ export default function EditCoordinations() {
 
   // コーデ変更内容を登録
   const changeCoordination = async () => {
-    if (!user) {
-      alert("権限がありません（ログインしてください）");
+    if (isUploading) {
       return;
     }
-    if (clothesId.length < 2) {
-      alert("アイテムを2点以上選んでください");
-      return;
-    }
-    if (clothesId.length > 6) {
-      alert("使用できるアイテムは6点までです");
-      return;
-    }
+    setIsUploading(true);
 
-    const { error } = await supabase.rpc("update_coordination", {
-      p_coode_id: coodeId,
-      p_memo: memo,
-      p_pin: isPin,
-      p_clothes: clothesId,
-      p_tags: tagsId
-    });
-    if (error) {
-      console.error(error);
-      alert("更新に失敗しました");
-      return;
+      try {
+      if (!user) {
+        alert("権限がありません（ログインしてください）");
+        return;
+      }
+      if (clothesId.length < 2) {
+        alert("アイテムを2点以上選んでください");
+        return;
+      }
+      if (clothesId.length > 6) {
+        alert("使用できるアイテムは6点までです");
+        return;
+      }
+
+      const { error } = await supabase.rpc("update_coordination", {
+        p_coode_id: coodeId,
+        p_memo: memo,
+        p_pin: isPin,
+        p_clothes: clothesId,
+        p_tags: tagsId
+      });
+      if (error) {
+        console.error(error);
+        alert("更新に失敗しました");
+        return;
+      }
+      alert("更新完了しました！");
+      router.back();
+      router.refresh()
+
+    } finally {
+      setIsUploading(false);
     }
-    alert("更新完了しました！");
-    router.back();
-    router.refresh()
   };
 
   return (
@@ -267,7 +280,7 @@ export default function EditCoordinations() {
       </section>
 
       <div className="btnArea">
-        <button onClick={() => changeCoordination()}>変更</button>
+        <button onClick={() => changeCoordination()} disabled={isUploading}>{isUploading ? "変更中..." : "変更"}</button>
         <Note />
       </div>
 

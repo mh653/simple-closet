@@ -14,6 +14,9 @@ export default function DeleteCoordination() {
   const searchParams = useSearchParams();
   const from = searchParams.get("from")
 
+  // 連打防止
+  const[isUploading, setIsUploading] = useState(false);
+
   // ログイン判定
   const [user, setUser] = useState(null);
   const getUser = async () => {
@@ -26,27 +29,37 @@ export default function DeleteCoordination() {
 
   // 削除関数
   const deleteCoordination = async (id) => {
-    if (!user) {
-      alert("権限がありません（ログインしてください）");
+    if (isUploading) {
       return;
     }
-    const { error } = await supabase
-      .from("t_coordinations")
-      .delete()
-      .eq("id", id);
+    setIsUploading(true);
 
-    if (error) {
-      console.error(error);
-      alert("削除失敗");
-      return;
-    }
+    try {
+      if (!user) {
+        alert("権限がありません（ログインしてください）");
+        return;
+      }
+      const { error } = await supabase
+        .from("t_coordinations")
+        .delete()
+        .eq("id", id);
 
-    if (from) {
-      router.push(from)
-    } else {
-      router.push("/")
+      if (error) {
+        console.error(error);
+        alert("削除失敗");
+        return;
+      }
+
+      if (from) {
+        router.push(from)
+      } else {
+        router.push("/")
+      }
+      alert("コーディネートを削除しました");
+
+    } finally {
+      setIsUploading(false);
     }
-    alert("コーディネートを削除しました");
   };
 
   return (
@@ -55,8 +68,8 @@ export default function DeleteCoordination() {
       <p>削除したコーディネートは元に戻せません</p>
       <section>
         <div className="yesNo">
-          <button onClick={() => deleteCoordination(deleteId)}>削除する</button>
-          <button onClick={() => router.back()}>削除しない</button>
+          <button onClick={() => deleteCoordination(deleteId)} disabled={isUploading}>{isUploading ? "削除中..." : "削除する"}</button>
+          <button onClick={() => router.back()} disabled={isUploading}>削除しない</button>
         </div>
       </section>
 
