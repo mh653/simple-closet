@@ -4,6 +4,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { useState, useEffect } from "react"
 import { useRouter, useParams, useSearchParams } from "next/navigation";
 import Note from "@/app/ui/Note";
+// import { revalidatePath } from 'next/cache'
 
 export default function DeleteCoordination() {
   // ルータ
@@ -41,12 +42,18 @@ export default function DeleteCoordination() {
       return;
     }
 
-    alert("コーディネートを削除しました");
+    // revalidatePath('/')              // トップページを再検証
+    // revalidatePath('/clothes')       // アイテム一覧を再検証
+    // revalidatePath('/coordinations') // コーデ一覧を再検証
+
     if (from) {
       router.push(from)
+      router.refresh();
     } else {
       router.push("/")
+      router.refresh();
     }
+    alert("コーディネートを削除しました");
   };
 
   return (
@@ -55,9 +62,9 @@ export default function DeleteCoordination() {
       <p>削除したコーディネートは元に戻せません</p>
       <section>
         <div className="yesNo">
-          <button onClick={() => deleteCoordination(deleteId)}>削除する</button>   
+          <button onClick={() => deleteCoordination(deleteId)}>削除する</button>
           <button onClick={() => router.back()}>削除しない</button>
-        </div>        
+        </div>
       </section>
 
       <Note />

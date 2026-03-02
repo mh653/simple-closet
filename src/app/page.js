@@ -87,7 +87,7 @@ export default async function Home() {
           coodes ? (
               <div className="coodeThumbArea">
               {coodes.map((c) => (
-                <Link key={c.id} href={`/coode-details/${c.id}`} className="coodeThumbWrapper">
+                <Link key={c.id} href={`/coode-details/${c.id}?from=/`} className="coodeThumbWrapper">
                     <p className="idNum">No.{c.id}</p>
                     <div className="coodeThumbImgWrapper">
                       {c.t_coode_clothes.map((item) => (
