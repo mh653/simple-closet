@@ -15,6 +15,7 @@ import {
   WiThunderstorm
 } from 'react-icons/wi';
 
+// 天気コード→アイコン変換表
 const weatherIconMap = {
   1000: WiDaySunny,
   1003: WiDayCloudy,
@@ -30,43 +31,54 @@ const weatherIconMap = {
   1273: WiThunderstorm
 };
 
+// 時刻
+const times = [7,12,18];
+
+// 変換用
+const formatDate = (dateStr) => {
+const d = new Date(dateStr);
+return `${d.getMonth() + 1}月${d.getDate()}日`;
+};
+const formatHour = (dateStr) => {
+  const d = new Date(dateStr);
+  return `${d.getHours()}時`;
+};
+
 export default function Weather() {
   // 天気情報
   const [weather, setWeather] = useState(null);
-  // 時刻
-  const times = [7,12,18];
+  const [error, setError] = useState(false);
 
-  // 天気を取得
-  const getWeather = async () => {
-    setWeather(null);
-    const position = localStorage.getItem("weatherQuery") || "Tokyo";
-    try {
-        const res = await fetch(
-            `https://api.weatherapi.com/v1/forecast.json?key=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=${position}&days=1&aqi=no&alerts=no`,
-        );
-        if(!res.ok) {
-            throw new Error("天気の取得に失敗しました");//Errorオブジェクトを返す
-        }
-        const data = await res.json();
-        setWeather(data);
-    } catch(e) {
-        console.error(e.message);
-    }
-  };
 
+  // useEffect内で関数を定義（Reactの推奨パターン）
   useEffect(() => {
+    // 天気を取得
+    const getWeather = async () => {
+      setWeather(null);
+      const position = localStorage.getItem("weatherQuery") || "Tokyo";
+      try {
+          const res = await fetch(
+              `https://api.weatherapi.com/v1/forecast.json?key=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=${position}&days=1&aqi=no&alerts=no`,
+          );
+          if(!res.ok) {
+              throw new Error("天気の取得に失敗しました");//Errorオブジェクトを返す
+          }
+          const data = await res.json();
+          setWeather(data);
+      } catch(e) {
+          console.error(e.message);
+          setError(true);
+      }
+    };
+
     getWeather()
   }, [])
 
-  // 変換用
-  const formatDate = (dateStr) => {
-  const d = new Date(dateStr);
-  return `${d.getMonth() + 1}月${d.getDate()}日`;
-  };
-  const formatHour = (dateStr) => {
-    const d = new Date(dateStr);
-    return `${d.getHours()}時`;
-  };
+  if (error) return (
+    <div className="weather">
+      <p>天気を取得できませんでした</p>
+    </div>
+  );
 
   if(!weather) return (
     <div className="weather">
@@ -85,14 +97,14 @@ export default function Weather() {
 
         <div className="weatherSec">
           {times.map((t) => {
-            const Icon = weatherIconMap[weather.forecast.forecastday[0].hour[t].condition.code] ?? WiCloud;
-            const officialIcon = "https:" + weatherIconMap[weather.forecast.forecastday[0].hour[t].condition.icon];
+            const hourData = weather.forecast.forecastday[0].hour[t];
+            const Icon = weatherIconMap[hourData.condition.code] ?? WiCloud;
             return(
                 <div key={t} className="weatherEach">
                   <Icon size={30} className="weatherIcon"/>
                   <div className="timeTemp">
-                    <p className="time">{formatHour(weather.forecast.forecastday[0].hour[t].time)}</p>
-                    <p className="temp">{weather.forecast.forecastday[0].hour[t].temp_c}℃</p>
+                    <p className="time">{formatHour(hourData.time)}</p>
+                    <p className="temp">{hourData.temp_c}℃</p>
                   </div>
                 </div>
             )
@@ -103,22 +115,3 @@ export default function Weather() {
   );
 }
 
-  //  <div className="weather">
-  //     <p>Weather</p>
-  //       <p>日付：{weather.location.localtime}</p>
-  //       <p>場所：{weather.location.name}</p>
-
-  //       {times.map((t) => {
-  //         const Icon = weatherIconMap[weather.forecast.forecastday[0].hour[t].condition.code];
-  //         const officialIcon = "https:" + weatherIconMap[weather.forecast.forecastday[0].hour[t].condition.icon];
-  //         return(
-  //             <div key={t}>
-  //               <p>時刻：{weather.forecast.forecastday[0].hour[t].time}</p>
-  //               <p>天気：{weather.forecast.forecastday[0].hour[t].condition.text}</p>
-  //               <p>天気コード：{weather.forecast.forecastday[0].hour[t].condition.code}</p>
-  //               <p>気温：{weather.forecast.forecastday[0].hour[t].temp_c}℃</p>
-  //               <Icon size={40} />
-  //             </div>
-  //         )
-  //       })}
-  //   </div>
