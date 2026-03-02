@@ -1,7 +1,7 @@
 // サーバーコンポーネントのVercelのキャッシュ対策
 export const revalidate = 60
 
-import { supabase } from "@/lib/supabaseClient"
+import { supabase, getImageUrl } from "@/lib/supabaseClient"
 import Image from "next/image";
 import Link from "next/link";
 
@@ -38,16 +38,16 @@ export default async function tagCoode(props) {
     `)
     .eq('t_coode_tags.tags_id', tagId)
 
-  // ストレージの画像URLを取得する関数
-  const getImageUrl = (imgPath) => {
-    if(!imgPath) return null;
+  // // ストレージの画像URLを取得する関数
+  // const getImageUrl = (imgPath) => {
+  //   if(!imgPath) return null;
 
-    const { data } = supabase.storage
-      .from('clothes_image')
-      .getPublicUrl(imgPath)
+  //   const { data } = supabase.storage
+  //     .from('clothes_image')
+  //     .getPublicUrl(imgPath)
 
-    return data.publicUrl
-  }
+  //   return data.publicUrl
+  // }
 
   return (
     <main>

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import { supabase } from "@/lib/supabaseClient"
+import { supabase, getImageUrl } from "@/lib/supabaseClient"
 import Image from "next/image";
 import { useRouter, useParams } from "next/navigation";
 import Note from "@/app/ui/Note";
@@ -46,15 +46,15 @@ export default function EditCoordinations() {
 
   }
 
-  // ストレージの画像URLを取得
-  const getImageUrl = (imgPath) => {
-    if(!imgPath) return null;
-    const { data } = supabase.storage
-      .from('clothes_image')
-      .getPublicUrl(imgPath)
+  // // ストレージの画像URLを取得
+  // const getImageUrl = (imgPath) => {
+  //   if(!imgPath) return null;
+  //   const { data } = supabase.storage
+  //     .from('clothes_image')
+  //     .getPublicUrl(imgPath)
 
-    return data.publicUrl
-  }
+  //   return data.publicUrl
+  // }
 
   // 編集前状態をセット
   useEffect(() => {

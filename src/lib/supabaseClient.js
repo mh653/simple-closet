@@ -13,3 +13,14 @@ export const supabase = createClient(
   //   },
   // }
 );
+
+// ストレージの画像URLを取得する関数
+export const getImageUrl = (imgPath) => {
+  if(!imgPath) return null;
+
+  const { data } = supabase.storage
+    .from('clothes_image')
+    .getPublicUrl(imgPath)
+
+  return data.publicUrl
+}

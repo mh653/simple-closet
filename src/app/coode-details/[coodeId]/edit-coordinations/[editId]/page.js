@@ -1,6 +1,6 @@
 'use client'
 
-import { supabase } from "@/lib/supabaseClient"
+import { supabase, getImageUrl } from "@/lib/supabaseClient"
 import { useState, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
@@ -130,15 +130,15 @@ export default function EditCoordinations() {
     setSelectedClothes(data || [])
   }
 
-  // ストレージの画像URLを取得
-  const getImageUrl = (imgPath) => {
-    if(!imgPath) return null;
-    const { data } = supabase.storage
-      .from('clothes_image')
-      .getPublicUrl(imgPath)
+  // // ストレージの画像URLを取得
+  // const getImageUrl = (imgPath) => {
+  //   if(!imgPath) return null;
+  //   const { data } = supabase.storage
+  //     .from('clothes_image')
+  //     .getPublicUrl(imgPath)
 
-    return data.publicUrl
-  }
+  //   return data.publicUrl
+  // }
 
 
   // 編集前状態をセット
