@@ -68,9 +68,7 @@ export default async function ClothesDetail(props) {
           <section>
             <p className="idNum">Item:{clothesId}</p>
             <Image src={getImageUrl(clothes.img_path)} alt='アイテム画像' width={500} height={500} className="image"
-            // loading="lazy"
-            loading="eager"  // ← eagerに変更
-            priority          // ← priorityも追加推奨
+            loading="eager"
             sizes="500px"/>
           </section>
         </div>
