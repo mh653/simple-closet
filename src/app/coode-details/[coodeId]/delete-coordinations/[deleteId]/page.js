@@ -4,7 +4,6 @@ import { supabase } from "@/lib/supabaseClient";
 import { useState, useEffect } from "react"
 import { useRouter, useParams, useSearchParams } from "next/navigation";
 import Note from "@/app/ui/Note";
-// import { revalidatePath } from 'next/cache'
 
 export default function DeleteCoordination() {
   // ルータ
@@ -42,18 +41,10 @@ export default function DeleteCoordination() {
       return;
     }
 
-    // revalidatePath('/')              // トップページを再検証
-    // revalidatePath('/clothes')       // アイテム一覧を再検証
-    // revalidatePath('/coordinations') // コーデ一覧を再検証
-
     if (from) {
-      router.refresh();
       router.push(from)
-
     } else {
-      router.refresh();
       router.push("/")
-
     }
     alert("コーディネートを削除しました");
   };
