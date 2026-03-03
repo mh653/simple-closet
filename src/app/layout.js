@@ -20,7 +20,7 @@ export const metadata = {
   },
   openGraph: {
     title: "Simple Closet",
-    description: "個人用に開発した、シンプルで操作性の良いクローゼットアプリのデモサイトです。",
+    description: "個人用に開発した、シンプルで操作性の良いクローゼットアプリのデモサイトです",
     url: "https://simple-closet.vercel.app/",
     siteName: "Simple Closet",
     images: [
