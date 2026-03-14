@@ -3,6 +3,7 @@ import 'destyle.css'
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Header from "@/components/Header";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const noto = Noto_Sans_JP({
   weight: ["400"],//variableフォントではないので、使う太さを決めてDLする
@@ -43,6 +44,11 @@ export default function RootLayout({ children }) {
         <Nav />
           {children}
       </body>
+
+      {/* googleアナリティクス */}
+      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID} />
+      )}
     </html>
   );
 }
