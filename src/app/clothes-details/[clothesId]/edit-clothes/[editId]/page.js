@@ -4,9 +4,10 @@ import { useState, useEffect } from "react"
 import { supabase, getImageUrl } from "@/lib/supabaseClient"
 import Image from "next/image";
 import { useRouter, useParams } from "next/navigation";
+import FileResizer from "react-image-file-resizer";
 import Note from "@/app/ui/Note";
 
-export default function EditCoordinations() {
+export default function EditClothes() {
   // ルータ
   const router = useRouter();
   // パラメータ取得
@@ -16,6 +17,7 @@ export default function EditCoordinations() {
   const [memo, setMemo] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [imgPath, setImgPath] = useState(null);
+  const[file, setFile] = useState(null);
 
   // 連打防止
   const[isUploading, setIsUploading] = useState(false);
@@ -29,6 +31,34 @@ export default function EditCoordinations() {
   useEffect(() => {
     getUser()
   }, [])
+
+  // ライブラリのリサイズ
+  const resizeImage = (file) =>
+  new Promise((resolve) => {
+    FileResizer.imageFileResizer(
+      file,    // リサイズ対象のファイル
+      800,     // 横1000px固定
+      4000,    // 縦は十分大きくして自動計算させる
+      "JPEG",  // 出力形式
+      90,      // 画質（JPEGの場合1〜100）
+      0,       // 回転角度
+      (resizedFile) => {
+        resolve(resizedFile);
+      },
+      // リサイズ完了後に呼ばれる関数（コールバック関数）
+      // 引数 resizedFile にリサイズ後の画像が入る
+      // Promiseの resolve で返すことで await で使えるようにしている
+      "file"
+      // 出力タイプ（"file" or "base64"）
+      // "file" → Blob/File オブジェクトとして出力。そのまま SupabaseやFormDataに送信可能
+      // "base64" → Base64文字列として出力。imgタグの src にそのまま使える
+    );
+  });
+  //  FileResizer.imageFileResizer は コールバック関数方式
+  // 「リサイズが終わったら次の処理をしたい」とき、通常の async/await では扱えないので、
+  // Promiseで包むことで、await resizeImage(file) のように非同期処理を待てるようにする
+  // resolve(resizedFile) が呼ばれた時点で Promise が完了し、次の処理に進める
+
 
   // 編集前状態を取得
   const fetchDefault = async () => {
@@ -46,7 +76,6 @@ export default function EditCoordinations() {
   setCategoryId(defaultCategories)
   const defaultImgPath = data?.img_path || ""
   setImgPath(defaultImgPath)
-
   }
 
   // 編集前状態をセット
@@ -71,19 +100,68 @@ export default function EditCoordinations() {
         alert("カテゴリは登録必須です");
         return;
       }
-      const { error: insertError } = await supabase
-        .from("t_clothes")
-        .update({
-            category: categoryId,
-            memo: memo,
-          })
-        .eq('id', clothesId);
 
-      if (insertError) {
-        console.log(insertError);
-        alert("更新に失敗しました");
-        return;
+      if (file) {
+      // 画像を変更する場合        
+        if (!["image/jpeg", "image/jpg", "image/png", "image/webp", "image/avif"].includes(file.type)) {
+          alert("アップロード不可なファイル形式です");
+          return;
+        }
+        const resizedFile = await resizeImage(file);
+        const fileName = `${Date.now()}.jpg`;
+
+        // ストレージに新画像追加
+        const { error: uploadError } = await supabase.storage
+          .from("clothes_image")
+          .upload(fileName, resizedFile)
+        if (uploadError) {
+          console.log(uploadError);
+          alert("画像アップロードに失敗しました")
+          return;
+        }
+        // テーブル更新
+        const { error: insertError } = await supabase
+          .from("t_clothes")
+          .update({
+              category: categoryId,
+              memo: memo,
+              img_path: fileName,
+            })
+          .eq('id', clothesId);
+        if (insertError) {
+          await supabase.storage.from("clothes_image").remove([fileName])
+          console.log(insertError);
+          alert("テーブル登録に失敗しました")
+          return
+        }
+        // ストレージの旧画像削除
+        const { error: deleteError } = await supabase.storage
+          .from("clothes_image")
+          .remove([imgPath])
+        if (deleteError) {
+          console.log(deleteError);
+          alert("画像削除に失敗しました")
+          return;
+        }
+
+      } else {
+      // 画像を変更しない場合
+        // テーブル更新
+        const { error: insertError } = await supabase
+          .from("t_clothes")
+          .update({
+              category: categoryId,
+              memo: memo,
+            })
+          .eq('id', clothesId);
+
+        if (insertError) {
+          console.log(insertError);
+          alert("更新に失敗しました");
+          return;
+        }
       }
+
       alert("更新完了しました！");
       router.back();
       router.refresh()
@@ -99,17 +177,35 @@ export default function EditCoordinations() {
       <h2>アイテム編集</h2>
         <p>ID:{clothesId}</p>
 
-        {imgPath && (
-          <Image
-            src={getImageUrl(imgPath)}
-            alt=""
-            width={500}
-            height={500}
-            className="image"
-            loading="eager"
-            sizes="500px"
-          />
-        )}
+        <section>
+          <h3>アイテム画像</h3>
+          <p>※画像を変更する場合はファイルを選択してください</p>
+          <p>※正方形、JPEG推奨</p>
+          <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files[0])}/>
+          <div className="preview">
+            {
+              file ? (
+                <Image
+                  src={URL.createObjectURL(file)}
+                  alt=""
+                  width={500}
+                  height={500}
+                  className="image"
+                />
+              ) : (
+                imgPath && (
+                  <Image
+                    src={getImageUrl(imgPath)}
+                    alt=""
+                    width={500}
+                    height={500}
+                    className="image"
+                  />
+                )
+              )
+            }
+          </div>
+        </section>
 
         <section>
           <h3>メモ</h3>

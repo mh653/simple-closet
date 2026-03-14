@@ -1,6 +1,7 @@
 'use client'
 
 import { supabase } from "@/lib/supabaseClient"
+import Image from "next/image";
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 import FileResizer from "react-image-file-resizer";
@@ -123,6 +124,19 @@ export default function AddClothes() {
         <h3>アイテム画像（必須）</h3>
         <p>※正方形、JPEG推奨</p>
         <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files[0])}/>
+        <div className="preview">
+          {
+            file && (
+              <Image
+                src={URL.createObjectURL(file)}
+                alt=""
+                width={500}
+                height={500}
+                className="image"
+              />
+            )
+          }
+        </div>
       </section>
 
       <section>

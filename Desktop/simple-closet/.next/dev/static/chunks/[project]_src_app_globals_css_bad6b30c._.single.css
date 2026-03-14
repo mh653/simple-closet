@@ -1,4 +1,4 @@
-/* カラーコード */
+/* [project]/src/app/globals.css [app-client] (css) */
 :root {
   --white: #fff;
   --gray1: #666;
@@ -11,65 +11,72 @@
   --red: #ff6450;
 }
 
-/* 共通部分 */
 body {
   color: var(--gray1);
   font-size: 14px;
   line-height: 1.2em;
 }
+
 main {
   width: 100%;
-  padding: 10px 10px 180px 10px;
+  padding: 10px 10px 180px;
 }
+
 section {
   width: 100%;
   padding-top: 10px;
   padding-bottom: 20px;
 }
+
 h1 {
-  font-size: 20px;
   letter-spacing: .03em;
+  font-size: 20px;
 }
+
 h2 {
-  font-size: 24px;
   letter-spacing: .03em;
   margin-top: 30px;
   margin-bottom: 30px;
+  font-size: 24px;
 }
+
 h3 {
+  letter-spacing: .03em;
   margin-top: 10px;
   margin-bottom: 15px;
   font-size: 18px;
-  letter-spacing: .03em;
 }
+
 p {
   padding: 2px 0;
 }
 
-/* ヘッダー */
 header {
+  background-color: var(--turquoise2);
   width: 100%;
   height: 45px;
-  padding: 10px 0;
-  position: relative;
-  display: flex;
+  color: var(--white);
   justify-content: center;
   align-items: center;
-  background-color: var(--turquoise2);
-  color: var(--white);
+  padding: 10px 0;
+  display: flex;
+  position: relative;
 }
+
 .settingIcon {
+  font-size: 25px;
   position: absolute;
   top: 10px;
   left: 10px;
-  font-size: 25px;
 }
+
 .settingIcon:active {
   color: var(--turquoise1);
 }
 
-/* ナビ */
 nav {
+  z-index: 100;
+  background-color: var(--turquoise2);
   width: 100%;
   height: 90px;
   margin: auto;
@@ -77,557 +84,585 @@ nav {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 100;
-  background-color: var(--turquoise2);
 }
+
 nav ul {
-  display: flex;
   justify-content: space-around;
   align-items: center;
+  display: flex;
 }
+
 nav ul li {
-  height: 60px;
-  width: 60px;
-  padding: 10px 0;
   text-align: center;
+  width: 60px;
+  height: 60px;
+  padding: 10px 0;
 }
+
 nav ul li.homeBtn {
   background-color: var(--white);
   border-radius: 50%;
-  display: flex;
   justify-content: center;
   align-items: center;
+  display: flex;
 }
+
 nav ul li p {
   font-size: 9px;
 }
+
 .navIconWrappwer {
   position: relative;
 }
+
 .navIcon {
-  font-size: 30px;
   color: var(--white);
-}
-.navHomeIcon {
   font-size: 30px;
-  color: var(--gray2);
-}
-li:active .navIcon {
-  color: var(--turquoise1);
-}
-li:active .navHomeIcon {
-  color: var(--turquoise1);
-}
-.navPlusIcon {
-  position: absolute;
-  right: 3px;
-  bottom: 3px;
-  color: var(--gray2);
 }
 
-/* 天気 */
+.navHomeIcon {
+  color: var(--gray2);
+  font-size: 30px;
+}
+
+li:active .navIcon, li:active .navHomeIcon {
+  color: var(--turquoise1);
+}
+
+.navPlusIcon {
+  color: var(--gray2);
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+}
+
 .weather {
+  background-color: var(--white);
   width: 100%;
   height: 65px;
+  color: var(--gray2);
   margin-top: -10px;
   margin-bottom: 10px;
-  background-color: var(--white);
-  color: var(--gray2);
 }
+
 .weatherLoading {
+  border-bottom: var(--gray3) 1px solid;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 65px;
+  font-size: 12px;
   display: flex;
+}
+
+.dateSec {
   justify-content: center;
   align-items: center;
-  font-size: 12px;
-  border-bottom: var(--gray3) 1px solid;
-}
-.dateSec {
+  gap: 10px;
   height: 20px;
   padding: 4px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
   font-size: 12px;
-}
-.weatherSec {
-  height: 45px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+}
+
+.weatherSec {
   border-top: var(--gray3) 1px solid;
   border-bottom: var(--gray3) 1px solid;
-}
-.weatherEach {
-  width: 32%;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
   display: flex;
+}
+
+.weatherEach {
   justify-content: center;
   align-items: center;
   gap: 10px;
+  width: 32%;
+  display: flex;
 }
-.weatherEach:nth-child(even)  {
+
+.weatherEach:nth-child(2n) {
   border-left: var(--gray3) 1px solid;
   border-right: var(--gray3) 1px solid;
 }
+
 .timeTemp {
-  text-align: right;;
+  text-align: right;
 }
+
 .time {
   font-size: 10px;
 }
+
 .temp {
   font-size: 12px;
   line-height: 1.5em;
 }
 
-/* 入力系 */
 input, textarea {
+  transform-origin: 0;
   font-size: 16px;
-  transform: scale(0.875);
-  transform-origin: left center;
+  transform: scale(.875);
 }
+
 input[type="text"] {
-  width: 300px;
-  max-width: 60vw;
   border: var(--gray1) 1px solid;
   border-radius: 5px;
+  width: 300px;
+  max-width: 60vw;
   padding: 5px;
 }
+
 input[type="text"]:focus {
-  outline: none;
   border: var(--blue1) 1px solid;
+  outline: none;
 }
+
 input[type="password"] {
-  width: 300px;
-  max-width: 60vw;
   border: var(--gray1) 1px solid;
   border-radius: 5px;
+  width: 300px;
+  max-width: 60vw;
   padding: 5px;
 }
+
 input[type="password"]:focus {
-  outline: none;
   border: var(--blue1) 1px solid;
+  outline: none;
 }
+
 input[type="file"] {
   margin-top: 5px;
 }
+
 input[type="file"]::file-selector-button {
   color: var(--gray1);
   cursor: pointer;
-  padding: 8px 12px;
-  background-color: #eee;
   border: var(--gray1) solid 1px;
+  background-color: #eee;
   border-radius: 20px;
+  padding: 8px 12px;
 }
+
 input[type="file"]::file-selector-button:hover {
   background-color: var(--gray3);
 }
-input[type="checkbox"],
-input[type="radio"] {
+
+input[type="checkbox"], input[type="radio"] {
   appearance: auto;
   cursor: pointer;
   width: 20px;
   height: 20px;
 }
+
 .checkboxRadioText {
   padding-left: 4px;
   padding-right: 15px;
 }
+
 textarea {
+  border: var(--gray1) 1px solid;
+  border-radius: 5px;
   width: 100%;
-  /* max-width: 900px; */
   min-height: 100px;
-  border: var(--gray1) 1px solid;
-  border-radius: 5px;
   padding: 5px;
-}
-textarea:focus {
-  outline: none;
-  border: var(--blue1) 1px solid;
-}
-select {
-  width: 200px;
-  padding: 5px;
-  border: var(--gray1) 1px solid;
-  border-radius: 5px;
-  cursor: pointer;
-  appearance: auto;
-  -webkit-appearance: auto;
-  -moz-appearance: auto;
 }
 
-/* ボタン関連 */
+textarea:focus {
+  border: var(--blue1) 1px solid;
+  outline: none;
+}
+
+select {
+  border: var(--gray1) 1px solid;
+  cursor: pointer;
+  appearance: auto;
+  border-radius: 5px;
+  width: 200px;
+  padding: 5px;
+}
+
 button {
-  padding: 10px 12px;
   background-color: var(--turquoise1);
   color: var(--white);
   border-radius: 5px;
+  padding: 10px 12px;
 }
+
 button:active {
   background-color: var(--turquoise2);
 }
+
 .grayBtn {
   color: var(--gray1);
-  background-color: #eee;
   border: var(--gray1) solid 1px;
+  background-color: #eee;
 }
+
 .grayBtn:active {
   background-color: var(--gray3);
 }
+
 .disabledBtn {
   background-color: var(--turquoise2);
 }
+
 .btnArea {
   margin-top: 40px;
 }
+
 .selectItemBtn {
   margin-bottom: 10px;
 }
+
 .resultButtons {
-  display: flex;
   flex-direction: column;
   gap: 10px;
-}
-.editDeleteButtons {
-  margin-top: 40px;
   display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  align-items: center;
-}
-.deleteButton {
-  background-color: var(--white);
-  font-size: 20px;
-  border: none;
 }
 
-/* タグ */
-.tagArea {
+.editDeleteButtons {
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
   display: flex;
+}
+
+.deleteButton {
+  background-color: var(--white);
+  border: none;
+  font-size: 20px;
+}
+
+.tagArea {
   flex-wrap: wrap;
   gap: 10px;
+  display: flex;
 }
+
 .tag {
-  padding: 10px 15px;
-  background-color: #4181cf;
   color: var(--white);
-  border-radius: calc(infinity * 1px);
+  background-color: #4181cf;
+  border-radius: 3.40282e38px;
+  padding: 10px 15px;
 }
+
 .clickableTag:active {
   background-color: var(--blue2);
 }
 
-/* コーデサムネイル */
 .coodeThumbArea {
-  display: grid;
   grid-template-columns: repeat(2, minmax(155px, 1fr));
   gap: 10px;
+  display: grid;
 }
+
 .coodeThumbWrapper {
+  border: var(--gray2) 1px solid;
+  border-radius: 10px;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   padding: 5px;
+  transition: all .2s;
   display: flex;
-  flex-direction: column;
-  border: var(--gray2) 1px solid;
-  border-radius: 10px;
-  transition: .2s;
 }
+
 .coodeThumbWrapper:active {
   opacity: .7;
 }
+
 .coodeThumbImgWrapper {
-  display: grid;
   grid-template-columns: repeat(2, minmax(70px, 1fr));
   gap: 2px;
+  display: grid;
 }
+
 .coodeThumbImg {
+  border-radius: 3.40282e38px;
   width: 100%;
   height: auto;
-  border-radius: calc(infinity * 1px);
 }
 
-/* ID */
 .idNum {
-  font-size: 11px;
   color: var(--gray3);
   text-align: left;
+  font-size: 11px;
 }
 
-/* メモ */
 .memoArea {
+  border: var(--gray2) solid 1px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  border-radius: 5px;
   width: 100%;
   height: auto;
   min-height: 50px;
   padding: 5px;
-  border: var(--gray2) solid 1px;
-  border-radius: 5px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  white-space: pre-wrap;
-  word-break: break-word;
-} 
+  overflow: hidden auto;
+}
 
-/* 未ログインメッセージ */
 .note {
+  border: var(--red) 1px solid;
+  background-color: #ffd6d1;
   max-width: 800px;
   margin: 5px 0;
   padding: 20px;
-  background-color: #ffd6d1;
-  border: var(--red) 1px solid;
 }
 
-/* 以下、各画面 */
-
-/* コーデ登録、コーデ詳細 */
 .selectedClothes {
-  max-width: 500px;
-  display: grid;
   grid-template-columns: repeat(2, minmax(155px, 1fr));
   gap: 10px;
+  max-width: 500px;
+  display: grid;
 }
+
 .selectedClothesImg {
   width: 100%;
   height: auto;
 }
-.selectedClothes>a {
-  transition: .2s;
+
+.selectedClothes > a {
+  transition: all .2s;
 }
-.selectedClothes>a:active {
+
+.selectedClothes > a:active {
   opacity: .7;
 }
 
-/* コーデアイテム選択モーダル */
 .modal {
-  position: fixed;
-  inset: 0;/* 要素を四隅にピッタリ貼り付ける */
-  background: rgba(0,0,0,0.4);
-  display: flex;
+  z-index: 200;
+  background: #0006;
   justify-content: center;
   align-items: center;
-  z-index: 200;
+  display: flex;
+  position: fixed;
+  inset: 0;
 }
+
 .modalContent {
-  background: white;
+  background: #fff;
+  border-radius: 10px;
   width: 98%;
   height: 90%;
   padding: 10px;
-  border-radius: 10px;
 }
+
 .modalClothes {
-  height: 90%;
+  border: 1px solid var(--gray1);
+  background: #fff;
   width: 99%;
+  height: 90%;
   margin-top: 10px;
   padding: 10px;
-  background: white;
-  border: 1px solid var(--gray1);
-  overflow-y: auto;/* 縦スクロール */
+  overflow-y: auto;
 }
+
 .modalSelectWrapper {
   position: relative;
 }
+
 .modalSelected {
   width: 100px;
   height: 100px;
+  color: var(--white);
+  background: #0006;
+  justify-content: center;
+  align-items: center;
+  display: flex;
   position: absolute;
   top: 0;
   left: 0;
-  background: rgba(0,0,0,0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--white);
 }
+
 .categoryItemsModal {
   gap: 5px;
 }
 
-/* アイテム一覧 */
 .itemsList {
   border-top: var(--gray3) 1px solid;
 }
+
 .categoryItems {
-  display: grid;
   grid-template-columns: repeat(auto-fit, 100px);
   gap: 10px;
+  display: grid;
 }
-.categoryItems>a {
-  transition: .2s;
+
+.categoryItems > a {
+  transition: all .2s;
 }
-.categoryItems>a:active {
+
+.categoryItems > a:active {
   opacity: .7;
 }
 
-/* アイテム詳細 */
 .clothesDetailImgWrapper {
   text-align: center;
 }
+
 .image {
   width: 100%;
   max-width: 500px;
   height: auto;
 }
-.preview {
-  margin-top: 10px;
-}
 
-/* アイテム削除、コーデ削除 */
 .yesNo {
-  display: flex;
   gap: 10px;
+  display: flex;
 }
 
-/* 設定 */
-.loginSec {
+.loginSec, .settings button {
   margin-top: 10px;
 }
-.settings button {
-  margin-top: 10px;
-}
-.settings h3::before {
+
+.settings h3:before {
   content: "";
-  display: inline-block;
+  background: var(--gray1);
+  vertical-align: middle;
   width: 6px;
   height: 6px;
   margin-right: 5px;
-  background: var(--gray1);
-  vertical-align: middle;
+  display: inline-block;
 }
 
-/* タグ設定 */
 .tagCreateWrapper {
+  align-items: stretch;
+  gap: 10px;
   margin-top: 20px;
   display: flex;
-  align-items: stretch;
-  gap: 10px;
-}
-.tagEditDeleteWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.tagSetWrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.tagEditWrapper {
-  display: flex;
-  align-items: stretch;
-  gap: 10px;
-}
-.tagBtns {
-  display: flex;
-  gap: 10px;
 }
 
-/* タグでコーデを検索 */
+.tagEditDeleteWrapper {
+  flex-direction: column;
+  gap: 10px;
+  display: flex;
+}
+
+.tagSetWrapper {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.tagEditWrapper {
+  align-items: stretch;
+  gap: 10px;
+  display: flex;
+}
+
+.tagBtns {
+  gap: 10px;
+  display: flex;
+}
+
 .tagResult {
+  align-items: center;
+  gap: 10px;
   margin-top: 30px;
   margin-bottom: 20px;
   display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
-
-/* タブレット用 */
 @media screen and (min-width: 640px) {
   .coodeThumbArea {
     grid-template-columns: repeat(3, minmax(155px, 1fr));
   }
 }
 
-/* PC用 */
 @media screen and (min-width: 768px) {
   body {
-    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    display: flex;
   }
+
   header {
+    z-index: 100;
     margin: auto;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 100;
   }
+
   nav {
     height: 62px;
   }
+
   main {
     max-width: 1000px;
     margin-top: 45px;
   }
+
   .modalContent {
     max-width: 1000px;
   }
+
   .pcDetails {
-    width: 100%;
-    display: grid;
     grid-template-columns: 40% 55%;
     gap: 5%;
+    width: 100%;
+    display: grid;
   }
+
   .memoArea {
     height: auto;
     min-height: 100px;
   }
+
   .tagSetWrapper {
     width: 500px;
   }
+
   .coodeThumbArea {
-    grid-template-columns: repeat(4, minmax(0,340px));
+    grid-template-columns: repeat(4, minmax(0, 340px));
     gap: 15px;
   }
+
   button:hover {
     background-color: var(--turquoise2);
   }
+
   .grayBtn:hover {
     background-color: var(--gray3);
   }
+
   .clickableTag:hover {
     background-color: var(--blue2);
   }
-  .coodeThumbWrapper:hover {
+
+  .coodeThumbWrapper:hover, .categoryItems > a:hover, .selectedClothes > a:hover {
     opacity: .7;
   }
-  .categoryItems>a:hover {
-    opacity: .7;
-  }
-  .selectedClothes>a:hover {
-    opacity: .7;
-  }
-  .settingIcon:hover {
-    color: var(--turquoise1);
-  }
-  li:hover .navIcon {
-    color: var(--turquoise1);
-  }
-  li:hover .navHomeIcon {
+
+  .settingIcon:hover, li:hover .navIcon, li:hover .navHomeIcon {
     color: var(--turquoise1);
   }
 }
 
-/* PC用 */
 @media screen and (min-width: 1536px) {
   .pcNavWrapper {
     max-width: 1600px;
     margin: 0 auto;
   }
+
   main {
     max-width: 1440px;
     margin-top: 45px;
   }
+
   .modalContent {
     max-width: 1440px;
   }
+
   .coodeThumbArea {
-    grid-template-columns: repeat(5, minmax(0,340px));
+    grid-template-columns: repeat(5, minmax(0, 340px));
     gap: 15px;
   }
 }
 
+/*# sourceMappingURL=%5Bproject%5D_src_app_globals_css_bad6b30c._.single.css.map*/
