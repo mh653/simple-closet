@@ -6,7 +6,6 @@ import { redirect } from "next/navigation"
 import Image from "next/image";
 import Link from "next/link";
 import FromBackButton from "@/app/ui/FromBackButton";
-import { BsTrash3Fill } from "react-icons/bs";
 
 export default async function CoodeDetail(props) {
   // パラメータ受け取り
@@ -94,7 +93,7 @@ export default async function CoodeDetail(props) {
             ) : (
               <div className="tagArea">
                 {coode.t_coode_tags.map((tag) => (
-                    <p key={tag.t_tags.id} className="tag">{tag.t_tags.name}</p>
+                    <p key={tag.t_tags.id} className="tag unclickableTag">{tag.t_tags.name}</p>
                 ))}
               </div>
             )}

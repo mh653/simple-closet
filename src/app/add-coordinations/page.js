@@ -44,9 +44,10 @@ export default function AddCoodinations() {
     const {data} = await supabase
       .from('t_tags')
       .select(`
-        *
+        id,
+        name
       `)
-      .order('created_at', {ascending: false})
+      .order('id', {ascending: false})
     setTags(data || [])
   }
 
@@ -98,17 +99,6 @@ export default function AddCoodinations() {
       .in('id', clothesId)
     setSelectedClothes(data || [])
   }
-
-  // // ストレージの画像URLを取得する関数
-  // const getImageUrl = (imgPath) => {
-  //   if(!imgPath) return null;
-
-  //   const { data } = supabase.storage
-  //     .from('clothes_image')
-  //     .getPublicUrl(imgPath)
-
-  //   return data.publicUrl
-  // }
 
   // 新しいタグが作成されたらセット
   useEffect(() => {
@@ -193,7 +183,6 @@ export default function AddCoodinations() {
           ):(
             null
         )}
-
       </section>
 
       <section>
@@ -228,7 +217,7 @@ export default function AddCoodinations() {
       </section>
 
       <section>
-        <h3>トップ画面にピン留めする？</h3>
+        <h3>ホーム画面にピン留めする？</h3>
         <input type="radio" id="yes" name="ispin" value={true} onChange={(e) => setIsPin(e.target.value)}/>
         <label htmlFor="yes"><span className="checkboxRadioText">する</span></label>
         <input type="radio" id="no" name="ispin" value={false} defaultChecked onChange={(e) => setIsPin(e.target.value)}/>

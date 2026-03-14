@@ -25,7 +25,7 @@ export default async function tagCoode(props) {
   const { data:coodes } = await supabase
     .from('t_coordinations')
     .select(`
-      *,
+      id,
       t_coode_tags!inner (
         tags_id
       ),
@@ -37,6 +37,7 @@ export default async function tagCoode(props) {
       )
     `)
     .eq('t_coode_tags.tags_id', tagId)
+    .order('id', {ascending: false})
 
   return (
     <main>

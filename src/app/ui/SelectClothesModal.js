@@ -20,6 +20,7 @@ export default function SelectClothesModal({ clothes, setClothes, onClose }) {
           img_path
         )
       `)
+      .order('id', {ascending: true})
     setCategoryClothes(data || [])
   }
 

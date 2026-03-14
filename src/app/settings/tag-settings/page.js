@@ -32,7 +32,8 @@ export default function TagSettings() {
     const {data} = await supabase
       .from('t_tags')
       .select(`
-        *
+        id,
+        name
       `)
       .order('id', {ascending: false})
     setTags(data || [])

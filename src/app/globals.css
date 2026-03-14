@@ -398,6 +398,9 @@ button:active {
 .selectedClothes>a:active {
   opacity: .7;
 }
+.unclickableTag {
+  background-color: var(--blue2);
+}
 
 /* コーデアイテム選択モーダル */
 .modal {

@@ -46,9 +46,10 @@ export default function EditCoordinations() {
     const {data} = await supabase
       .from('t_tags')
       .select(`
-        *
+        id,
+        name
       `)
-      .order('created_at', {ascending: false})
+      .order('id', {ascending: false})
     setTags(data || [])
   }
 

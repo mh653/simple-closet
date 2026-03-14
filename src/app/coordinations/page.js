@@ -13,7 +13,7 @@ export default async function Home() {
   const { data:coodes } = await supabase
     .from('t_coordinations')
     .select(`
-      *,
+      id,
       t_coode_clothes (
         t_clothes (
           id,
@@ -21,6 +21,7 @@ export default async function Home() {
         )
       )
     `)
+    .order('id', {ascending: false})
 
   return (
     <main>

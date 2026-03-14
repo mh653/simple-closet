@@ -20,6 +20,7 @@ export default async function Clothes() {
         img_path
       )
     `)
+    .order('id', {ascending: true})
 
   return (
     <main>

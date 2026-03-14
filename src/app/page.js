@@ -11,7 +11,7 @@ export default async function Home() {
   const { data:coodes } = await supabase
     .from('t_coordinations')
     .select(`
-      *,
+      id,
       t_coode_clothes (
         t_clothes (
           id,
@@ -19,6 +19,7 @@ export default async function Home() {
         )
       )
     `)
+    .order('id', {ascending: true})
     .eq('pin', true)
 
   // t_tagsのデータを取得する関数（コーデと紐づいてるものだけ）
@@ -33,7 +34,7 @@ export default async function Home() {
         id
       )
     `)
-    .order('created_at', {ascending: false})
+    .order('id', {ascending: false})
 
   return (
     <>
